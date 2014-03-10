@@ -1,0 +1,62 @@
+services:
+    sonata.admin.almacen:
+        class: Nossis\NossisBundle\Admin\AlmacenAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "General", label: "Almacen", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Almacen
+            - ~
+    sonata.admin.producto:
+        class: Nossis\NossisBundle\Admin\ProductoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "General", label: "Producto", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Producto
+            - ~
+    sonata.admin.area:
+        class: Nossis\NossisBundle\Admin\AreaAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "General", label: "Area", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Area
+            - ~
+    sonata.admin.estado:
+        class: Nossis\NossisBundle\Admin\EstadoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "General", label: "Estado", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Estado
+            - ~
+    sonata.admin.cliente:
+        class: Nossis\NossisBundle\Admin\ClienteAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "General", label: "Cliente", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Cliente
+            - ~
+            
+    sonata.admin.pais:
+        class: Nossis\NossisBundle\Admin\PaisAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Procedencia", label: "Pais", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Pais
+            - ~
+    sonata.admin.ciudad:
+        class: Nossis\NossisBundle\Admin\CiudadAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Procedencia", label: "Ciudad", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Ciudad
+            - ~
+    
+          
+        
+

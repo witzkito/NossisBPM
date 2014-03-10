@@ -1,0 +1,70 @@
+<?php
+
+namespace Nossis\NossisBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Provincia
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\ProvinciaRepository")
+ */
+class Provincia
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=100)
+     */
+    private $nombre;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Pais", inversedBy="provincias")
+     * @ORM\JoinColumn(name="pais", referencedColumnName="id")
+     */
+    private $pais;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Provincia
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+}
