@@ -1,0 +1,31 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Ingresar Stock{% endblock %}
+
+
+{% block body %}
+       
+<div class="form">
+    <form action="{{ path('agregar_stock') }}" method="post">
+        {{ form_rest(form) }}
+        <input class="submit" type="submit" value="Ingresar"  />
+    </form>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+    <script>
+        function setFocus()
+        {
+            document.getElementById("nossis_nossisbundle_stock_lote").focus();
+        }
+    </script>
+    {% block stylesheets %} 
+            {{ form_stylesheet(form) }}
+    {% endblock %}
+{% endblock %}
+    
+    

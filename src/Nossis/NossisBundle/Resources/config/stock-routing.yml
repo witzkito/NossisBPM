@@ -1,0 +1,8 @@
+ingresar_stock:
+    pattern:  /ingresar
+    defaults: { _controller: NossisBundle:Stock:ingresar }
+
+agregar_stock:
+    pattern:  /agregar
+    defaults: { _controller: NossisBundle:Stock:agregar }
+

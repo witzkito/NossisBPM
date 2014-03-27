@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>NossisBMB |{% block title %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link href="{{ asset('bundles/nossis/css/estilo.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/nossis/css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+        <script src="{{ asset('bundles/nossis/js/jquery-1.10.2.min.js') }}"></script>
+        <script src="{{ asset('bundles/nossis/js/jquery-ui.js') }}"></script>
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body onload="setFocus()">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="menu">
+                <a href="{{ path("nossis_homepage")}}" >INICIO</a>
+                <a href="#" >LISTADOS</a>
+                <a href="{{ path("sonata_admin_dashboard")}}" >ADMINISTRAR</a>
+            </div>
+        </div>
+        
+            <div class="botones">
+                {% block botonera %}    
+               
+                {% endblock %}
+            </div>
+            <div class="mensajes_ok">
+                {% block mensajes_ok %}
+                    {% for flashMessage in app.session.flashbag.get('mensaje_ok') %}
+                        <div class="flash-notice">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+                
+            </div>
+        {% block body %}
+            
+        {% endblock %}
+            
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
