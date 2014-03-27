@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Retiro
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\RetiroRepository")
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\RetiroRepository")
  */
 class Retiro
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Area
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\AreaRepository")
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\AreaRepository")
  */
 class Area
 {
@@ -42,10 +42,15 @@ class Area
     private $capacidad;
     
      /**
-     * @ORM\ManyToOne(targetEntity="Almacen", inversedBy="areas")
+     * @ORM\ManyToOne(targetEntity="Almacen", inversedBy="almacen")
      * @ORM\JoinColumn(name="almacen", referencedColumnName="id")
      */
     private $almacen;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="area")
+     */
+    protected $stocks;
     
 
 
@@ -149,5 +154,49 @@ class Area
     public function getAlmacen()
     {
         return $this->almacen;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\Stock $stocks
+     * @return Area
+     */
+    public function addStock(\Nossis\NossisBundle\Entity\Stock $stocks)
+    {
+        $this->stocks[] = $stocks;
+
+        return $this;
+    }
+
+    /**
+     * Remove stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\Stock $stocks
+     */
+    public function removeStock(\Nossis\NossisBundle\Entity\Stock $stocks)
+    {
+        $this->stocks->removeElement($stocks);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+    
+    public function __toString() {
+        return $this->nombre;
     }
 }

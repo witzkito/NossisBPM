@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Stock
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\StockRepository")
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\StockRepository")
  */
 class Stock
 {
@@ -62,6 +62,24 @@ class Stock
      * @ORM\Column(name="turno", type="string", length=10)
      */
     private $turno;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Producto", inversedBy="producto")
+     * @ORM\JoinColumn(name="producto", referencedColumnName="id")
+     */
+    private $producto;
+    
+    /**
+     * @var integer
+     * @orm\Column(name="cantidad", type="integer")
+     */
+    private $cantidad;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Area", inversedBy="area")
+     * @ORM\JoinColumn(name="area", referencedColumnName="id")
+     */
+    private $area;
 
 
     /**
@@ -210,5 +228,74 @@ class Stock
     public function getTurno()
     {
         return $this->turno;
+    }
+
+    /**
+     * Set area
+     *
+     * @param \Nossis\NossisBundle\Entity\Area $area
+     * @return Stock
+     */
+    public function setArea(\Nossis\NossisBundle\Entity\Area $area = null)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * Get area
+     *
+     * @return \Nossis\NossisBundle\Entity\Area 
+     */
+    public function getArea()
+    {
+        return $this->area;
+    }
+
+    /**
+     * Set cantidad
+     *
+     * @param integer $cantidad
+     * @return Stock
+     */
+    public function setCantidad($cantidad)
+    {
+        $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidad
+     *
+     * @return integer 
+     */
+    public function getCantidad()
+    {
+        return $this->cantidad;
+    }
+
+    /**
+     * Set producto
+     *
+     * @param \Nossis\NossisBundle\Entity\Producto $producto
+     * @return Stock
+     */
+    public function setProducto(\Nossis\NossisBundle\Entity\Producto $producto = null)
+    {
+        $this->producto = $producto;
+
+        return $this;
+    }
+
+    /**
+     * Get producto
+     *
+     * @return \Nossis\NossisBundle\Entity\Producto 
+     */
+    public function getProducto()
+    {
+        return $this->producto;
     }
 }

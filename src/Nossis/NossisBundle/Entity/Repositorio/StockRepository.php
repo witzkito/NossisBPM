@@ -1,6 +1,6 @@
 <?php
 
-namespace Nossis\NossisBundle\Entity;
+namespace Nossis\NossisBundle\Entity\Repositorio;
 
 use Doctrine\ORM\EntityRepository;
 

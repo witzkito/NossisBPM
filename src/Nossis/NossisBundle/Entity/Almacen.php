@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Almacen
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\AlmacenRepository")
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\AlmacenRepository")
  */
 class Almacen
 {
@@ -36,7 +36,7 @@ class Almacen
     private $ubicacion;
     
      /**
-     * @ORM\OneToMany(targetEntity="Area", mappedBy="areas")
+     * @ORM\OneToMany(targetEntity="Area", mappedBy="almacen")
      */
     protected $areas;
 

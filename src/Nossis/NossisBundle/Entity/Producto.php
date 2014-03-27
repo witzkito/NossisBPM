@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Producto
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\ProductoRepository")
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\ProductoRepository")
  */
 class Producto
 {
@@ -34,6 +34,11 @@ class Producto
      * @ORM\Column(name="codigo", type="string", length=255)
      */
     private $codigo;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="producto")
+     */
+    protected $stocks;
 
 
     /**
@@ -90,5 +95,49 @@ class Producto
     public function getCodigo()
     {
         return $this->codigo;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\Stock $stocks
+     * @return Producto
+     */
+    public function addStock(\Nossis\NossisBundle\Entity\Stock $stocks)
+    {
+        $this->stocks[] = $stocks;
+
+        return $this;
+    }
+
+    /**
+     * Remove stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\Stock $stocks
+     */
+    public function removeStock(\Nossis\NossisBundle\Entity\Stock $stocks)
+    {
+        $this->stocks->removeElement($stocks);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+    
+    public function __toString() {
+        return $this->nombre;
     }
 }
