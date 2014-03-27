@@ -1,4 +1,4 @@
-nossis:
+_nossis:
     resource: "@NossisBundle/Resources/config/routing.yml"
     prefix:   /
     

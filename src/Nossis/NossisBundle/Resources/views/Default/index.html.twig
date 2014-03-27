@@ -1,1 +1,71 @@
-Hello {{ name }}!
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block botonera %}    
+       <a class="boton-blue" id="btt-1" href="{{ path('ingresar_stock')}}">Ingresar</a>
+       <a class="boton-blue" id="btt-3" href="#">Despachar</a>
+       <a class="boton-blue" id="btt-5" href="#">Devolucion</a>
+{% endblock %}
+{% block body %}
+
+    
+    
+    <ul class="tabrow">
+        <li class="selected">Codigo</li>        
+    </ul>
+    <div class="form-codigo">
+        <form action="{{ path('nossis_homepage') }}" method="post">
+            {{ form_rest(form) }}
+            <input type="submit" value="Buscar" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;" />
+        </form>
+    </div>
+
+    <hr class="hr-inicio">
+    
+    {% for almacen in almacenes %}
+        <h3>{{ almacen.nombre }}</h3>
+        <hr class="hr3-inicio">
+    <div class="datagrid">    
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    {% for area in almacen.areas %}
+                        <th>{{ area.nombre }}</th>
+                    {%endfor%}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for producto in productos %}
+                        <tr>
+                            <td class="datagrid-producto">{{ producto.nombre }}</td>
+                            {% for area in almacen.areas %}
+                                {% set count = 0 %}
+                                {% for stock in area.stocks %}
+                                    {% if (stock.producto == producto) %}
+                                        {% set count = count + stock.cantidad %}
+                                    {%endif %}                                
+                                {% endfor %}
+                                <td>{{ count }}</td>
+                            {%endfor%}
+                        </tr>   
+                    {% endfor %}
+                </tr>
+                
+            
+            </tbody>
+        </table>
+    {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function setFocus()
+        {
+            document.getElementById("form_codigo").focus();
+        }
+    
+     </script>
+{% endblock %}
