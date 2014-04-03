@@ -4,13 +4,47 @@
 
 
 {% block body %}
-       
-<div class="form">
-    <form action="{{ path('agregar_stock') }}" method="post">
-        {{ form_rest(form) }}
-        <input class="submit" type="submit" value="Ingresar"  />
-    </form>
-</div>
+<hr>
+    <div class="panel-ingresar">
+        <div class="form">
+            <form action="{{ path('agregar_stock') }}" method="post">
+                {{ form_rest(form) }}            
+                <input class="submit" type="submit" value="Ingresar"  />
+            </form>
+        </div>
+        <div class="tabla-hoy">
+            <div class="datagrid">
+            <h3>Ingresos del dia</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cantidad</th>
+                            <th>Producto</th>
+                            <th>Lote</th>
+                            <th>Palet</th>
+                            <th>Turno</th>
+                            <th>Area</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        {% for ultimo in ultimos %}
+                        <tr>
+                            <td>{{ ultimo.cantidad }}</td>
+                            <td class="datagrid-producto">{{ ultimo.producto }}</td>
+                            <td>{{ ultimo.lote }}</td>
+                            <td>{{ ultimo.palet }}</td>
+                            <td>{{ ultimo.turno }}</td>
+                            <td class="datagrid-area">{{ ultimo.area }}</td>
+                            <td class="datagrid-fecha">{{ ultimo.fechaIngreso | date('d/m/y h:m') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<hr>
 
 {% endblock %}
 

@@ -11,15 +11,16 @@ class StockController extends Controller
 {
     public function ingresarAction()
     {
-         
+         $em = $this->get('doctrine')->getManager();
          $stock = new Stock;
          $form = $this->get('form.factory')->create(
                 new StockType(),
                 $stock
          );
+         $ultimosStock = $em->getRepository('NossisBundle:Stock')->findLast();
          
          return $this->render('NossisBundle:Stock:ingresar.html.twig',
-                array( 'form' => $form->createView(),
+                array( 'form' => $form->createView(), 'ultimos' => $ultimosStock
                 ));         
     }
     

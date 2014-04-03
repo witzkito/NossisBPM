@@ -233,8 +233,11 @@ body{
 }
 
 .form {
+    border: 1px solid #D7D7D7;
+    border-radius: 7px;
     display: -moz-inline-grid;
     margin-left: 29px;
+    width: 24%;
 }
 
 .form label {
@@ -244,13 +247,14 @@ body{
 
 .form input {
     height: 35px;
-    width: 123%;
+    width: 119%;
 }
 
 .form div {
     display: -moz-inline-box;
     margin-bottom: 15px;
-    width: 126%;
+    padding-left: 10px;
+    padding-top: 10px;    
 }
 
 .form select {
@@ -267,6 +271,92 @@ body{
     display: block;
 }
 
+
+element.style {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font: 13px arial,sans-serif;
+    margin: 0;
+}
+
 .form input[type="submit"] {
-    width: 432%;
+    background-color: #4DFF56;
+    border: medium none;
+    border-radius: 13px;
+    font-weight: bold;
+    margin-left: 93px;
+    margin-top: 18px;
+    width: 43%;
+}
+
+
+element.style {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font: 13px Ubuntu,sans-serif;
+    margin: 0;
+}
+.mensajes_ok {
+    background-color: #00D600;
+    border-radius: 13px;
+    height: 34px;
+    margin-top: -12px;
+    padding-top: 12px;
+    text-align: center;
+    width: 325px;
+}
+
+
+element.style {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font: 13px arial,sans-serif;
+    margin: 0;
+}
+.panel-ingresar {
+    display: flex;
+}
+
+.tabla-hoy{
+    border: 1px solid #D7D7D7;
+    border-radius: 7px;
+    margin-left: 21px;
+    width: 72%;
+}
+
+.tabla-hoy h3 {
+    padding-left: 3px;
+}
+
+.tabla-hoy .datagrid{
+    border:#fff;
+}
+
+.datagrid-fecha{
+    width: 14%;
+}
+
+.datagrid-area{
+    width: 14%;
 }

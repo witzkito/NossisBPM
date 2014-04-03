@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class StockRepository extends EntityRepository
 {
+    
+    public function findLast($limit=20)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('s')
+            ->from('NossisBundle:Stock', 's')
+            ->orderBy('s.id')
+            ->setMaxResults($limit)
+            ->getQuery();
+        return $query->getResult();
+        
+    }
+    
+    
 }
