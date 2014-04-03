@@ -24,16 +24,18 @@
                
                 {% endblock %}
             </div>
-            <div class="mensajes_ok">
-                {% block mensajes_ok %}
-                    {% for flashMessage in app.session.flashbag.get('mensaje_ok') %}
-                        <div class="flash-notice">
-                            {{ flashMessage }}
-                        </div>
-                    {% endfor %}
-                {% endblock %}
-                
-            </div>
+            {% set mensajes = app.session.flashbag.get('mensaje_ok') %}
+            {% if mensajes | length > 0 %}
+                <div class="mensajes_ok">
+                    {% block mensajes_ok %}
+                        {% for flashMessage in mensajes %}
+                            <div class="flash-notice">
+                                {{ flashMessage }}
+                            </div>
+                        {% endfor %}
+                    {% endblock %}
+                </div>
+           {% endif %}
         {% block body %}
             
         {% endblock %}
