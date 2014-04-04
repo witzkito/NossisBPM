@@ -29,15 +29,21 @@
                     </thead>    
                     <tbody>
                         {% for ultimo in ultimos %}
-                        <tr>
-                            <td>{{ ultimo.cantidad }}</td>
-                            <td class="datagrid-producto">{{ ultimo.producto }}</td>
-                            <td>{{ ultimo.lote }}</td>
-                            <td>{{ ultimo.palet }}</td>
-                            <td>{{ ultimo.turno }}</td>
-                            <td class="datagrid-area">{{ ultimo.area }}</td>
-                            <td class="datagrid-fecha">{{ ultimo.fechaIngreso | date('d/m/y h:m') }}</td>
-                        </tr>
+                            {% if first %}
+                                {% set first = false %}
+                                    <tr class="datagrid-agregado">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                        <td>{{ ultimo.cantidad }}</td>
+                                        <td class="datagrid-producto">{{ ultimo.producto }}</td>
+                                        <td>{{ ultimo.lote }}</td>
+                                        <td>{{ ultimo.palet }}</td>
+                                        <td>{{ ultimo.turno }}</td>
+                                        <td class="datagrid-area">{{ ultimo.area }}</td>
+                                        <td class="datagrid-fecha">{{ ultimo.fechaIngreso | date('d/m/y h:m') }}</td>
+                                    </tr>
+
                         {% endfor %}
                     </tbody>
                 </table>

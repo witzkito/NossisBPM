@@ -39,9 +39,10 @@ class StockControllerTest extends WebTestCase
         
         $this->assertEquals('Nossis\NossisBundle\Controller\StockController::agregarAction', $client->getRequest()->attributes->get('_controller'));
         
+        
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("El stock fue ingresado correctamente!!")')->count()
+            $crawler->filter('tr.datagrid-agregado')->count()
         );
         
     }

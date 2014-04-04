@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StockController extends Controller
 {
-    public function ingresarAction()
+    public function ingresarAction($nuevo = false)
     {
          $em = $this->get('doctrine')->getManager();
          $stock = new Stock;
@@ -20,7 +20,8 @@ class StockController extends Controller
          $ultimosStock = $em->getRepository('NossisBundle:Stock')->findLast();
          
          return $this->render('NossisBundle:Stock:ingresar.html.twig',
-                array( 'form' => $form->createView(), 'ultimos' => $ultimosStock
+                array( 'form' => $form->createView(), 'ultimos' => $ultimosStock,
+                    'first' => $nuevo
                 ));         
     }
     
@@ -45,11 +46,8 @@ class StockController extends Controller
             $em->persist($stock);
             $em->flush();
             
-            $this->get('session')->getFlashBag()->add(
-            'mensaje_ok',
-            'El stock fue ingresado correctamente!!'
-            );
-            return $this->ingresarAction(); 
+           
+            return $this->ingresarAction(true); 
                 
         }
     }
