@@ -1,0 +1,38 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block botonera %}    
+       
+        <a class="boton-blue" id="btt-1" href="{{ path('ingresar_stock')}}">Trazladar</a>
+        <a class="boton-blue" id="btt-3" href="#">Fraccionar</a>
+       
+{% endblock %}
+{% block body %}
+    
+    <div class="show-stock">
+        <h1>Stock {{ stock.id }}</h1>
+        <hr>
+
+        <table>
+            <tr>
+                <td colspan="2"><h2>{{ stock.producto.nombre }}</h2></td><td><h2>Lote {{ stock.lote}}</h2></td>
+            </tr>        
+            <tr>
+                <td><h3>Ubicado en Area {{stock.area.nombre}}</h3></td>
+            </tr>
+            <tr>
+                <td><b>Cantidad Restante:</b></td><td> {{stock.cantidad}}</td>
+            </tr>
+            <tr>
+                <td><b>Fecha Envasado:</b></td>
+                <td> {{stock.fechaenvasado | date('d/m/y')}}</td>
+                <td> <b>Fecha Ingreso:</b></td>
+                <td> {{stock.fechaingreso | date('d/m/y')}}</td>
+            </tr>
+            <tr>
+                <td><b>Palet:</b></td>
+                <td> {{stock.palet}}</td>
+                <td><b>Turno:</b></td>
+                <td> {{stock.turno}}</td>
+        </table>
+    </div>
+{% endblock %}
