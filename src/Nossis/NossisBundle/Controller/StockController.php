@@ -51,5 +51,24 @@ class StockController extends Controller
                 
         }
     }
+    
+    public function indexAction(){
+        $form = $this->createFormBuilder()
+            ->add('codigo')
+            ->getForm();
+        $request = $this->get('request');
+        $form->bind($request);
+        $datos = $form->getData();
+        $em = $this->get('doctrine')->getManager();
+        $stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $datos['codigo']));
+        if ($stock == null){
+            return $this->redirect($this->generateUrl('nossis_homepage'));
+        }else{
+            return $this->render('NossisBundle:Stock:show.html.twig',
+                array( 'form' => $form->createView(), 'stock' => $stock)); 
+        }
+             
+        
+    }
 
 }

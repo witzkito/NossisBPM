@@ -6,6 +6,25 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StockControllerTest extends WebTestCase
 {
+    
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function setUp()
+    {
+        static::$kernel = static::createKernel();
+        static::$kernel->boot();
+        $this->em = static::$kernel->getContainer()
+            ->get('doctrine')
+            ->getManager()
+        ;
+    }
+    
     public function testIngresar()
     {
         $client = static::createClient();
@@ -45,6 +64,51 @@ class StockControllerTest extends WebTestCase
             $crawler->filter('tr.datagrid-agregado')->count()
         );
         
+    }
+    
+    public function testIndex(){
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/index');
+        
+        $form = $crawler->selectButton('Buscar')->form();
+        $form['form[codigo]'] = "1";
+        
+        $crawler = $client->submit($form);
+        
+        $crawler = $client->followRedirect();
+        
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Codigo")')->count()
+        );
+
+        //var_dump($client->getResponse()->getContent());
+        
+        $stocks = $this->em
+            ->getRepository('NossisBundle:Stock')
+            ->findAll();
+        
+        $stock = $stocks[1];
+        
+        $form = $crawler->selectButton('Buscar')->form();
+        $form['form[codigo]'] = $stock->getCodigo();
+        
+        $crawler = $client->submit($form);
+        
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("'."Stock ". $stock->getId() .'")')->count()
+        );
+       
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->em->close();
     }
 
 }

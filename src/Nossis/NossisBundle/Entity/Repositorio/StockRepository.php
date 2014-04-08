@@ -19,7 +19,7 @@ class StockRepository extends EntityRepository
         $query = $em->createQueryBuilder()
             ->select('s')
             ->from('NossisBundle:Stock', 's')
-            ->orderBy('s.id')
+            ->orderBy('s.id', 'DESC')
             ->setMaxResults($limit)
             ->getQuery();
         return $query->getResult();
