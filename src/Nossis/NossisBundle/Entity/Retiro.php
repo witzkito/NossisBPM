@@ -60,6 +60,12 @@ class Retiro
      */
     private $cliente;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="retiros")
+     * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
+     */
+    private $empresa;
+    
     public $codigo;
 
 
@@ -229,4 +235,28 @@ class Retiro
     }
     
     
+
+    /**
+     * Set empresa
+     *
+     * @param \Nossis\NossisBundle\Entity\Empresa $empresa
+     *
+     * @return Retiro
+     */
+    public function setEmpresa(\Nossis\NossisBundle\Entity\Empresa $empresa = null)
+    {
+        $this->empresa = $empresa;
+
+        return $this;
+    }
+
+    /**
+     * Get empresa
+     *
+     * @return \Nossis\NossisBundle\Entity\Empresa 
+     */
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
 }

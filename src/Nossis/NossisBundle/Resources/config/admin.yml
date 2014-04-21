@@ -39,6 +39,15 @@ services:
             - ~
             - Nossis\NossisBundle\Entity\Cliente
             - ~
+    
+    sonata.admin.empresa:
+        class: Nossis\NossisBundle\Admin\EmpresaAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "General", label: "Empresa", label_translator_strategy: "sonata.admin.label.strategy.native"}
+        arguments:
+            - ~
+            - Nossis\NossisBundle\Entity\Empresa
+            - ~
             
     sonata.admin.pais:
         class: Nossis\NossisBundle\Admin\PaisAdmin
