@@ -1,0 +1,13 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Despachar{% endblock %}
+
+{% block body %}
+    <hr>
+        <div class="form">
+                <form action="{{ path('edit_retiro_stock', { 'id' : retirostock.id}) }}" method="post">
+                {{ form_rest(form) }}
+                <input class="submit" type="submit" value="Guardar"  />
+            
+        </div>
+{% endblock %}

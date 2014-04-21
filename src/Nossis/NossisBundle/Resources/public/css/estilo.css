@@ -286,15 +286,33 @@ body {
     margin: 0;
 }
 
-.form input[type="submit"] {
+.form .submit {
     background-color: #4DFF56;
     border: medium none;
     border-radius: 13px;
     font-weight: bold;
-    margin-left: 93px;
+    margin-left: 56px;
     margin-top: 18px;
+    text-align: center;
     width: 43%;
 }
+
+.botones {
+    text-align: center;
+    width: 100%;
+}
+
+.form .imprimir {
+    background-color: #00A4FF;
+    border: medium none;
+    border-radius: 13px;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: 18px;
+    text-align: center;
+    width: 43%;
+}
+
 
 
 element.style {
@@ -396,4 +414,36 @@ body {
     color: #AAAAAA;
     font-size: 150%;
     margin-top: 6%;
+}
+
+.formcodigo {
+    border: 1px solid #D7D7D7;
+    border-radius: 7px;
+    display: -moz-inline-grid;
+    margin-left: 0;
+    text-align: center;
+    width: 50%;
+}
+
+.formcodigo input {
+    color: #666666;
+    font-size: 22px;
+    height: 44px;
+    margin-bottom: 5%;
+    margin-top: 3%;
+    width: 570px;
+}
+
+.retiro{
+    width: 50%;
+}
+
+.despachar {
+    display: flex;
+}
+
+.datagrid .retiro {
+    height: 21%;
+    text-align: center;
+    width: 21%;
 }

@@ -1,0 +1,120 @@
+<pdf>
+    <dynamic-page>
+        
+        <table>
+            <tr>
+                <td width="100px" border-color="white">
+                    <img src="{{ pdf_image('logo.jpg') }}" />
+                </td>
+                <td border-color="white">
+                    <div text-align="center">
+                        <p line-height="-1px">
+                            Elaboradores de Fécula de mandioca ALDEMA <br></br>
+                            INAC 6084 del 16-05-1967 – Dir. Prov. Coop. 102 del 04-07-1966 <br></br>
+                            <b>Planta Industrial:</b> Ruta Nac. 12 – TEL.: 03743-491153 – 3334 GARUHAPE – Misiones <br></br>
+                            <b>Administración:</b> Av. 9 de Julio y Asunción – TEL/Fax: 03743-420204/042 <br></br>
+                            E-mail: coopsalberto@prico.com.ar – www.coopsanalberto.com.ar <br></br>
+                            3334 PUERTO RICO – Misiones
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>    
+        
+        <div font-size="12" margin-top="40px">
+            <div margin-top="40px">
+                <b>Fecha:</b> {{ "now" | date('d-m-Y') }}<br></br>
+                <b>Hora:</b> {{ "now" | date('h:m A') }}
+            </div>
+
+            <div margin-top="30px">
+                Por la presente se da CONFORMIDAD  a las condiciones generales de los productos cargados, y forma de carga,
+                Según orden de carga Nº: {{ retiro.nroorden }}
+            </div>
+
+            <h3 margin-top="50px" margin-bottom="20px" >Datos del transporte:</h3>  
+
+            <div>
+                <b>Chapa patente Nº:</b> {{ retiro.patente }} <br /><br />
+                <b>Empresa:</b> <br /><br />
+                <b>Nombre del transportista:</b> {{ retiro.transportista.nombre }}
+            </div>
+
+            <h3 margin-top="50px" margin-bottom="20px">Datos de la carga:</h3>
+
+
+                <table text-align="center" >
+                    <tr>
+                        <td  height="30px" width="100px" border-color="white">
+                            <b>Numero Lote</b>
+                        </td>
+                        <td width="80px" border-color="white">
+                            <b>Cantidad</b> 
+                        </td>
+                        <td border-color="white">
+                            <b>Producto</b>
+                        </td>
+                        <td border-color="white">
+                            <b>Fecha Envasado</b> 
+                        </td>
+                    </tr>
+                    {% for stock in stocks %}
+                    <tr>
+                        <td height="25px" border-color="white">
+                            {{ stock.stock.lote }}
+                        </td>
+                        <td border-color="white">
+                            {{ stock.cantidad }}
+                        </td>
+                        <td border-color="white">
+                            {{ stock.stock.producto.nombre }}
+                        </td>
+                        <td border-color="white">
+                            {{ stock.stock.fechaenvasado | date('d-m-Y') }}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            <div margin-top="30px" margin-bottom="120px">
+                <p>Otros:</p>
+            </div>
+
+
+
+
+            <table text-align="center">
+                <tr>
+                    <td border-color="white">
+                        ............................................
+                    </td>
+                    <td border-color="white"></td>
+                    <td border-color="white">
+                        ............................................
+                    </td>
+                </tr>
+
+                <tr>
+                    <td border-color="white">
+                        Firma y Aclaración
+                    </td>
+                    <td border-color="white"></td>
+                    <td border-color="white">
+                        Firma y Aclaración
+                    </td>
+                </tr>
+
+                <tr>
+                    <td border-color="white">
+                        Encargado del Deposito
+                    </td>
+                    <td border-color="white"></td>
+                    <td border-color="white">
+                        Transportista / Chofer
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </dynamic-page>
+</pdf>

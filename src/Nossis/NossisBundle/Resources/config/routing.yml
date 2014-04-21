@@ -6,3 +6,10 @@ nossis:
     resource: "@NossisBundle/Resources/config/stock-routing.yml"
     prefix:   /stock
 
+despachar:
+    resource: "@NossisBundle/Resources/config/retiro-routing.yml"
+    prefix:   /despachar
+
+RetiroStock:
+    resource: "@NossisBundle/Resources/config/retiro-stock-routing.yml"
+    prefix:   /retiro/stock

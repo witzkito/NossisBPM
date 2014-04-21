@@ -1,0 +1,64 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Despachar{% endblock %}
+
+{% block body %}
+    <hr>
+    <div class="despachar">
+        <div class="form">
+                <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
+                {{ form_row(form.nroOrden) }}
+                {{ form_row(form.cliente) }}
+                {{ form_row(form.patente) }}
+                {{ form_row(form.transportista) }}
+                <div class="botones">
+                    <input class="submit" type="submit" value="Guardar"  />
+                    <input class="imprimir" type="submit" name="imprimir" value="Imprimir"  />
+                </div>
+            
+        </div>
+        <div class="formcodigo">
+            {{ form_row(form.codigo) }}
+                </form>
+            <div class="datagrid">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Producto</th>
+                            <th>Stock Actual</th>
+                            <th>Retira</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stock in stocks %}
+                            <tr>
+                                <td>{{ stock.stock.id }}</td>
+                                <td>{{ stock.stock.producto.nombre }}</td>
+                                <td>{{ stock.stock.cantidad }}</td>
+                                <td>{{ stock.cantidad }}</td>
+                                <td><a href="{{ path('edit_retiro_stock', { 'id' : stock.id}) }}">Editar</a>
+                                <a href="#" onclick="confirmar('¿Esta seguro de querer borra?','{{ path('eliminar_retiro_stock', { 'id' : stock.id}) }}')">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
+    
+{% endblock %}
+    
+
+{% block javascripts %}
+    <script>
+        function setFocus()
+        {
+            document.getElementById("nossis_nossisbundle_retiro_codigo").focus();
+        }
+        
+        
+    
+     </script>
+{% endblock %}

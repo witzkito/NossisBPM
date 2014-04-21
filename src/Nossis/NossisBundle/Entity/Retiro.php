@@ -31,16 +31,36 @@ class Retiro
     /**
      * @var string
      *
-     * @ORM\Column(name="nro_orden", type="string", length=255)
+     * @ORM\Column(name="nro_orden", type="string", length=255, nullable=true)
      */
     private $nroOrden;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="patente", type="string", length=255)
+     * @ORM\Column(name="patente", type="string", length=255, nullable=true)
      */
     private $patente;
+    
+    
+     /**
+     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="stock", cascade={"persist"})
+     */
+    protected $stocks;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Transportista", inversedBy="retiros")
+     * @ORM\JoinColumn(name="transportista", referencedColumnName="id")
+     */
+    private $transportista;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="retiros")
+     * @ORM\JoinColumn(name="cliente", referencedColumnName="id")
+     */
+    private $cliente;
+    
+    public $codigo;
 
 
     /**
@@ -121,4 +141,92 @@ class Retiro
     {
         return $this->patente;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\RetiroStock $stocks
+     * @return Retiro
+     */
+    public function addStock(\Nossis\NossisBundle\Entity\RetiroStock $stocks)
+    {
+        $this->stocks[] = $stocks;
+
+        return $this;
+    }
+
+    /**
+     * Remove stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\RetiroStock $stocks
+     */
+    public function removeStock(\Nossis\NossisBundle\Entity\RetiroStock $stocks)
+    {
+        $this->stocks->removeElement($stocks);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+
+    /**
+     * Set transportista
+     *
+     * @param \Nossis\NossisBundle\Entity\Transportista $transportista
+     * @return Retiro
+     */
+    public function setTransportista(\Nossis\NossisBundle\Entity\Transportista $transportista = null)
+    {
+        $this->transportista = $transportista;
+
+        return $this;
+    }
+
+    /**
+     * Get transportista
+     *
+     * @return \Nossis\NossisBundle\Entity\Transportista 
+     */
+    public function getTransportista()
+    {
+        return $this->transportista;
+    }
+
+    /**
+     * Set cliente
+     *
+     * @param \Nossis\NossisBundle\Entity\Cliente $cliente
+     * @return Retiro
+     */
+    public function setCliente(\Nossis\NossisBundle\Entity\Cliente $cliente = null)
+    {
+        $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    /**
+     * Get cliente
+     *
+     * @return \Nossis\NossisBundle\Entity\Cliente 
+     */
+    public function getCliente()
+    {
+        return $this->cliente;
+    }
+    
+    
 }

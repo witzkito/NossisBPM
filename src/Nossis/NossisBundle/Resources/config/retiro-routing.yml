@@ -1,0 +1,11 @@
+index_retiro:
+    pattern:  /index
+    defaults: { _controller: NossisBundle:Retiro:index }
+
+new_retiro:
+    pattern:  /nuevo
+    defaults: { _controller: NossisBundle:Retiro:new }
+
+edit_retiro:
+    pattern:  /editar/{id}
+    defaults: { _controller: NossisBundle:Retiro:edit }
