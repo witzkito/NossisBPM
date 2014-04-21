@@ -80,6 +80,13 @@ class Stock
      * @ORM\JoinColumn(name="area", referencedColumnName="id")
      */
     private $area;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="retiro")
+     */
+    protected $retiros;
+    
+    
 
 
     /**
@@ -297,5 +304,72 @@ class Stock
     public function getProducto()
     {
         return $this->producto;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->retiros = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add retiros
+     *
+     * @param \Nossis\NossisBundle\Entity\Retiro $retiros
+     * @return Stock
+     */
+    public function addRetiro(\Nossis\NossisBundle\Entity\Retiro $retiros)
+    {
+        $this->retiros[] = $retiros;
+
+        return $this;
+    }
+
+    /**
+     * Remove retiros
+     *
+     * @param \Nossis\NossisBundle\Entity\Retiro $retiros
+     */
+    public function removeRetiro(\Nossis\NossisBundle\Entity\Retiro $retiros)
+    {
+        $this->retiros->removeElement($retiros);
+    }
+
+    /**
+     * Get retiros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetiros()
+    {
+        return $this->retiros;
+    }
+
+    /**
+     * Set transportista
+     *
+     * @param \Nossis\NossisBundle\Entity\Transportista $transportista
+     * @return Stock
+     */
+    public function setTransportista(\Nossis\NossisBundle\Entity\Transportista $transportista = null)
+    {
+        $this->transportista = $transportista;
+
+        return $this;
+    }
+
+    /**
+     * Get transportista
+     *
+     * @return \Nossis\NossisBundle\Entity\Transportista 
+     */
+    public function getTransportista()
+    {
+        return $this->transportista;
+    }
+    
+    public function __toString() {
+        return $this->getId() . " - " . $this->getProducto()->getNombre();
     }
 }

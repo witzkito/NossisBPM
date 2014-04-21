@@ -41,6 +41,11 @@ class Transportista
      * @ORM\Column(name="direccion", type="string", length=255)
      */
     private $direccion;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="Retiro", mappedBy="transportista")
+     */
+    protected $retiros;
 
 
     /**
@@ -120,5 +125,49 @@ class Transportista
     public function getDireccion()
     {
         return $this->direccion;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->retiros = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add retiros
+     *
+     * @param \Nossis\NossisBundle\Entity\Retiro $retiros
+     * @return Transportista
+     */
+    public function addRetiro(\Nossis\NossisBundle\Entity\Retiro $retiros)
+    {
+        $this->retiros[] = $retiros;
+
+        return $this;
+    }
+
+    /**
+     * Remove retiros
+     *
+     * @param \Nossis\NossisBundle\Entity\Retiro $retiros
+     */
+    public function removeRetiro(\Nossis\NossisBundle\Entity\Retiro $retiros)
+    {
+        $this->retiros->removeElement($retiros);
+    }
+
+    /**
+     * Get retiros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetiros()
+    {
+        return $this->retiros;
+    }
+    
+    public function __toString() {
+        return $this->nombre;
     }
 }

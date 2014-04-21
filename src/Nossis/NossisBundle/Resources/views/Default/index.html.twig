@@ -1,8 +1,10 @@
 {% extends "NossisBundle::layout.html.twig" %}
 
+{% block title %}Inicio{% endblock %}
+
 {% block botonera %}    
        <a class="boton-blue" id="btt-1" href="{{ path('ingresar_stock')}}">Ingresar</a>
-       <a class="boton-blue" id="btt-3" href="#">Despachar</a>
+       <a class="boton-blue" id="btt-3" href="{{ path('index_retiro')}}">Despachar</a>
        <a class="boton-blue" id="btt-5" href="#">Devolucion</a>
 {% endblock %}
 {% block body %}

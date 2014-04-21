@@ -1,0 +1,7 @@
+edit_retiro_stock:
+    pattern:  /editar/{id}
+    defaults: { _controller: NossisBundle:RetiroStock:edit }
+    
+eliminar_retiro_stock:
+    pattern:  /eliminar/{id}
+    defaults: { _controller: NossisBundle:RetiroStock:eliminar }

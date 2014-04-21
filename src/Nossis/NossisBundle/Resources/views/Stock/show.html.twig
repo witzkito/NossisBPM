@@ -1,5 +1,7 @@
 {% extends "NossisBundle::layout.html.twig" %}
 
+{% block title %} Stock {{ stock.id }}{% endblock %}
+
 {% block botonera %}    
        
         <a class="boton-blue" id="btt-1" href="{{ path('ingresar_stock')}}">Trazladar</a>
@@ -26,7 +28,7 @@
                 <td><b>Fecha Envasado:</b></td>
                 <td> {{stock.fechaenvasado | date('d/m/y')}}</td>
                 <td> <b>Fecha Ingreso:</b></td>
-                <td> {{stock.fechaingreso | date('d/m/y')}}</td>
+                <td> {{stock.fechaingreso | date('d/m/y h:m A')}}</td>
             </tr>
             <tr>
                 <td><b>Palet:</b></td>
