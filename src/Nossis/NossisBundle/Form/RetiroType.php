@@ -21,6 +21,7 @@ class RetiroType extends AbstractType
             ->add('stocks')
             ->add('transportista')
             ->add('cliente')
+            ->add('empresa')
             ->add('codigo', 'text', array(
                 "label" => false,
                 "required" => false,

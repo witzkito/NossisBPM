@@ -202,4 +202,8 @@ class Empresa
     {
         return $this->retiros;
     }
+    
+    public function __toString() {
+        return $this->nombre;
+    }
 }
