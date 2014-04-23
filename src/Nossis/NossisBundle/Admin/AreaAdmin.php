@@ -12,7 +12,7 @@ class AreaAdmin extends Admin {
     {
         $formMapper
             ->add('nombre', 'text', array('label' => 'Nombre'))
-            ->add('salida', 'sonata_type_boolean', array('label' => "Salida",))
+            ->add('salida', 'sonata_type_boolean', array('label' => "Salida"))
             ->add('capacidad', 'integer', array('label' => 'Capacidad'))
             ->add('almacen', 'entity', array('class' => 'Nossis\NossisBundle\Entity\Almacen'))
         ;

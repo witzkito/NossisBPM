@@ -447,3 +447,34 @@ body {
     text-align: center;
     width: 21%;
 }
+
+.links {
+    margin-left: 2.5%;
+}
+
+.links a {color:#22568c;}
+.links a:link {
+    color:#22568c;
+    padding-bottom: 5px;
+    text-decoration: none;
+}
+.links a:hover {color:#22568c; text-decoration: none;}
+
+.ver{
+    padding-left: 20px;
+    background: url(images/ver.png) no-repeat;
+}
+
+
+.flash {
+    background-color: #FFBABA;
+    background-image: url("images/error.png");
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    color: #D8000C;
+    font-family: "Ubuntu";
+    font-size: 20px;
+    padding-bottom: 8px;
+    padding-left: 42px;
+    padding-top: 8px;
+}

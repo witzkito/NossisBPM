@@ -3,6 +3,11 @@
 {% block title %}Despachar{% endblock %}
 
 {% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class='flash'>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
     <hr>
     <div class="despachar">
         <div class="form">
@@ -27,7 +32,7 @@
                         <tr>
                             <th>Numero</th>
                             <th>Producto</th>
-                            <th>Stock Actual</th>
+                            <th>Stock Restante</th>
                             <th>Retira</th>
                             <th></th>
                         </tr>

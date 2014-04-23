@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Nossis\NossisBundle\Entity\Stock;
 
 class StockControllerTest extends WebTestCase
 {
@@ -100,6 +101,14 @@ class StockControllerTest extends WebTestCase
             $crawler->filter('html:contains("'."Stock ". $stock->getId() .'")')->count()
         );
        
+    }
+    
+    public function testActualizarStock()
+    {
+        $stock = new Stock;
+        $stock->setCantidad(100);
+        $stock->actualizarStock(0, 40);        
+        $this->assertEquals(60, $stock->getCantidad());
     }
     
     /**

@@ -13,6 +13,7 @@ class RetiroStockController extends Controller
     {
         $em = $this->get('doctrine')->getManager();
         $retirostock = $em->getRepository('NossisBundle:RetiroStock')->find($id);
+        $cantanterior= $retirostock->getCantidad();
         $form = $this->get('form.factory')->create(
                new RetiroStockType(),
                $retirostock);
@@ -20,7 +21,12 @@ class RetiroStockController extends Controller
         if ($request->getMethod() == 'POST'){
             $form->bind($request);
             $retiros = $form->getData();
+            
+            $stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('id' => $retirostock->getStock()->getId()));
+            //$stock->setCantidad($cantanterior + $stock->getCantidad() - $retiros->getCantidad());
+            $stock->actualizarStock($cantanterior, $retiros->getCantidad());
             $em->persist($retiros);
+            $em->persist($stock);
             $em->flush();
             return $this->redirect($this->generateUrl('edit_retiro', array('id' => $retirostock->getRetiro()->getId())));
         }
@@ -34,6 +40,10 @@ class RetiroStockController extends Controller
          $retirostock = $em->getRepository('NossisBundle:RetiroStock')->find($id);
          if ($retirostock != null){
              $em->remove($retirostock);
+             $stock = $retirostock->getStock();
+             $cantidad = $stock->getCantidad() + $retirostock->getCantidad();
+             $stock->setCantidad($cantidad);
+             $em->persist($stock);
              $em->flush();             
          }
          return $this->redirect($this->generateUrl('edit_retiro', array('id' => $retirostock->getRetiro()->getId())));

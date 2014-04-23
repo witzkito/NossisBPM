@@ -9,3 +9,7 @@ new_retiro:
 edit_retiro:
     pattern:  /editar/{id}
     defaults: { _controller: NossisBundle:Retiro:edit }
+
+list_retiro:
+    pattern:  /listar
+    defaults: { _controller: NossisBundle:Retiro:listar }

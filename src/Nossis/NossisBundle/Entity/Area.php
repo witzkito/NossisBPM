@@ -31,7 +31,7 @@ class Area
     /**
      * @var boolean
      *
-     * @ORM\Column(name="salida", type="boolean")
+     * @ORM\Column(name="salida", type="boolean", nullable=true)
      */
     private $salida;
     

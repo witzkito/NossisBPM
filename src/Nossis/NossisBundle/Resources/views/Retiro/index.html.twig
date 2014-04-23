@@ -3,8 +3,13 @@
 {% block title %}Despachar{% endblock %}
 
 {% block body %}
+    <div class="links">
+        <a class="ver" href="{{ path('list_retiro') }}">Ver Despachados</a>
+    </div>
     <hr>
+    
     <div class="despachar">
+        
         <div class="form">
                 <form action="{{ path('new_retiro') }}" method="post">
                 {{ form_row(form.nroOrden) }}
@@ -24,7 +29,7 @@
                         <tr>
                             <th>Numero</th>
                             <th>Producto</th>
-                            <th>Stock Actual</th>
+                            <th>Stock Restante</th>
                             <th>Retira</th>
                             <th></th>
                         </tr>

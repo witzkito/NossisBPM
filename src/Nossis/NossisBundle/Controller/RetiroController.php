@@ -58,13 +58,24 @@ class RetiroController extends Controller
                 }else{
                     $retiro->setFechaSalida(new \DateTime('NOW'));
                     if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $retiro->codigo))) != null){
-                        $retirostock = new RetiroStock;
-                        $retirostock->setStock($stock);
-                        $retirostock->setRetiro($retiro);
-                        $retirostock->setCantidad($stock->getCantidad());
-                        $retiro->addStock($retirostock);
+                        if ($stock->getArea()->getSalida()){
+                            if (($retirostock = $em->getRepository('NossisBundle:RetiroStock')->findOneBy(array('retiro' => $retiro->getId(), 'stock' => $stock->getId()))) == null){
+                                $retirostock = new RetiroStock;
+                                $retirostock->setStock($stock);
+                                $retirostock->setRetiro($retiro);
+                                $retirostock->setCantidad($stock->getCantidad());
+                                $retiro->addStock($retirostock);
+                                $cantidad = $stock->getCantidad() - $retirostock->getCantidad();
+                                $stock->setCantidad($cantidad);
+                                $em->persist($stock);
+                            }
+                        }else{
+                            $this->get('session')->getFlashBag()->add(
+                                'notice',
+                                'El articulo se encuentra en un area de no salida'
+                            );
+                        }
                     }
-                    $em = $this->get('doctrine')->getManager();
                     $em->persist($retiro);
                     $em->flush();
                 }

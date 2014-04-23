@@ -372,4 +372,10 @@ class Stock
     public function __toString() {
         return $this->getId() . " - " . $this->getProducto()->getNombre();
     }
+    
+    public function actualizarStock($anterior, $actualizar)
+    {
+        $this->cantidad = ($this->cantidad + $anterior - $actualizar);
+        
+    }
 }
