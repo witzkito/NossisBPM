@@ -51,7 +51,7 @@ class StockControllerTest extends WebTestCase
         $form['nossis_nossisbundle_stock[fechaEnvasado]'] = '2014-03-27';
         $form['nossis_nossisbundle_stock[palet]'] = 'palet';
         $form['nossis_nossisbundle_stock[turno]']->select('A');
-        $form['nossis_nossisbundle_stock[cantidad]'] = '40';
+        $form['nossis_nossisbundle_stock[ingresado]'] = '40';
         $form['nossis_nossisbundle_stock[area]']->select('2');
         
         
@@ -106,9 +106,9 @@ class StockControllerTest extends WebTestCase
     public function testActualizarStock()
     {
         $stock = new Stock;
-        $stock->setCantidad(100);
+        $stock->setActual(100);
         $stock->actualizarStock(0, 40);        
-        $this->assertEquals(60, $stock->getCantidad());
+        $this->assertEquals(60, $stock->getActual());
     }
     
     /**

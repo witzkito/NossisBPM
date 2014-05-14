@@ -45,7 +45,7 @@
                                 {% set count = 0 %}
                                 {% for stock in area.stocks %}
                                     {% if (stock.producto == producto) %}
-                                        {% set count = count + stock.cantidad %}
+                                        {% set count = count + stock.actual %}
                                     {%endif %}                                
                                 {% endfor %}
                                 <td>{{ count }}</td>

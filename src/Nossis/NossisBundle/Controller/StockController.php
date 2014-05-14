@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Nossis\NossisBundle\Entity\Trazlado;
 use Nossis\NossisBundle\Form\TrazladoType;
 use \DateTime;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 class StockController extends Controller
 {
@@ -42,6 +44,7 @@ class StockController extends Controller
             $stock = $form->getData();
             $stock->setFechaIngreso(new \DateTime('NOW'));
             $stock->setCodigo(0);
+            $stock->setActual($stock->getIngresado());
             $em = $this->get('doctrine')->getManager();
             $em->persist($stock);
             $em->flush();
@@ -97,6 +100,24 @@ class StockController extends Controller
         }
         return $this->render('NossisBundle:Stock:trazladar.html.twig',
                 array( 'form' => $form->createView(), 'stock' => $stock));
+    }
+    
+    public function listarAction(){
+        $source = new Entity('NossisBundle:Stock');
+
+        /* @var $grid \APY\DataGridBundle\Grid\Grid */
+        $grid = $this->get('grid');
+        
+        /*$ver = new RowAction('Ver', 'show_stock');
+        $ver->setRouteParametersMapping(array('stock.id' => 'id'));
+        $grid->addRowAction($ver);
+        $editar = new RowAction('Editar', 'edit_retiro');
+        $editar->setRouteParametersMapping(array('retiro.id' => 'id'));
+        $grid->addRowAction($editar);*/
+
+        $grid->setSource($source);
+        $grid->setDefaultOrder('id', 'desc');
+        return $grid->getGridResponse('NossisBundle:Stock:listar.html.twig');
     }
 
 }

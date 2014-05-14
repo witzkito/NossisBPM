@@ -17,8 +17,9 @@ class Builder extends ContainerAware
         
         $menu->addChild('Listar')->setAttribute('dropdown', true);
         
+        $menu['Listar']->addChild('Ingresos', array('route' => 'listar_stock'));
         $menu['Listar']->addChild('Despachos', array('route' => 'list_retiro'));
-        
+                
         $menu->addChild('User')
         ->setAttribute('dropdown', true);
 

@@ -71,9 +71,15 @@ class Stock
     
     /**
      * @var integer
-     * @orm\Column(name="cantidad", type="integer")
+     * @orm\Column(name="ingresado", type="integer")
      */
-    private $cantidad;
+    private $ingresado;
+    
+    /**
+     * @var integer
+     * @orm\Column(name="actual", type="integer")
+     */
+    private $actual;
     
     /**
      * @ORM\ManyToOne(targetEntity="Area", inversedBy="area")
@@ -265,29 +271,7 @@ class Stock
         return $this->area;
     }
 
-    /**
-     * Set cantidad
-     *
-     * @param integer $cantidad
-     * @return Stock
-     */
-    public function setCantidad($cantidad)
-    {
-        $this->cantidad = $cantidad;
-
-        return $this;
-    }
-
-    /**
-     * Get cantidad
-     *
-     * @return integer 
-     */
-    public function getCantidad()
-    {
-        return $this->cantidad;
-    }
-
+    
     /**
      * Set producto
      *
@@ -380,7 +364,7 @@ class Stock
     
     public function actualizarStock($anterior, $actualizar)
     {
-        $this->cantidad = ($this->cantidad + $anterior - $actualizar);
+        $this->actual = ($this->actual + $anterior - $actualizar);
         
     }
 
@@ -416,5 +400,53 @@ class Stock
     public function getTrazlados()
     {
         return $this->trazlados;
+    }
+
+    /**
+     * Set ingresado
+     *
+     * @param integer $ingresado
+     *
+     * @return Stock
+     */
+    public function setIngresado($ingresado)
+    {
+        $this->ingresado = $ingresado;
+
+        return $this;
+    }
+
+    /**
+     * Get ingresado
+     *
+     * @return integer 
+     */
+    public function getIngresado()
+    {
+        return $this->ingresado;
+    }
+
+    /**
+     * Set actual
+     *
+     * @param integer $actual
+     *
+     * @return Stock
+     */
+    public function setActual($actual)
+    {
+        $this->actual = $actual;
+
+        return $this;
+    }
+
+    /**
+     * Get actual
+     *
+     * @return integer 
+     */
+    public function getActual()
+    {
+        return $this->actual;
     }
 }
