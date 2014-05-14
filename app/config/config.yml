@@ -94,3 +94,10 @@ ps_pdf:
     markdown_stylesheet_filepath: ~
     markdown_document_template_filepath: ~
     document_parser_type: ~
+    
+knp_menu:
+    twig: 
+        template: knp_menu.html.twig
+    templating: false # if true, enables the helper for PHP templates
+    default_renderer: twig
+    

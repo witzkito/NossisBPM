@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Nossis\NossisBundle\Entity\Stock;
 use Nossis\NossisBundle\Form\StockType;
 use Symfony\Component\HttpFoundation\Response;
+use Nossis\NossisBundle\Entity\Trazlado;
+use Nossis\NossisBundle\Form\TrazladoType;
+use \DateTime;
 
 class StockController extends Controller
 {
@@ -69,6 +72,31 @@ class StockController extends Controller
         }
              
         
+    }
+    
+    public function trazladarAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        $trazlado = new Trazlado;
+        $form = $this->get('form.factory')->create(
+                new TrazladoType(),
+                $trazlado
+         );
+        $request = $this->get('request');
+        $form->bind($request);
+        if ($form->isValid()){
+            $trazlado = $form->getData();
+            $stock->setArea($trazlado->getArea());
+            $trazlado->setFecha(new DateTime('now'));
+            $trazlado->setStock($stock);
+            $em->persist($trazlado);
+            $em->persist($stock);
+            $em->flush();
+            return $this->render('NossisBundle:Stock:show.html.twig',
+                array( 'form' => $form->createView(), 'stock' => $stock));
+        }
+        return $this->render('NossisBundle:Stock:trazladar.html.twig',
+                array( 'form' => $form->createView(), 'stock' => $stock));
     }
 
 }

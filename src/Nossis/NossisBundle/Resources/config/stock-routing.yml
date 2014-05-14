@@ -9,4 +9,8 @@ agregar_stock:
 index_stock:
     pattern:  /index
     defaults: { _controller: NossisBundle:Stock:index }
+    
+trazladar_stock:
+    pattern:  /trazladar/{id}
+    defaults: { _controller: NossisBundle:Stock:trazladar }
 

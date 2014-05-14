@@ -4,7 +4,7 @@
 
 {% block botonera %}    
        
-        <a class="boton-blue" id="btt-1" href="{{ path('ingresar_stock')}}">Trazladar</a>
+        <a class="boton-blue" id="btt-1" href="{{ path('trazladar_stock', { 'id': stock.id})}}">Trazladar</a>
         <a class="boton-blue" id="btt-3" href="#">Fraccionar</a>
        
 {% endblock %}

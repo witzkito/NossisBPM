@@ -3,23 +3,31 @@
         <meta charset="UTF-8" />
         <title>NossisBPM |{% block title %}{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <link href="{{ asset('bundles/nossis/css/estilo.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/nossis/css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/nossis/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/nossis/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/nossis/css/estilo.css') }}" rel="stylesheet" type="text/css" />
         <script src="{{ asset('bundles/nossis/js/jquery-1.10.2.min.js') }}"></script>
+        <script src="{{ asset('bundles/nossis/js/bootstrap.js') }}"></script>
         <script src="{{ asset('bundles/nossis/js/jquery-ui.js') }}"></script>
         <script src="{{ asset('bundles/nossis/js/confirmar.js') }}"></script>
         <script src="{{ asset('bundles/nossis/js/mensaje.js') }}"></script>
         
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body onload="setFocus()">
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="menu">
-                <a href="{{ path("nossis_homepage")}}" >INICIO</a>
-                <a href="#" >LISTADOS</a>
-                <a href="{{ path("sonata_admin_dashboard")}}" >ADMINISTRAR</a>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">NossisBPM</a>
+                    <div class="nav-collapse">
+                        {{ knp_menu_render('NossisBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'NossisBundle:Menu:knp_menu.html.twig'}) }}
+                    </div>
+                </div>
             </div>
         </div>
+            
         
             <div class="botones">
                 {% block botonera %}    

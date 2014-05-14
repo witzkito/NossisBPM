@@ -7,6 +7,9 @@ use Nossis\NossisBundle\Entity\Retiro;
 use Nossis\NossisBundle\Form\RetiroType;
 use Nossis\NossisBundle\Entity\RetiroStock;
 use Symfony\Component\HttpFoundation\Response;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
+use Ps\PdfBundle\Annotation\Pdf;
 
 class RetiroController extends Controller
 {
@@ -33,6 +36,7 @@ class RetiroController extends Controller
         $form->bind($request);
             $retiro = $form->getData();
             $retiro->setFechaSalida(new \DateTime('NOW'));
+            $retiro->setConfirmado(false);
             $em = $this->get('doctrine')->getManager();
             $em->persist($retiro);
             $em->flush();
@@ -91,8 +95,9 @@ class RetiroController extends Controller
     /**
     *@Pdf(stylesheet="NossisBundle:Retiro:comprobantestyle.xml")
     */
-    public function imprimirAction($retiro){
+    public function imprimirAction($id){
         $em = $this->get('doctrine')->getManager();
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
         $stocks = $em->getRepository('NossisBundle:RetiroStock')->findby(array("retiro" => $retiro->getId()));
         
         $facade = $this->get('ps_pdf.facade');
@@ -103,11 +108,43 @@ class RetiroController extends Controller
         $content = $facade->render($xml);
         
         return new Response($content, 200, array('content-type' => 'application/pdf'));
-        /*$format = $this->get('request')->get('_format');
         
-        return $this->render(sprintf('NossisBundle:Retiro:comprobante.pdf.twig', $format), array(
-            'retiro' => $retiro, 'stocks' => $stocks
-        ));*/
+        
+    }
+    
+    public function confirmarAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
+        $retiro->setConfirmado(true);
+        $em->persist($retiro);
+        $em->flush();
+        return $this->render('NossisBundle:Retiro:show.html.twig',
+                array("retiro" => $em->getRepository('NossisBundle:Retiro')->find($id)));
+        
+    }
+    
+    public function listarAction(){
+        $source = new Entity('NossisBundle:Retiro');
+
+        /* @var $grid \APY\DataGridBundle\Grid\Grid */
+        $grid = $this->get('grid');
+        
+        $ver = new RowAction('Ver', 'show_retiro');
+        $ver->setRouteParametersMapping(array('retiro.id' => 'id'));
+        $grid->addRowAction($ver);
+        $editar = new RowAction('Editar', 'edit_retiro');
+        $editar->setRouteParametersMapping(array('retiro.id' => 'id'));
+        $grid->addRowAction($editar);
+
+        $grid->setSource($source);
+        $grid->setDefaultOrder('id', 'desc');
+        return $grid->getGridResponse('NossisBundle:Retiro:listar.html.twig');
+    }
+    
+    public function showAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
+        return $this->render('NossisBundle:Retiro:show.html.twig', array("retiro" => $retiro));
         
     }
     

@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new Ps\PdfBundle\PsPdfBundle(),
+            new APY\DataGridBundle\APYDataGridBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

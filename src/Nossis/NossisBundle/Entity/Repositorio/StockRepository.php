@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class StockRepository extends EntityRepository
 {
     
-    public function findLast($limit=20)
+    public function findLastHoy($limit=20)
     {
         $em = $this->getEntityManager();
         $query = $em->createQueryBuilder()

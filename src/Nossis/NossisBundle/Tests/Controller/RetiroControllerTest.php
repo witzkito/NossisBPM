@@ -67,5 +67,16 @@ class RetiroControllerTest extends WebTestCase
             ->getManager()
         ;
     }
+    
+    public function testListar()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', 'despachar/listar');
+        
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('tr.grid-row-titles')->count()
+        );
+    }
 
 }

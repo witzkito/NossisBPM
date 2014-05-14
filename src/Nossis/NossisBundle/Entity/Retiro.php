@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Retiro
@@ -18,6 +19,7 @@ class Retiro
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @GRID\Column(title="Id", filterable=false)
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Retiro
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_salida", type="datetime")
+     * @GRID\Column(title="Fecha Salida", filterable=true)
      */
     private $fechaSalida;
 
@@ -32,6 +35,7 @@ class Retiro
      * @var string
      *
      * @ORM\Column(name="nro_orden", type="string", length=255, nullable=true)
+     * @GRID\Column(title="Numero Orden", filterable=true)
      */
     private $nroOrden;
 
@@ -39,32 +43,43 @@ class Retiro
      * @var string
      *
      * @ORM\Column(name="patente", type="string", length=255, nullable=true)
+     * @GRID\Column(title="Patente", filterable=true)
      */
     private $patente;
     
     
      /**
-     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="stock", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="retiro", cascade={"persist"})
      */
     protected $stocks;
     
     /**
      * @ORM\ManyToOne(targetEntity="Transportista", inversedBy="retiros")
      * @ORM\JoinColumn(name="transportista", referencedColumnName="id")
+     * @GRID\Column(title="Transportista", filterable=true, field="transportista.nombre")
      */
     private $transportista;
     
     /**
      * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="retiros")
      * @ORM\JoinColumn(name="cliente", referencedColumnName="id")
+     * @GRID\Column(title="Transportista", filterable=true, field="cliente.nombre")
      */
     private $cliente;
     
     /**
      * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="retiros")
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
+     * @GRID\Column(title="Empresa", filterable=true, field="empresa.nombre")
      */
     private $empresa;
+    
+    /**
+    * @var boolean
+    * @ORM\Column(name="confirmado", type="boolean")
+    * @GRID\Column(title="Confirmado?", values={"1"="SI","0"="NO"})
+    */
+    private $confirmado;
     
     public $codigo;
 
@@ -258,5 +273,29 @@ class Retiro
     public function getEmpresa()
     {
         return $this->empresa;
+    }
+
+    /**
+     * Set confirmado
+     *
+     * @param boolean $confirmado
+     *
+     * @return Retiro
+     */
+    public function setConfirmado($confirmado)
+    {
+        $this->confirmado = $confirmado;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmado
+     *
+     * @return boolean 
+     */
+    public function getConfirmado()
+    {
+        return $this->confirmado;
     }
 }

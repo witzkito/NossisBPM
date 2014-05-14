@@ -82,9 +82,14 @@ class Stock
     private $area;
     
      /**
-     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="retiro")
+     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="stock")
      */
     protected $retiros;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Trazlado", mappedBy="stock")
+     */
+    protected $trazlados;
     
     
 
@@ -377,5 +382,39 @@ class Stock
     {
         $this->cantidad = ($this->cantidad + $anterior - $actualizar);
         
+    }
+
+    /**
+     * Add trazlados
+     *
+     * @param \Nossis\NossisBundle\Entity\Trazlado $trazlados
+     *
+     * @return Stock
+     */
+    public function addTrazlado(\Nossis\NossisBundle\Entity\Trazlado $trazlados)
+    {
+        $this->trazlados[] = $trazlados;
+
+        return $this;
+    }
+
+    /**
+     * Remove trazlados
+     *
+     * @param \Nossis\NossisBundle\Entity\Trazlado $trazlados
+     */
+    public function removeTrazlado(\Nossis\NossisBundle\Entity\Trazlado $trazlados)
+    {
+        $this->trazlados->removeElement($trazlados);
+    }
+
+    /**
+     * Get trazlados
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrazlados()
+    {
+        return $this->trazlados;
     }
 }

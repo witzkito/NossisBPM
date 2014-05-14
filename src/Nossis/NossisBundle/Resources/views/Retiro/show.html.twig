@@ -1,0 +1,60 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Mostrar{% endblock %}
+
+{% block body %}
+    <hr>
+  <div class="show">
+        <div class="grid">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Numero:</th>
+                        <td>{{ retiro.id }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Fecha Salida:</th>
+                        <td>{{ retiro.fechasalida | date('d/m/Y H:i a') }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Numero de Orden:</th>
+                        <td>{{ retiro.nroOrden }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Cliente:</th>
+                        <td>{{ retiro.cliente }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Empresa:</th>
+                        <td>{{ retiro.empresa }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Transportista:</th>
+                        <td>{{ retiro.transportista }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Patente:</th>
+                        <td>{{ retiro.patente }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Retiro:</th>
+                        <td></td>                
+                    </tr>
+                    {% for stock in retiro.stocks %}
+                        <tr>
+                            <th></th>
+                            <td>{{ stock.cantidad }} - {{ stock.stock.producto.nombre }}</td>                
+                        </tr>
+                    {% endfor %}
+                </thead>
+                <tbody>
+
+                </tbody>
+             </table>
+        </div>
+     {% if retiro.confirmado %}
+        <a class="pdf" href="{{ path('imprimir_retiro', { 'id' : retiro.id}) }}">Imprimir</a>
+     {% endif  %}
+  </div>
+{% endblock %}

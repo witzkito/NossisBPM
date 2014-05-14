@@ -52,6 +52,11 @@ class Area
      */
     protected $stocks;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Trazlado", mappedBy="area")
+     */
+    protected $trazlados;
+    
 
 
     /**
@@ -198,5 +203,39 @@ class Area
     
     public function __toString() {
         return $this->nombre;
+    }
+
+    /**
+     * Add trazlados
+     *
+     * @param \Nossis\NossisBundle\Entity\Trazlado $trazlados
+     *
+     * @return Area
+     */
+    public function addTrazlado(\Nossis\NossisBundle\Entity\Trazlado $trazlados)
+    {
+        $this->trazlados[] = $trazlados;
+
+        return $this;
+    }
+
+    /**
+     * Remove trazlados
+     *
+     * @param \Nossis\NossisBundle\Entity\Trazlado $trazlados
+     */
+    public function removeTrazlado(\Nossis\NossisBundle\Entity\Trazlado $trazlados)
+    {
+        $this->trazlados->removeElement($trazlados);
+    }
+
+    /**
+     * Get trazlados
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrazlados()
+    {
+        return $this->trazlados;
     }
 }
