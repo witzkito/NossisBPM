@@ -25,5 +25,5 @@ class DefaultController extends Controller
                 'almacenes' => $almacenes,
                 'productos' => $productos,
         ));
-    }
+    }    
 }

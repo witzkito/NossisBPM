@@ -44,15 +44,7 @@ class RetiroControllerTest extends WebTestCase
         
         $this->assertEquals('Nossis\NossisBundle\Controller\RetiroController::editAction', $client->getRequest()->attributes->get('_controller'));
         
-        $buttonImprimir = $crawler->selectButton('Imprimir');
-        $form = $buttonImprimir->form();
-        $crawler = $client->submit($form);
-        $this->assertTrue(
-        $client->getResponse()->headers->contains(
-            'Content-Type',
-            'application/pdf'
-        )
-);
+        
     }
     
     /**

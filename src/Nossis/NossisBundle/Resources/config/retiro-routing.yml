@@ -13,3 +13,15 @@ edit_retiro:
 list_retiro:
     pattern:  /listar
     defaults: { _controller: NossisBundle:Retiro:listar }
+
+show_retiro:
+    pattern:  /show/{id}
+    defaults: { _controller: NossisBundle:Retiro:show }
+
+confirmar_retiro:
+    pattern:  /confirmar/{id}
+    defaults: { _controller: NossisBundle:Retiro:confirmar }
+
+imprimir_retiro:
+    pattern:  /imprimir/{id}
+    defaults: { _controller: NossisBundle:Retiro:imprimir }
