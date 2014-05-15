@@ -111,6 +111,35 @@ class StockControllerTest extends WebTestCase
         $this->assertEquals(60, $stock->getActual());
     }
     
+    public function testListar()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/stock/listar/ingreso');
+        
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("|Listar Ingresos")')->count()
+        );
+        
+    }
+    
+    public function testEditar()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/stock/listar/ingreso');
+        $link = $crawler->selectLink('Editar')->link();
+        $client->click($link);
+        $this->assertEquals('Nossis\NossisBundle\Controller\StockController::editarAction', $client->getRequest()->attributes->get('_controller'));
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Guardar')->form();
+        $crawler = $client->submit($form);
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("|Listar Ingresos")')->count()
+        );
+    }
+    
     /**
      * {@inheritDoc}
      */

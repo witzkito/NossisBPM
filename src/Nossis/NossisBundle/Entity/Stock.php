@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Stock
@@ -18,6 +19,7 @@ class Stock
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @GRID\Column(title="Nro.",filterable=false)
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Stock
      * @var string
      *
      * @ORM\Column(name="lote", type="string", length=10)
+     * @GRID\Column(title="Lote",filterable=true)
      */
     private $lote;
 
@@ -32,6 +35,7 @@ class Stock
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_ingreso", type="datetime")
+     * @GRID\Column(title="Fecha Ingreos",filterable=true)
      */
     private $fechaIngreso;
 
@@ -39,6 +43,7 @@ class Stock
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_envasado", type="datetime")
+     * @GRID\Column(title="Fecha Envasado", visible=false)
      */
     private $fechaEnvasado;
 
@@ -46,6 +51,7 @@ class Stock
      * @var string
      *
      * @ORM\Column(name="codigo", type="string", length=255)
+     * @GRID\Column(title="Codigo",visible=false)
      */
     private $codigo;
 
@@ -53,6 +59,7 @@ class Stock
      * @var string
      *
      * @ORM\Column(name="palet", type="string", length=10)
+     * @GRID\Column(title="Palet",filterable=true)
      */
     private $palet;
 
@@ -60,30 +67,35 @@ class Stock
      * @var string
      *
      * @ORM\Column(name="turno", type="string", length=10)
+     * @GRID\Column(title="Turno",filterable=true)
      */
     private $turno;
     
     /**
      * @ORM\ManyToOne(targetEntity="Producto", inversedBy="producto")
      * @ORM\JoinColumn(name="producto", referencedColumnName="id")
+     * @GRID\Column(title="Producto", field="producto.nombre", filterable=true)
      */
     private $producto;
     
     /**
      * @var integer
      * @orm\Column(name="ingresado", type="integer")
+     * @GRID\Column(title="Cant. Ingresada",filterable=true)
      */
     private $ingresado;
     
     /**
      * @var integer
      * @orm\Column(name="actual", type="integer")
+     * @GRID\Column(title="Cant. Actual",filterable=true)
      */
     private $actual;
     
     /**
      * @ORM\ManyToOne(targetEntity="Area", inversedBy="area")
      * @ORM\JoinColumn(name="area", referencedColumnName="id")
+     * @GRID\Column(title="Area", field="area.nombre", filterable=true)
      */
     private $area;
     

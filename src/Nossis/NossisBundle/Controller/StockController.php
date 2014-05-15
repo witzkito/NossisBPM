@@ -5,6 +5,7 @@ namespace Nossis\NossisBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Nossis\NossisBundle\Entity\Stock;
 use Nossis\NossisBundle\Form\StockType;
+use Nossis\NossisBundle\Form\StockEditType;
 use Symfony\Component\HttpFoundation\Response;
 use Nossis\NossisBundle\Entity\Trazlado;
 use Nossis\NossisBundle\Form\TrazladoType;
@@ -77,6 +78,13 @@ class StockController extends Controller
         
     }
     
+    public function showAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        return $this->render('NossisBundle:Stock:show.html.twig',
+                array( 'stock' => $stock)); 
+    }
+    
     public function trazladarAction($id){
         $em = $this->get('doctrine')->getManager();
         $stock = $em->getRepository('NossisBundle:Stock')->find($id);
@@ -108,16 +116,37 @@ class StockController extends Controller
         /* @var $grid \APY\DataGridBundle\Grid\Grid */
         $grid = $this->get('grid');
         
-        /*$ver = new RowAction('Ver', 'show_stock');
+        $ver = new RowAction('Ver', 'show_stock');
         $ver->setRouteParametersMapping(array('stock.id' => 'id'));
         $grid->addRowAction($ver);
-        $editar = new RowAction('Editar', 'edit_retiro');
-        $editar->setRouteParametersMapping(array('retiro.id' => 'id'));
-        $grid->addRowAction($editar);*/
+        $editar = new RowAction('Editar', 'editar_stock');
+        $editar->setRouteParametersMapping(array('stock.id' => 'id'));
+        $grid->addRowAction($editar);
 
         $grid->setSource($source);
         $grid->setDefaultOrder('id', 'desc');
         return $grid->getGridResponse('NossisBundle:Stock:listar.html.twig');
+    }
+    
+     public function editarAction($id)
+    {
+         $em = $this->get('doctrine')->getManager();
+         $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+         $form = $this->get('form.factory')->create(
+                new StockEditType(),
+                $stock
+         );
+         $request = $this->get('request');
+         if ($request->getMethod() == 'POST'){
+            $form->bind($request);
+            $stock = $form->getData();
+            $em->persist($stock);
+            $em->flush();
+            return $this->listarAction();
+             
+         }    
+         return $this->render('NossisBundle:Stock:editar.html.twig',
+                array( 'form' => $form->createView(), 'stock' => $stock));         
     }
 
 }
