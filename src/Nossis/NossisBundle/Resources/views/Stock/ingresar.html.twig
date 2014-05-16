@@ -9,7 +9,7 @@
         <div class="form">
             <form action="{{ path('agregar_stock') }}" method="post">
                 {{ form_rest(form) }}            
-                <input class="submit" type="submit" value="Ingresar"  />
+                <input class="submit" type="submit" value="Ingresar" />
             </form>
         </div>
         <div class="tabla-hoy">
@@ -25,6 +25,7 @@
                             <th>Turno</th>
                             <th>Area</th>
                             <th>Fecha</th>
+                            <th></th>
                         </tr>
                     </thead>    
                     <tbody>
@@ -42,6 +43,7 @@
                                         <td>{{ ultimo.turno }}</td>
                                         <td class="datagrid-area">{{ ultimo.area }}</td>
                                         <td class="datagrid-fecha">{{ ultimo.fechaIngreso | date('d/m/y h:m') }}</td>
+                                        <td><a class="imprimir" href="{{ path('imprimir_stock', { 'id': ultimo.id}) }}"></a></td>
                                     </tr>
 
                         {% endfor %}

@@ -696,3 +696,8 @@ th div {
 .show th{
     text-align: right;
 }
+
+.imprimir {
+    background: url("../images/imprimir.png") no-repeat scroll 0 center rgba(0, 0, 0, 0);
+    padding-left: 20px;
+}
