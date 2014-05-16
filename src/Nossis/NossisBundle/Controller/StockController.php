@@ -12,6 +12,8 @@ use Nossis\NossisBundle\Form\TrazladoType;
 use \DateTime;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
+use PHPPdf\Core\Node\Barcode as Barcode;
+use Zend\Barcode\Object;
 
 class StockController extends Controller
 {
@@ -122,6 +124,9 @@ class StockController extends Controller
         $editar = new RowAction('Editar', 'editar_stock');
         $editar->setRouteParametersMapping(array('stock.id' => 'id'));
         $grid->addRowAction($editar);
+        $imprimir = new RowAction('Imprimir', 'imprimir_stock');
+        $imprimir->setRouteParametersMapping(array('stock.id' => 'id'));
+        $grid->addRowAction($imprimir);
 
         $grid->setSource($source);
         $grid->setDefaultOrder('id', 'desc');
@@ -147,6 +152,19 @@ class StockController extends Controller
          }    
          return $this->render('NossisBundle:Stock:editar.html.twig',
                 array( 'form' => $form->createView(), 'stock' => $stock));         
+    }
+    
+    public function imprimirAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        $facade = $this->get('ps_pdf.facade');
+        $response = new Response();
+        $this->render('NossisBundle:Stock:comprobante.pdf.twig', array("stock" => $stock), $response);
+        
+        $xml = $response->getContent();
+        $content = $facade->render($xml);
+        
+        return new Response($content, 200, array('content-type' => 'application/pdf'));
     }
 
 }

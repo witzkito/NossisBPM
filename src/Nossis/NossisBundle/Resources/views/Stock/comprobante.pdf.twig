@@ -1,0 +1,60 @@
+<pdf>
+    <dynamic-page>
+        <page page-size="a4-landscape">
+        
+            <div font-type="DejaVuSans">
+                
+                <table>
+                    <tr>
+                        <td border-color="white" width="800px" padding-top="40px" font-size="70px" font-style="bold">{{ stock.producto.nombre }}</td>
+                        <td border-color="white" padding-top="40px" width="200px" text-align="right" font-size="170px" font-style="bold">{{ stock.id }}</td>
+                    </tr>
+                </table>
+                    <table font-size="40px" >
+                        <tr>
+                            <td border-color="white"><b>Cantidad:</b> {{stock.ingresado}} Unidades</td>
+                        </tr>
+                        <tr>
+                            <td border-color="white"><b>Lote: </b>{{stock.lote}}</td>
+                        </tr>
+                        <tr>
+                            <td border-color="white"><b>Turno: </b>{{stock.turno}}</td>
+                        </tr>
+                        <tr>
+                            <td border-color="white"><b>Pale: </b>{{stock.palet}}</td>
+                        </tr>
+                        <tr>
+                            <td border-color="white"><b>Envasado: </b>{{stock.fechaEnvasado | date('d/m/y')}}</td>
+                        </tr>
+                        <tr>
+                            <td border-color="white"><b>Almacenado:</b> {{stock.fechaIngreso | date('d/m/y')}}</td>
+                        </tr>
+                    </table>
+                
+                <table margin-top="70px">
+                    <tr>
+                        <td font-size="40px" border-color="white" padding-left="-30px"  >
+                            <barcode type="code128" bar-thin-width="7px" bar-height="170px" code="{{ stock.codigo}}"/>
+                        </td>                        
+                        <td width="190px" padding-top="-15px" padding-left="100px" border-color="white">
+                            <img src="{{ pdf_image('logo.jpg') }}" />
+                        </td>
+                        <td padding-left="10px" padding-top="-30px" width="350px" border-color="white">
+                            <div text-align="center">
+                                <p line-height="-1px">
+                                    Elaboradores de Fécula de mandioca ALDEMA <br></br>
+                                    INAC 6084 del 16-05-1967 – Dir. Prov. Coop. 102 del 04-07-1966 <br></br>
+                                    <b>Planta Industrial:</b> Ruta Nac. 12 – TEL.: 03743-491153 – 3334 GARUHAPE – Misiones <br></br>
+                                    <b>Administración:</b> Av. 9 de Julio y Asunción – TEL/Fax: 03743-420204/042 <br></br>
+                                    E-mail: coopsalberto@prico.com.ar – www.coopsanalberto.com.ar <br></br>
+                                    3334 PUERTO RICO – Misiones
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </page>
+    </dynamic-page>
+</pdf>

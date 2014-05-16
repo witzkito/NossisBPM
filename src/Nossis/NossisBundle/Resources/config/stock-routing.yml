@@ -25,3 +25,7 @@ show_stock:
 editar_stock:
     pattern:  /editar/{id}
     defaults: { _controller: NossisBundle:Stock:editar }
+
+imprimir_stock:
+    pattern:  /imprimir/{id}
+    defaults: { _controller: NossisBundle:Stock:imprimir }

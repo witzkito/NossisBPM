@@ -140,6 +140,15 @@ class StockControllerTest extends WebTestCase
         );
     }
     
+    public function testImprimir()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/stock/listar/ingreso');
+        $link = $crawler->selectLink('Imprimir')->link();
+        $client->click($link);
+        $this->assertEquals('Nossis\NossisBundle\Controller\StockController::imprimirAction', $client->getRequest()->attributes->get('_controller'));       
+    }
+    
     /**
      * {@inheritDoc}
      */
