@@ -4,6 +4,7 @@ namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use APY\DataGridBundle\Grid\Mapping as GRID;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Stock
@@ -108,6 +109,12 @@ class Stock
      * @ORM\OneToMany(targetEntity="Trazlado", mappedBy="stock")
      */
     protected $trazlados;
+    
+    /**
+     * @ManyToMany(targetEntity="EstadoStock", mappedBy="stock")
+     */
+    private $estados;
+
     
     
 
@@ -460,5 +467,39 @@ class Stock
     public function getActual()
     {
         return $this->actual;
+    }
+
+    /**
+     * Add estados
+     *
+     * @param \Nossis\NossisBundle\Entity\Estado $estados
+     *
+     * @return Stock
+     */
+    public function addEstado(\Nossis\NossisBundle\Entity\Estado $estados)
+    {
+        $this->estados[] = $estados;
+
+        return $this;
+    }
+
+    /**
+     * Remove estados
+     *
+     * @param \Nossis\NossisBundle\Entity\Estado $estados
+     */
+    public function removeEstado(\Nossis\NossisBundle\Entity\Estado $estados)
+    {
+        $this->estados->removeElement($estados);
+    }
+
+    /**
+     * Get estados
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstados()
+    {
+        return $this->estados;
     }
 }

@@ -14,6 +14,7 @@ use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use PHPPdf\Core\Node\Barcode as Barcode;
 use Zend\Barcode\Object;
+use Nossis\NossisBundle\Entity\EstadoStock;
 
 class StockController extends Controller
 {
@@ -35,6 +36,7 @@ class StockController extends Controller
     
     public function agregarAction()
     {
+        $em = $this->get('doctrine')->getManager();
         $stock = new Stock;
         $form = $this->get('form.factory')->create(
                 new StockType(),
@@ -48,8 +50,16 @@ class StockController extends Controller
             $stock->setFechaIngreso(new \DateTime('NOW'));
             $stock->setCodigo(0);
             $stock->setActual($stock->getIngresado());
-            $em = $this->get('doctrine')->getManager();
+            
+            $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Ingresado'));
+            $estadoStock = new EstadoStock;
+            $estadoStock->setEstado($estado);
+            $estadoStock->setStock($stock);
+            $estadoStock->setDescripcion("Ingresado al area ". $stock->getArea()->getNombre());
+            $estadoStock->setFecha(new \DateTime('NOW'));
+            
             $em->persist($stock);
+            $em->persist($estadoStock);
             $em->flush();
             $stock->setCodigo($stock->getProducto()->getCodigo() . $stock->getId());
             $em->persist($stock);
@@ -102,8 +112,16 @@ class StockController extends Controller
             $stock->setArea($trazlado->getArea());
             $trazlado->setFecha(new DateTime('now'));
             $trazlado->setStock($stock);
+            
+            $estadoStock = new EstadoStock;
+            $estadoStock->setStock($stock);
+            $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Trazlado')));
+            $estadoStock->setDescripcion("Se trazlado al area " . $trazlado->getArea()->getNombre());
+            $estadoStock->setFecha(new DateTime('now'));
+            
             $em->persist($trazlado);
             $em->persist($stock);
+            $em->persist($estadoStock);
             $em->flush();
             return $this->render('NossisBundle:Stock:show.html.twig',
                 array( 'form' => $form->createView(), 'stock' => $stock));

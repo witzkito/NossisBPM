@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use Ps\PdfBundle\Annotation\Pdf;
+use Nossis\NossisBundle\Entity\EstadoStock;
 
 class RetiroController extends Controller
 {
@@ -67,10 +68,10 @@ class RetiroController extends Controller
                                 $retirostock = new RetiroStock;
                                 $retirostock->setStock($stock);
                                 $retirostock->setRetiro($retiro);
-                                $retirostock->setCantidad($stock->getCantidad());
+                                $retirostock->setCantidad($stock->getActual());
                                 $retiro->addStock($retirostock);
-                                $cantidad = $stock->getCantidad() - $retirostock->getCantidad();
-                                $stock->setCantidad($cantidad);
+                                $cantidad = $stock->getIngresado() - $retirostock->getCantidad();
+                                $stock->setActual($cantidad);
                                 $em->persist($stock);
                             }
                         }else{
@@ -117,6 +118,16 @@ class RetiroController extends Controller
         $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
         $retiro->setConfirmado(true);
         $em->persist($retiro);
+        foreach ($retiro->getStocks() as $stock) {
+            $estadoStock = new EstadoStock;
+            $estadoStock->setStock($stock->getStock());
+            $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Salida')));
+            $estadoStock->setDescripcion("Salida del Almacen por " . $retiro->getTransportista() . " hacia " . $retiro->getCliente());
+            $estadoStock->setFecha(new \DateTime('now'));
+            $em->persist($estadoStock);
+        }
+                        
+        
         $em->flush();
         return $this->render('NossisBundle:Retiro:show.html.twig',
                 array("retiro" => $em->getRepository('NossisBundle:Retiro')->find($id)));

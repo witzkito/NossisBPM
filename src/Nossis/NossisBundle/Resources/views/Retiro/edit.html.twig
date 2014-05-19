@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{ stock.stock.id }}</td>
                                 <td>{{ stock.stock.producto.nombre }}</td>
-                                <td>{{ stock.stock.cantidad }}</td>
+                                <td>{{ stock.stock.actual }}</td>
                                 <td>{{ stock.cantidad }}</td>
                                 <td><a href="{{ path('edit_retiro_stock', { 'id' : stock.id}) }}">Editar</a>
                                 <a href="#" onclick="confirmar('¿Esta seguro de querer borra?','{{ path('eliminar_retiro_stock', { 'id' : stock.id}) }}')">Eliminar</a></td>

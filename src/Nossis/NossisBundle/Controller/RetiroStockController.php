@@ -41,8 +41,8 @@ class RetiroStockController extends Controller
          if ($retirostock != null){
              $em->remove($retirostock);
              $stock = $retirostock->getStock();
-             $cantidad = $stock->getCantidad() + $retirostock->getCantidad();
-             $stock->setCantidad($cantidad);
+             $cantidad = $stock->getActual() + $retirostock->getCantidad();
+             $stock->setActual($cantidad);
              $em->persist($stock);
              $em->flush();             
          }

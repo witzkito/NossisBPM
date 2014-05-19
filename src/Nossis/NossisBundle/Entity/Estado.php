@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Estado
@@ -27,7 +28,11 @@ class Estado
      * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
-
+    
+    /**
+     * @OneToMany(targetEntity="EstadoStock", mappedBy="estado")
+     */
+    private $stock;
 
     /**
      * Get id
@@ -60,5 +65,56 @@ class Estado
     public function getNombre()
     {
         return $this->nombre;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\Stock $stocks
+     *
+     * @return Estado
+     */
+    public function addStock(\Nossis\NossisBundle\Entity\Stock $stocks)
+    {
+        $this->stocks[] = $stocks;
+
+        return $this;
+    }
+
+    /**
+     * Remove stocks
+     *
+     * @param \Nossis\NossisBundle\Entity\Stock $stocks
+     */
+    public function removeStock(\Nossis\NossisBundle\Entity\Stock $stocks)
+    {
+        $this->stocks->removeElement($stocks);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStock()
+    {
+        return $this->stock;
     }
 }
