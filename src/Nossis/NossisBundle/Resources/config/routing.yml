@@ -13,3 +13,7 @@ despachar:
 RetiroStock:
     resource: "@NossisBundle/Resources/config/retiro-stock-routing.yml"
     prefix:   /retiro/stock
+
+sonata:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin

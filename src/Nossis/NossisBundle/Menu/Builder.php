@@ -13,26 +13,15 @@ class Builder extends ContainerAware
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav pull-right');
         
-        $menu->addChild('Inicio', array ('route' => 'nossis_homepage'));
+        $menu->addChild('Inicio', array ('route' => 'nossis_homepage'))->setAttribute('divider_prepend', true);
         
-        $menu->addChild('Listar')->setAttribute('dropdown', true);
+        $menu->addChild('Listar')->setAttribute('dropdown', true)->setAttribute('divider_prepend', true);
         
         $menu['Listar']->addChild('Ingresos', array('route' => 'listar_stock'));
         $menu['Listar']->addChild('Despachos', array('route' => 'list_retiro'));
-                
-        $menu->addChild('User')
-        ->setAttribute('dropdown', true);
-
-        $menu['User']->addChild('Profile', array('uri' => '#'))
-        ->setAttribute('divider_append', true);
-        $menu['User']->addChild('Logout', array('uri' => '#'));
-
-        $menu->addChild('Language')
-        ->setAttribute('dropdown', true)
+        
+        $menu->addChild('Administrar', array('route' => 'sonata_admin_redirect'))
         ->setAttribute('divider_prepend', true);
-
-        $menu['Language']->addChild('Deutsch', array('uri' => '#'));
-        $menu['Language']->addChild('English', array('uri' => '#'));
 
         return $menu;
     }

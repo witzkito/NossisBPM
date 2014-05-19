@@ -79,6 +79,11 @@ sonata_block:
         sonata.block.service.action: ~
         sonata.block.service.rss:    ~
  
+sonata_admin:
+    title:      NossisBPM Admin
+    templates:
+        layout:  SonataAdminBundle::standard_layout.html.twig
+ 
 genemu_form:
     date: ~
     
