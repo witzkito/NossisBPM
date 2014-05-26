@@ -83,8 +83,7 @@ class StockController extends Controller
         if ($stock == null){
             return $this->redirect($this->generateUrl('nossis_homepage'));
         }else{
-            return $this->render('NossisBundle:Stock:show.html.twig',
-                array( 'form' => $form->createView(), 'stock' => $stock)); 
+            return $this->showAction($stock->getId());
         }
              
         

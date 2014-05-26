@@ -408,7 +408,7 @@ body {
 }
 
 .show-stock hr {
-    margin-top: -1%;
+    margin-top: 2%;
 }
 
 .show-stock h2 {
@@ -431,7 +431,7 @@ body {
 .show-stock h1 {
     color: #AAAAAA;
     font-size: 150%;
-    margin-top: 6%;
+    margin-top: 1%;
 }
 
 .formcodigo {
@@ -700,4 +700,40 @@ th div {
 .imprimir {
     background: url("../images/imprimir.png") no-repeat scroll 0 center rgba(0, 0, 0, 0);
     padding-left: 20px;
+}
+
+
+.show-stock-estados {
+    font-family: "Ubuntu";
+    font-size: 115%;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
+.show-stock-estados table {
+    margin-left: 15px;
+}
+
+.show-stock-estados td {
+    padding-right: 25px;
+    padding-top: 15px;
+}
+
+
+.show-stock-estados h1 {
+    color: #AAAAAA;
+    padding-left: 14px;
+    text-align: left;
+}
+
+.show-stock-estados-nombre {
+}
+
+.show-stock-estados-detalle {
+    
+}
+
+.barra{
+    font-family: "code128";
 }

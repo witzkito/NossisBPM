@@ -10,31 +10,78 @@
 {% endblock %}
 {% block body %}
     
-    <div class="show-stock">
-        <h1>Stock {{ stock.id }}</h1>
-        <hr>
+    </br></br>
+    <h3>Stock {{ stock.id }}</h3>    
+    <hr class="hr3-inicio">
+    <div class="show">
+        <div class="grid">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto:</th><td>{{ stock.producto.nombre }}</td>                    
+                    </tr>
+                    <tr>
+                        <th>Lote:</th><td> {{ stock.lote}}</td>
+                    </tr>
+                    <tr>
+                        <th>Ubicacion:</th><td>Area {{stock.area.nombre}}</td>
+                    </tr>
+                    <tr>
+                        <th>Cantidad Restante:</th><td> {{stock.actual}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha Envasado:</th>
+                        <td> {{stock.fechaenvasado | date('d/m/y')}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha Ingreso:</th>
+                        <td> {{stock.fechaingreso | date('d/m/y h:m A')}}</td>
+                    </tr>
+                    <tr>
+                        <th>Palet:</th>
+                        <td> {{stock.palet}}</td>
+                    </tr>
+                    <tr>
+                        <th>Turno:</td>
+                        <td> {{stock.turno}}</td>
+                    </tr>
+                    <tr>
+                        <th>Codigo:</td>
+                        <td> {{stock.codigo}}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+     </div>
+     
+        <h3>Historia</h3>
+        <hr class="hr3-inicio">
+        <div class="datagrid">
 
-        <table>
-            <tr>
-                <td colspan="2"><h2>{{ stock.producto.nombre }}</h2></td><td><h2>Lote {{ stock.lote}}</h2></td>
-            </tr>        
-            <tr>
-                <td><h3>Ubicado en Area {{stock.area.nombre}}</h3></td>
-            </tr>
-            <tr>
-                <td><b>Cantidad Restante:</b></td><td> {{stock.actual}}</td>
-            </tr>
-            <tr>
-                <td><b>Fecha Envasado:</b></td>
-                <td> {{stock.fechaenvasado | date('d/m/y')}}</td>
-                <td> <b>Fecha Ingreso:</b></td>
-                <td> {{stock.fechaingreso | date('d/m/y h:m A')}}</td>
-            </tr>
-            <tr>
-                <td><b>Palet:</b></td>
-                <td> {{stock.palet}}</td>
-                <td><b>Turno:</b></td>
-                <td> {{stock.turno}}</td>
-        </table>
-    </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th>Descripcion</th>
+                    </tr>
+                </thead>
+                {% if (stock.estados | length) == 0 %}
+                    <tr>
+                        <td class="show-stock-estados-nombre">No hay Registros</td>
+                    </tr>
+                {% endif %}
+                {% for estado in stock.estados %}
+                    <tr>
+                        <td class="show-stock-estados-nombre">{{ estado.estado.nombre }}</td>
+                        <td>{{ estado.fecha | date('d-m-y h:i a') }}</td>
+                        <td class="show-stock-estados-detalle">{{ estado.descripcion }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+         </div>
+    
 {% endblock %}

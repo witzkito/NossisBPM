@@ -4,7 +4,6 @@ namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use APY\DataGridBundle\Grid\Mapping as GRID;
-use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Stock
@@ -111,7 +110,7 @@ class Stock
     protected $trazlados;
     
     /**
-     * @ManyToMany(targetEntity="EstadoStock", mappedBy="stock")
+     * @ORM\OneToMany(targetEntity="EstadoStock", mappedBy="stock")
      */
     private $estados;
 
