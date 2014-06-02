@@ -149,6 +149,7 @@ class StockControllerTest extends WebTestCase
         $this->assertEquals('Nossis\NossisBundle\Controller\StockController::imprimirAction', $client->getRequest()->attributes->get('_controller'));       
     }
     
+
     public function testListar()
     {
         $client = static::createClient();
@@ -158,7 +159,7 @@ class StockControllerTest extends WebTestCase
             $crawler->filter('html:contains("|Listar Stock")')->count()
         );
     }
-    
+
     public function testFraccionar()
     {
         $fraccionados = $this->em
@@ -188,7 +189,6 @@ class StockControllerTest extends WebTestCase
 
             $crawler = $client->submit($form);
             $this->assertEquals('Nossis\NossisBundle\Controller\StockController::fraccionarAction', $client->getRequest()->attributes->get('_controller'));
-            
            
         }else{
             return true;
