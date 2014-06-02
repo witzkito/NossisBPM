@@ -1,0 +1,39 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Mostrar Fraccionado{% endblock %}
+
+{% block body %}
+    <hr>
+  <div class="show">
+        <div class="grid">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Numero:</th>
+                        <td>{{ fraccionar.id }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Fecha:</th>
+                        <td>{{ fraccionar.fecha | date('d/m/Y H:i a') }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Cantidad:</th>
+                        <td>{{ fraccionar.cantidad }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Stock Origen:</th>
+                        <td>{{ fraccionar.stock }} - <a href="{{ path('show_stock', {'id' : fraccionar.stock.id}) }}">Ver</a></td>                
+                    </tr>
+                    <tr>
+                        <th>Stock Destino:</th>
+                        <td>{{ fraccionar.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionar.stockDestino.id}) }}">Ver</a></td>                
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+             </table>
+        </div>
+  </div>
+{% endblock %}

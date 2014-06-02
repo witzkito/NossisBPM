@@ -183,5 +183,50 @@ class StockController extends Controller
         
         return new Response($content, 200, array('content-type' => 'application/pdf'));
     }
+    
+    public function fraccionarAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $fraccionar = $em->getRepository('NossisBundle:Fraccionar')->find($id);
+        $stock = new Stock;
+        $form = $this->get('form.factory')->create(
+            new StockType(),
+            $stock
+        );
+        $request = $this->get('request');
+        $form->bind($request);
+        if ($form->isValid()){
+
+            $stock = $form->getData();
+            $stock->setFechaIngreso(new \DateTime('NOW'));
+            $stock->setCodigo(0);
+            $stock->setActual($fraccionar->getCantidad());
+            $stock->setOrigenFraccionado($fraccionar);
+            
+            $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Ingresado'));
+            $estadoStock = new EstadoStock;
+            $estadoStock->setEstado($estado);
+            $estadoStock->setStock($stock);
+            $estadoStock->setDescripcion("Ingresado al area ". $stock->getArea()->getNombre() ." origen fraccionado");
+            $estadoStock->setFecha(new \DateTime('NOW'));
+            
+            $em->persist($stock);
+            $em->persist($estadoStock);
+            $fraccionar->setStockDestino($stock);
+            $em->persist($fraccionar);
+            $em->flush();
+            $stock->setCodigo($stock->getProducto()->getCodigo() . $stock->getId());
+            $em->persist($stock);
+            $em->flush();
+            return $this->ingresarAction(true);
+            
+        }
+        return $this->render('NossisBundle:Stock:fraccionar.html.twig',
+                array( 'form' => $form->createView(),
+                    'stock' => $stock,
+                    'fraccionar' => $fraccionar,
+                    'ultimos' => $em->getRepository('NossisBundle:Stock')->findLast(),
+                    'first' => false));
+         
+    }
 
 }

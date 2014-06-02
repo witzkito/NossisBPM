@@ -149,6 +149,46 @@ class StockControllerTest extends WebTestCase
         $this->assertEquals('Nossis\NossisBundle\Controller\StockController::imprimirAction', $client->getRequest()->attributes->get('_controller'));       
     }
     
+    public function testFraccionar()
+    {
+        $fraccionados = $this->em
+            ->getRepository('NossisBundle:Fraccionar')
+            ->findAll();
+        foreach ($fraccionados as $fraccion){
+            if ($fraccion->getStockDestino() == null){
+                break;
+            }
+        }
+        if ($fraccion != null){
+           $client = static::createClient();
+           $crawler = $client->request('GET', '/stock/fraccionar/'. $fraccion->getId());
+           
+           $this->assertEquals('Nossis\NossisBundle\Controller\StockController::fraccionarAction', $client->getRequest()->attributes->get('_controller'));
+        
+            $form = $crawler->selectButton('Guardar')->form();
+
+            $form['nossis_nossisbundle_stock[producto]']->select('2');
+            $form['nossis_nossisbundle_stock[lote]'] = 'lote';
+            $form['nossis_nossisbundle_stock[fechaEnvasado]'] = '2014-03-27';
+            $form['nossis_nossisbundle_stock[palet]'] = 'palet';
+            $form['nossis_nossisbundle_stock[turno]']->select('A');
+            $form['nossis_nossisbundle_stock[area]']->select('2');
+            $form['nossis_nossisbundle_stock[ingresado]'] = "10";
+
+
+            $crawler = $client->submit($form);
+
+            $this->assertEquals('Nossis\NossisBundle\Controller\StockController::fraccionarAction', $client->getRequest()->attributes->get('_controller'));
+            $this->assertGreaterThan(
+                0,
+                $crawler->filter('tr.datagrid-agregado')->count()
+            );
+           
+        }else{
+            return true;
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */

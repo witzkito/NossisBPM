@@ -5,7 +5,7 @@
 {% block botonera %}    
        
         <a class="boton-blue" id="btt-1" href="{{ path('trazladar_stock', { 'id': stock.id})}}">Trazladar</a>
-        <a class="boton-blue" id="btt-3" href="#">Fraccionar</a>
+        <a class="boton-blue" id="btt-3" href="{{ path('index_fraccionar', { 'id': stock.id})}}">Fraccionar</a>
        
 {% endblock %}
 {% block body %}
@@ -17,6 +17,14 @@
         <div class="grid">
             <table>
                 <thead>
+                    <tr>
+                        <th>Origen:</th>
+                        {% if stock.origenfraccionado is not null %}
+                            <td>Fraccionado - <a href="{{ path('show_fraccionar', {'id' : stock.origenfraccionado.id}) }}">Ver</a></td>
+                        {% else %}
+                            <td>Produccion</td>
+                        {% endif %}
+                    </tr>
                     <tr>
                         <th>Producto:</th><td>{{ stock.producto.nombre }}</td>                    
                     </tr>
@@ -79,6 +87,37 @@
                         <td class="show-stock-estados-nombre">{{ estado.estado.nombre }}</td>
                         <td>{{ estado.fecha | date('d-m-y h:i a') }}</td>
                         <td class="show-stock-estados-detalle">{{ estado.descripcion }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+         </div>
+        
+        <h3>Fraccionados</h3>
+        <hr class="hr3-inicio">
+        <div class="datagrid">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Cantidad</th>
+                        <th>Destino</th>
+                    </tr>
+                </thead>
+                {% if (stock.fraccionados | length) == 0 %}
+                    <tr>
+                        <td class="show-stock-estados-nombre">No se ha fraccionado</td>
+                    </tr>
+                {% endif %}
+                {% for fraccionado in stock.fraccionados %}
+                    <tr>
+                        <td>{{ fraccionado.fecha | date('d/m/y h:m A') }}</td>
+                        <td>{{ fraccionado.cantidad }}</td>
+                        {% if fraccionado.stockDestino is null %}
+                        <td>Todavia sin destino - <a href=" {{ path('fraccionar_stock', { 'id' : fraccionado.id }) }}">Ingresar</a></td>
+                        {% else %}
+                        <td>{{ fraccionado.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionado.stockDestino.id}) }}">Ver</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>

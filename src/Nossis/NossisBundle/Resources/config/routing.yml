@@ -17,3 +17,7 @@ RetiroStock:
 sonata:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
+    
+FraccionarStock:
+    resource: "@NossisBundle/Resources/config/fraccionar-routing.yml"
+    prefix:   /fraccionar

@@ -1,0 +1,7 @@
+index_fraccionar:
+    pattern:  /index/{id}
+    defaults: { _controller: NossisBundle:Fraccionar:index }
+    
+show_fraccionar:
+  pattern:  /show/{id}
+  defaults: { _controller: NossisBundle:Fraccionar:show }
