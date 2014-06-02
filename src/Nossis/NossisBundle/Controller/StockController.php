@@ -129,7 +129,7 @@ class StockController extends Controller
                 array( 'form' => $form->createView(), 'stock' => $stock));
     }
     
-    public function listarAction(){
+    public function listaringresoAction(){
         $source = new Entity('NossisBundle:Stock');
 
         /* @var $grid \APY\DataGridBundle\Grid\Grid */
@@ -147,7 +147,15 @@ class StockController extends Controller
 
         $grid->setSource($source);
         $grid->setDefaultOrder('id', 'desc');
-        return $grid->getGridResponse('NossisBundle:Stock:listar.html.twig');
+        return $grid->getGridResponse('NossisBundle:Stock:listarIngreso.html.twig');
+    }
+    
+    public function listarStockAction(){
+        $em = $this->get('doctrine')->getManager();
+        $productos = $em->getRepository('NossisBundle:Producto')->findAll();
+        
+        return $this->render('NossisBundle:Stock:listar.html.twig',
+                array( 'productos' => $productos));   
     }
     
      public function editarAction($id)
@@ -164,7 +172,7 @@ class StockController extends Controller
             $stock = $form->getData();
             $em->persist($stock);
             $em->flush();
-            return $this->listarAction();
+            return $this->listaringresoAction();
              
          }    
          return $this->render('NossisBundle:Stock:editar.html.twig',

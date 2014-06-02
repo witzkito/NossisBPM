@@ -1,15 +1,55 @@
 {% extends "NossisBundle::layout.html.twig" %}
 
-{% block title %}Listar Ingresos{% endblock %}
+{% block title %}Listar Stock{% endblock %}
 
 {% block body %}
     
-    <hr>
-    
     <div class="grid">
+        {% for producto in productos %}
+        <hr class="hr3-inicio">
+        <h3>{{ producto.nombre }} - {{ producto.total }}</h3>
         <table>
-            {{ grid(grid) }}
+            <tbody>
+                {% if producto.stocks | length > 0 %}
+                    <tr class="grid-row-titles">
+                        <th>Numero</th>
+                        <th>Lote</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Palet</th>
+                        <th>Turno</th>
+                        <th>Area</th>
+                        <th>Actual</th>
+                        <th>Acciones</th>
+                    </tr>
+                    {% for stock in producto.stocks %}
+                        {% if stock.actual != 0 %}
+                            {% if stock.id is odd %}
+                                <tr class="grid-row-cells even">
+                            {% else %}
+                                <tr class="grid-row-cells odd">
+                            {% endif %}
+                                <td>{{ stock.id }}</td>
+                                <td>{{ stock.lote }}</td>
+                                <td>{{ stock.fechaingreso | date('d-m-y h:i a') }}</td>
+                                <td>{{ stock.palet }}</td>
+                                <td>{{ stock.turno }}</td>
+                                <td>{{ stock.area }}</td>
+                                <td class="stock-actual">{{ stock.actual }}</td>
+                                <td class="grid-column-__actions last-column">
+                                    <ul class="grid-row-actions">
+                                        <li><a href="{{ path('show_stock', { 'id' : stock.id}) }}">Ver</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                         {% endif %}
+                     {% endfor %}
+                 {% else %}
+                            <tr><th>No hay Stock!!</th></tr>
+                 {% endif %}
+            </tbody>
+                       
         </table>
+        {% endfor %}
     </div>
 
     

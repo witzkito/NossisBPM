@@ -737,3 +737,8 @@ th div {
 .barra{
     font-family: "code128";
 }
+
+.stock-actual {
+    font-size: 114%;
+    font-weight: bold;
+}

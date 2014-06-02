@@ -111,7 +111,7 @@ class StockControllerTest extends WebTestCase
         $this->assertEquals(60, $stock->getActual());
     }
     
-    public function testListar()
+    public function testListarIngreso()
     {
         $client = static::createClient();
 
@@ -149,6 +149,16 @@ class StockControllerTest extends WebTestCase
         $this->assertEquals('Nossis\NossisBundle\Controller\StockController::imprimirAction', $client->getRequest()->attributes->get('_controller'));       
     }
     
+    public function testListar()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/stock/listar/stock');
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("|Listar Stock")')->count()
+        );
+    }
+    
     public function testFraccionar()
     {
         $fraccionados = $this->em
@@ -177,12 +187,8 @@ class StockControllerTest extends WebTestCase
 
 
             $crawler = $client->submit($form);
-
             $this->assertEquals('Nossis\NossisBundle\Controller\StockController::fraccionarAction', $client->getRequest()->attributes->get('_controller'));
-            $this->assertGreaterThan(
-                0,
-                $crawler->filter('tr.datagrid-agregado')->count()
-            );
+            
            
         }else{
             return true;

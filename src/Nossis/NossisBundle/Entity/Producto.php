@@ -140,4 +140,12 @@ class Producto
     public function __toString() {
         return $this->nombre;
     }
+    
+    public function getTotal(){
+        $total = 0;
+        foreach ($this->getStocks() as $stock){
+            $total = $total + $stock->getActual();
+        }
+        return $total;
+    }
 }

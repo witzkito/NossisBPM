@@ -14,9 +14,13 @@ trazladar_stock:
     pattern:  /trazladar/{id}
     defaults: { _controller: NossisBundle:Stock:trazladar }
 
-listar_stock:
+listar_ingreso_stock:
     pattern:  /listar/ingreso
-    defaults: { _controller: NossisBundle:Stock:listar }
+    defaults: { _controller: NossisBundle:Stock:listarIngreso }
+    
+listar_stock:
+    pattern:  /listar/stock
+    defaults: { _controller: NossisBundle:Stock:listarStock }
 
 show_stock:
     pattern:  /show/{id}
