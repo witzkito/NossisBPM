@@ -1,0 +1,71 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Nuevo Stock{% endblock %}
+
+{% block body %}
+
+<hr>
+    <div class="panel-ingresar">
+        <div class="form">
+                <form action="{{ path('fraccionar_stock', { 'id' : fraccionar.id}) }}" method="post">
+                {{ form_rest(form) }}
+                <input class="submit" type="submit" value="Guardar"  />
+            
+        </div>
+        <div class="tabla-hoy">
+            <div class="datagrid">
+            <h3>Ultimos Ingresos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ingresado</th>
+                            <th>Producto</th>
+                            <th>Lote</th>
+                            <th>Palet</th>
+                            <th>Turno</th>
+                            <th>Area</th>
+                            <th>Fecha</th>
+                            <th></th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        {% for ultimo in ultimos %}
+                            {% if first %}
+                                {% set first = false %}
+                                    <tr class="datagrid-agregado">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                        <td>{{ ultimo.ingresado }}</td>
+                                        <td class="datagrid-producto">{{ ultimo.producto }}</td>
+                                        <td>{{ ultimo.lote }}</td>
+                                        <td>{{ ultimo.palet }}</td>
+                                        <td>{{ ultimo.turno }}</td>
+                                        <td class="datagrid-area">{{ ultimo.area }}</td>
+                                        <td class="datagrid-fecha">{{ ultimo.fechaIngreso | date('d/m/y h:m') }}</td>
+                                        <td><a class="imprimir" href="{{ path('imprimir_stock', { 'id': ultimo.id}) }}"></a></td>
+                                    </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<hr>
+    
+{% endblock %}
+    
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+    <script>
+        function setFocus()
+        {
+            document.getElementById("nossis_nossisbundle_stock_producto").focus();
+        }
+    </script>
+    {% block stylesheets %} 
+            {{ form_stylesheet(form) }}
+    {% endblock %}
+{% endblock %}

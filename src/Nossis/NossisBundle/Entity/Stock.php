@@ -113,6 +113,17 @@ class Stock
      * @ORM\OneToMany(targetEntity="EstadoStock", mappedBy="stock")
      */
     private $estados;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Fraccionar", mappedBy="stock")
+     */
+    private $fraccionados;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Fraccionar")
+     * @ORM\JoinColumn(name="es_fracciondo", referencedColumnName="id")
+     */
+    private $origenFraccionado;
 
     
     
@@ -385,6 +396,11 @@ class Stock
         $this->actual = ($this->actual + $anterior - $actualizar);
         
     }
+    
+    public function retirarStock($cantidad)
+    {
+        $this->actual = $this->actual - $cantidad;
+    }
 
     /**
      * Add trazlados
@@ -500,5 +516,64 @@ class Stock
     public function getEstados()
     {
         return $this->estados;
+    }
+
+    /**
+     * Add fraccionados
+     *
+     * @param \Nossis\NossisBundle\Entity\Fraccionar $fraccionados
+     *
+     * @return Stock
+     */
+    public function addFraccionado(\Nossis\NossisBundle\Entity\Fraccionar $fraccionados)
+    {
+        $this->fraccionados[] = $fraccionados;
+
+        return $this;
+    }
+
+    /**
+     * Remove fraccionados
+     *
+     * @param \Nossis\NossisBundle\Entity\Fraccionar $fraccionados
+     */
+    public function removeFraccionado(\Nossis\NossisBundle\Entity\Fraccionar $fraccionados)
+    {
+        $this->fraccionados->removeElement($fraccionados);
+    }
+
+    /**
+     * Get fraccionados
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFraccionados()
+    {
+        return $this->fraccionados;
+    }
+    
+
+    /**
+     * Set origenFraccionado
+     *
+     * @param \Nossis\NossisBundle\Entity\Fraccionar $origenFraccionado
+     *
+     * @return Stock
+     */
+    public function setOrigenFraccionado(\Nossis\NossisBundle\Entity\Fraccionar $origenFraccionado = null)
+    {
+        $this->origenFraccionado = $origenFraccionado;
+
+        return $this;
+    }
+
+    /**
+     * Get origenFraccionado
+     *
+     * @return \Nossis\NossisBundle\Entity\Fraccionar
+     */
+    public function getOrigenFraccionado()
+    {
+        return $this->origenFraccionado;
     }
 }

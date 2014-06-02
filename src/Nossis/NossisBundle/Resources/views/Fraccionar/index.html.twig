@@ -1,0 +1,16 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Fraccionar{% endblock %}
+
+{% block body %}
+    <hr class="hr3-inicio">
+    <h3>Stock {{ fraccionar.stock.id }} - Cantidad actual {{ fraccionar.stock.actual }}</h3>
+    </br></br>
+        <div class="form">
+                <form action="{{ path('index_fraccionar', { 'id' : fraccionar.stock.id}) }}" method="post">
+                {{ form_rest(form) }}
+                <input class="submit" type="submit" value="Fraccionar"  />
+            
+        </div>
+    
+{% endblock %}    

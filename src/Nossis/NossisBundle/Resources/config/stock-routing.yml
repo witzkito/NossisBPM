@@ -29,3 +29,7 @@ editar_stock:
 imprimir_stock:
     pattern:  /imprimir/{id}
     defaults: { _controller: NossisBundle:Stock:imprimir }
+    
+fraccionar_stock:
+    pattern:  /fraccionar/{id}
+    defaults: { _controller: NossisBundle:Stock:fraccionar }
