@@ -21,13 +21,15 @@
                         <th>Actual</th>
                         <th>Acciones</th>
                     </tr>
+                    {% set a = 2 %}
                     {% for stock in producto.stocks %}
                         {% if stock.actual != 0 %}
-                            {% if stock.id is odd %}
+                            {% if a is odd %}
                                 <tr class="grid-row-cells even">
                             {% else %}
                                 <tr class="grid-row-cells odd">
                             {% endif %}
+                            {% set a = a + 1 %}
                                 <td>{{ stock.id }}</td>
                                 <td>{{ stock.lote }}</td>
                                 <td>{{ stock.fechaingreso | date('d-m-y h:i a') }}</td>
