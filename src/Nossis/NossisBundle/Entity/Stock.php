@@ -115,7 +115,7 @@ class Stock
     private $estados;
     
     /**
-     * @ORM\OneToMany(targetEntity="Fraccionar", mappedBy="stock")
+     * @ORM\OneToMany(targetEntity="Fraccionar", mappedBy="stock", cascade={"remove"})
      */
     private $fraccionados;
     
