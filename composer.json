@@ -28,6 +28,7 @@
         "apy/datagrid-bundle": "dev-master",
         "zendframework/zend-validator": "dev-master",
         "zendframework/zend-barcode": "dev-master",        
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },"minimum-stability": "dev", 
     "scripts": {
         "post-install-cmd": [

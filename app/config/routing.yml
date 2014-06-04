@@ -10,4 +10,32 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+    
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+    
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /registro/varios
+
+fos_user_registration_register:
+    defaults: { _controller: 'ReclamosBundle:Registration:register' }
+    pattern: /registro
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+    
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout
