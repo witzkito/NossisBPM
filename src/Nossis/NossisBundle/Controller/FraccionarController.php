@@ -7,6 +7,8 @@ use Nossis\NossisBundle\Form\FraccionarType;
 use Nossis\NossisBundle\Entity\Fraccionar;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Nossis\NossisBundle\Entity\EstadoStock;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 class FraccionarController extends Controller
 {
@@ -52,6 +54,25 @@ class FraccionarController extends Controller
         return $this->render('NossisBundle:Fraccionar:show.html.twig',
                 array('fraccionar' => $fraccionar));
         
+    }
+    
+    public function listarAction(){
+        $source = new Entity('NossisBundle:Fraccionar');
+        $grid = $this->get('grid');
+        
+        $ver = new RowAction('Ver', 'show_fraccionar');
+        $ver->setRouteParametersMapping(array('fraccionar.id' => 'id'));
+        $grid->addRowAction($ver);
+        /*$editar = new RowAction('Editar', 'editar_stock');
+        $editar->setRouteParametersMapping(array('stock.id' => 'id'));
+        $grid->addRowAction($editar);
+        $imprimir = new RowAction('Imprimir', 'imprimir_stock');
+        $imprimir->setRouteParametersMapping(array('stock.id' => 'id'));
+        $grid->addRowAction($imprimir);*/
+
+        $grid->setSource($source);
+        $grid->setDefaultOrder('id', 'desc');
+        return $grid->getGridResponse('NossisBundle:Fraccionar:listar.html.twig');
     }
     
 }

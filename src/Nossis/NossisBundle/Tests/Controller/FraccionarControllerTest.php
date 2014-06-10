@@ -64,6 +64,15 @@ class FraccionarControllerTest extends WebTestCase
         }
     }
     
+    public function testListar(){
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/fraccionar/listar/');
+           $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("|Listar Fraccionados")')->count()
+            );
+    }
+    
     /**
      * {@inheritDoc}
      */

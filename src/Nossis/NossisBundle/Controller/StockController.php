@@ -207,7 +207,7 @@ class StockController extends Controller
             $stock = $form->getData();
             $stock->setFechaIngreso(new \DateTime('NOW'));
             $stock->setCodigo(0);
-            $stock->setActual($fraccionar->getCantidad());
+            $stock->setActual($stock->getIngresado());
             $stock->setOrigenFraccionado($fraccionar);
             
             $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Ingresado'));

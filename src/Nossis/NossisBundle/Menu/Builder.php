@@ -19,6 +19,7 @@ class Builder extends ContainerAware
         
         $menu['Listar']->addChild('Ingresos', array('route' => 'listar_ingreso_stock'));
         $menu['Listar']->addChild('Stocks', array('route' => 'listar_stock'));
+        $menu['Listar']->addChild('Fraccionados', array('route' => 'listar_fraccionar'));
         $menu['Listar']->addChild('Despachos', array('route' => 'list_retiro'));
         
         $menu->addChild('Administrar', array('route' => 'sonata_admin_redirect'))

@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Fraccionar
@@ -18,33 +19,43 @@ class Fraccionar
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @GRID\Column(title="Nro.",filterable=false)
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="cantidad", type="integer")
-     */
-    private $cantidad;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
+     * @GRID\Column(title="Fecha",filterable=true)
      */
     private $fecha;
     
     /**
      * @ORM\ManyToOne(targetEntity="Stock", inversedBy="fraccionados")
      * @ORM\JoinColumn(name="stock_id", referencedColumnName="id")
+     * @GRID\Column(title="Stock", field="stock.producto.nombre", filterable=true)
      */
     private $stock;
     
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidad", type="integer")
+     * @GRID\Column(title="Cantidad",filterable=true)
+     */
+    private $cantidad;
+        
     /** 
      * @ORM\OneToOne(targetEntity="Stock") 
+     * @GRID\Column(title="Stock Destino", field="stockDestino.producto.nombre", filterable=true)
      */
     private $stockDestino;
+    
+    /**
+     * @GRID\Column(title="Cantidad Destino", field="stockDestino.ingresado", filterable=true)
+     */
+    private $cantidadStockDestino;
     
     public $producto;
 

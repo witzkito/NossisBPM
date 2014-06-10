@@ -5,3 +5,7 @@ index_fraccionar:
 show_fraccionar:
   pattern:  /show/{id}
   defaults: { _controller: NossisBundle:Fraccionar:show }
+  
+listar_fraccionar:
+  pattern:  /listar/
+  defaults: { _controller: NossisBundle:Fraccionar:listar }
