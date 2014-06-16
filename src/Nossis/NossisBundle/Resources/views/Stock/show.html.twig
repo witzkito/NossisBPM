@@ -65,7 +65,7 @@
         </div>
      </div>
      
-        <h3>Historia</h3>
+        <h3 class="h3-stock">Historia</h3>
         <hr class="hr3-inicio">
         <div class="datagrid">
 
@@ -92,7 +92,7 @@
             </table>
          </div>
         
-        <h3>Fraccionados</h3>
+        <h3 class="h3-stock">Fraccionados</h3>
         <hr class="hr3-inicio">
         <div class="datagrid">
 
@@ -122,5 +122,39 @@
                 {% endfor %}
             </table>
          </div>
-    
+        
+        <h3 class="h3-stock">Despachos</h3>
+        <hr class="hr3-inicio">
+        <div class="datagrid">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nro. Orden</th>
+                        <th>Cliente</th>
+                        <th>Transportista</th>
+                        <th>Confirmado</th>
+                        <th>Acciones</th>
+                        
+                    </tr>
+                </thead>
+                {% for retiro in stock.retiros %}
+                    <tr>
+                        <td>{{ retiro.retiro.fechasalida | date('d/m/y h:m A') }}</td>
+                        <td>{{ retiro.retiro.nroorden }}</td>
+                        <td>{{ retiro.retiro.cliente }}</td>
+                        <td>{{ retiro.retiro.transportista }}</td>
+                        <td class="grid-column-confirmado align-center">
+                            <span class="grid_boolean_{{ retiro.retiro.stringconfirmado }}">{{ retiro.retiro.stringconfirmado }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ path('edit_retiro', { 'id' : retiro.retiro.id }) }}">Ver</a>
+                        </td>
+                        
+                    </tr>
+                {% endfor %}
+            </table>
+         </div>
+           
 {% endblock %}

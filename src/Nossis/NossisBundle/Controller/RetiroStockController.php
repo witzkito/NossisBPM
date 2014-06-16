@@ -5,6 +5,7 @@ namespace Nossis\NossisBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Nossis\NossisBundle\Entity\RetiroStock;
 use Nossis\NossisBundle\Form\RetiroStockType;
+use Nossis\NossisBundle\Entity\EstadoStock;
 
 class RetiroStockController extends Controller
 {
@@ -43,6 +44,14 @@ class RetiroStockController extends Controller
              $stock = $retirostock->getStock();
              $cantidad = $stock->getActual() + $retirostock->getCantidad();
              $stock->setActual($cantidad);
+             
+             $estadoStock = new EstadoStock;
+             $estadoStock->setStock($stock);
+             $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Cancelado Retiro')));
+             $estadoStock->setDescripcion("Se cancelo el retiro de ". $retirostock->getCantidad() ." unidades");
+             $estadoStock->setFecha(new \DateTime('now'));
+             $em->persist($estadoStock);
+             
              $em->persist($stock);
              $em->flush();             
          }
