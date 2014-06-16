@@ -22,7 +22,9 @@
                         <th>Acciones</th>
                     </tr>
                     {% set a = 2 %}
+                    {% set total = 0 %}
                     {% for stock in producto.stocks %}
+                        {% set total = 0 %}
                         {% if stock.actual != 0 %}
                             {% if a is odd %}
                                 <tr class="grid-row-cells even">
@@ -37,14 +39,18 @@
                                 <td>{{ stock.turno }}</td>
                                 <td>{{ stock.area }}</td>
                                 <td class="stock-actual">{{ stock.actual }}</td>
+                                {% set total = total +  stock.actual %}
                                 <td class="grid-column-__actions last-column">
                                     <ul class="grid-row-actions">
                                         <li><a href="{{ path('show_stock', { 'id' : stock.id}) }}">Ver</a></li>
                                     </ul>
                                 </td>
                             </tr>
-                         {% endif %}
+                         {% endif %}                            
                      {% endfor %}
+                        
+                        <tr><td collspan="7">Total {{ total }}</td></tr>
+                     
                  {% else %}
                             <tr><th>No hay Stock!!</th></tr>
                  {% endif %}

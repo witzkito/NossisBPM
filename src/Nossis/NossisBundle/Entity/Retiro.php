@@ -298,4 +298,17 @@ class Retiro
     {
         return $this->confirmado;
     }
+    
+    /**
+     * Devuelve confirmado en formato SI o NO
+     */
+    public function getStringConfirmado()
+    {
+        if ($this->confirmado == 1){
+            return "SI";
+        }else{
+            return "NO";
+        }
+        
+    }
 }

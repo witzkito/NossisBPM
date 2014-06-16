@@ -51,7 +51,7 @@ class FraccionarControllerTest extends WebTestCase
         $fraccionados = $this->em
             ->getRepository('NossisBundle:Fraccionar')
             ->findAll();
-        $fraccion = $fraccionados[1];
+        $fraccion = $fraccionados[0];
         if ($fraccion != null){
            $client = static::createClient();
            $crawler = $client->request('GET', '/fraccionar/show/'. $fraccion->getId());
