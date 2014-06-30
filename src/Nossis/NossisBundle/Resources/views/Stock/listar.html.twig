@@ -6,11 +6,12 @@
     
     <div class="grid">
         {% for producto in productos %}
+        {% if producto.stocks | length > 0 %}
         <hr class="hr3-inicio">
-        <h3>{{ producto.nombre }} - {{ producto.total }}</h3>
+        <h3>{{ producto.nombre }} - {{ producto.total }} Unidades</h3>
         <table>
             <tbody>
-                {% if producto.stocks | length > 0 %}
+                
                     <tr class="grid-row-titles">
                         <th>Numero</th>
                         <th>Lote</th>
@@ -24,7 +25,6 @@
                     {% set a = 2 %}
                     {% set total = 0 %}
                     {% for stock in producto.stocks %}
-                        {% set total = 0 %}
                         {% if stock.actual != 0 %}
                             {% if a is odd %}
                                 <tr class="grid-row-cells even">
@@ -37,7 +37,11 @@
                                 <td>{{ stock.fechaingreso | date('d-m-y h:i a') }}</td>
                                 <td>{{ stock.palet }}</td>
                                 <td>{{ stock.turno }}</td>
-                                <td>{{ stock.area }}</td>
+                                {% if stock.area.salida %}
+                                    <td><img src="{{ asset('bundles/nossis/images/normal.png') }}">{{ stock.area }} </td>
+                                {% else %}
+                                    <td><img src="{{ asset('bundles/nossis/images/naranja.png') }}">{{ stock.area }} </td>
+                                {% endif %}    
                                 <td class="stock-actual">{{ stock.actual }}</td>
                                 {% set total = total +  stock.actual %}
                                 <td class="grid-column-__actions last-column">
@@ -48,11 +52,6 @@
                             </tr>
                          {% endif %}                            
                      {% endfor %}
-                        
-                        <tr><td collspan="7">Total {{ total }}</td></tr>
-                     
-                 {% else %}
-                            <tr><th>No hay Stock!!</th></tr>
                  {% endif %}
             </tbody>
                        

@@ -106,7 +106,7 @@
                 </thead>
                 {% if (stock.fraccionados | length) == 0 %}
                     <tr>
-                        <td class="show-stock-estados-nombre">No se ha fraccionado</td>
+                        <td class="show-stock-estados-nombre">Sin Fraccionamiento</td>
                     </tr>
                 {% endif %}
                 {% for fraccionado in stock.fraccionados %}
@@ -139,6 +139,11 @@
                         
                     </tr>
                 </thead>
+                {% if (stock.retiros | length) == 0 %}
+                    <tr>
+                        <td class="show-stock-estados-nombre">Sin Dispachos</td>
+                    </tr>
+                {% endif %}
                 {% for retiro in stock.retiros %}
                     <tr>
                         <td>{{ retiro.retiro.fechasalida | date('d/m/y h:m A') }}</td>

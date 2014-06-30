@@ -61,7 +61,7 @@ class StockController extends Controller
             $em->persist($stock);
             $em->persist($estadoStock);
             $em->flush();
-            $stock->setCodigo($stock->getProducto()->getCodigo() . $stock->getId());
+            $stock->setCodigo($this->getCodigoBarra($stock));
             $em->persist($stock);
             $em->flush();
             
@@ -69,6 +69,14 @@ class StockController extends Controller
             return $this->ingresarAction(true); 
                 
         }
+    }
+    
+    private function getCodigoBarra($stock){
+        $codigo = $stock->getLote();
+        $codigo = $codigo. $stock->getPalet();
+        $codigo = $codigo. $stock->getTurno();
+        $codigo = $codigo. $stock->getId();
+        return $codigo;
     }
     
     public function indexAction(){
@@ -222,7 +230,7 @@ class StockController extends Controller
             $fraccionar->setStockDestino($stock);
             $em->persist($fraccionar);
             $em->flush();
-            $stock->setCodigo($stock->getProducto()->getCodigo() . $stock->getId());
+            $stock->setCodigo($this->getCodigoBarra($stock));
             $em->persist($stock);
             $em->flush();
             return $this->ingresarAction(true);
