@@ -537,6 +537,11 @@ body {
     border-bottom: 2px solid #D4E0EE;
     padding: 3px 7px 2px;
 }
+
+.grid td {
+    background-color: #fff;
+}
+
 .grid th
 {
     background-color: #E6EDF5;
