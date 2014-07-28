@@ -3,71 +3,63 @@
 {% block title %}Listar Stock{% endblock %}
 
 {% block body %}
-
+    
     <div class="grid">
         {% for producto in productos %}
-            {% if producto.stocks | length > 0 %}
-                <hr class="hr3-inicio">
-                <fieldset class="field" colapsado="true">
-                    <legend>{{ producto.nombre }} - {{ producto.total }} Unidades</legend>
-                    <div>
-                        <table>
-                            <tbody>
-
-                                <tr class="grid-row-titles">
-                                    <th>Numero</th>
-                                    <th>Lote</th>
-                                    <th>Fecha Ingreso</th>
-                                    <th>Palet</th>
-                                    <th>Turno</th>
-                                    <th>Area</th>
-                                    <th>Actual</th>
-                                    <th>Acciones</th>
-                                </tr>
-                                {% set a = 2 %}
-                                {% set total = 0 %}
-                                {% for stock in producto.stocks %}
-                                    {% if stock.actual != 0 %}
-                                        {% if a is odd %}
-                                            <tr class="grid-row-cells even">
-                                            {% else %}
-                                            <tr class="grid-row-cells odd">
-                                            {% endif %}
-                                            {% set a = a + 1 %}
-                                            <td>{{ stock.id }}</td>
-                                            <td>{{ stock.lote }}</td>
-                                            <td>{{ stock.fechaingreso | date('d-m-y h:i a') }}</td>
-                                            <td>{{ stock.palet }}</td>
-                                            <td>{{ stock.turno }}</td>
-                                            {% if stock.area.salida %}
-                                                <td><img src="{{ asset('bundles/nossis/images/normal.png') }}">{{ stock.area }} </td>
-                                                {% else %}
-                                                <td><img src="{{ asset('bundles/nossis/images/naranja.png') }}">{{ stock.area }} </td>
-                                                {% endif %}    
-                                            <td class="stock-actual">{{ stock.actual }}</td>
-                                            {% set total = total +  stock.actual %}
-                                            <td class="grid-column-__actions last-column">
-                                                <ul class="grid-row-actions">
-                                                    <li><a href="{{ path('show_stock', { 'id' : stock.id}) }}">Ver</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    {% endif %}                            
-                                {% endfor %}
+        {% if producto.stocks | length > 0 %}
+        <hr class="hr3-inicio">
+        <h3>{{ producto.nombre }} - {{ producto.total }} Unidades</h3>
+        <table>
+            <tbody>
+                
+                    <tr class="grid-row-titles">
+                        <th>Numero</th>
+                        <th>Lote</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Palet</th>
+                        <th>Turno</th>
+                        <th>Area</th>
+                        <th>Actual</th>
+                        <th>Acciones</th>
+                    </tr>
+                    {% set a = 2 %}
+                    {% set total = 0 %}
+                    {% for stock in producto.stocks %}
+                        {% if stock.actual != 0 %}
+                            {% if a is odd %}
+                                <tr class="grid-row-cells even">
+                            {% else %}
+                                <tr class="grid-row-cells odd">
                             {% endif %}
-                        </tbody>
-
-                    </table>
-                </div>
-            </fieldset>
+                            {% set a = a + 1 %}
+                                <td>{{ stock.id }}</td>
+                                <td>{{ stock.lote }}</td>
+                                <td>{{ stock.fechaingreso | date('d-m-y h:i a') }}</td>
+                                <td>{{ stock.palet }}</td>
+                                <td>{{ stock.turno }}</td>
+                                {% if stock.area.salida %}
+                                    <td><img src="{{ asset('bundles/nossis/images/normal.png') }}">{{ stock.area }} </td>
+                                {% else %}
+                                    <td><img src="{{ asset('bundles/nossis/images/naranja.png') }}">{{ stock.area }} </td>
+                                {% endif %}    
+                                <td class="stock-actual">{{ stock.actual }}</td>
+                                {% set total = total +  stock.actual %}
+                                <td class="grid-column-__actions last-column">
+                                    <ul class="grid-row-actions">
+                                        <li><a href="{{ path('show_stock', { 'id' : stock.id}) }}">Ver</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                         {% endif %}                            
+                     {% endfor %}
+                 {% endif %}
+            </tbody>
+                       
+        </table>
         {% endfor %}
     </div>
 
-
+    
 {% endblock %}
 
-{% block javascripts %}
-    <script>
-        function setFocus(){}    
-    </script>
-{% endblock %}
+    
