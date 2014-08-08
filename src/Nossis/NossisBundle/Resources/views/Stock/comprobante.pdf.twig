@@ -31,15 +31,15 @@
                         </tr>
                     </table>
                 
-                <table margin-top="70px">
+                <table margin-top="50px">
                     <tr>
-                        <td font-size="40px" border-color="white" padding-left="-30px"  >
-                            <barcode type="code128" bar-thin-width="7px" bar-height="170px" code="{{ stock.codigo}}"/>
+                        <td border-color="white" padding-left="30px"  >
+                            <img width="350px" src="{{ pdf_image(mopa_barcode_url('code128', stock.codigo , {'barcodeOptions': {}, 'rendererOptions': {width:0, height:0}})) }}" />
                         </td>                        
                         <td width="190px" padding-top="-15px" padding-left="100px" border-color="white">
                             <img src="{{ pdf_image('logo.jpg') }}" />
                         </td>
-                        <td padding-left="10px" padding-top="-30px" width="350px" border-color="white">
+                        <td padding-left="10px" padding-top="-10px" width="350px" border-color="white">
                             <div text-align="center">
                                 <p line-height="-1px">
                                     Elaboradores de Fécula de mandioca ALDEMA <br></br>

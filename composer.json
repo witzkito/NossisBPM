@@ -28,7 +28,11 @@
         "apy/datagrid-bundle": "dev-master",
         "zendframework/zend-validator": "dev-master",
         "zendframework/zend-barcode": "dev-master",        
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "mopa/barcode-bundle": "dev-master",
+        "avalanche123/imagine-bundle": "dev-master",
+        "zendframework/zendframework": "2.3.x-dev",
+        "mopa/bootstrap-sandbox-bundle": "dev-master"
     },"minimum-stability": "dev", 
     "scripts": {
         "post-install-cmd": [

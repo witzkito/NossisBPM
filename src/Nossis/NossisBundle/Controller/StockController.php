@@ -100,8 +100,12 @@ class StockController extends Controller
     public function showAction($id){
         $em = $this->get('doctrine')->getManager();
         $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        
+        $bmanager = $this->container->get('mopa_barcode.barcode_service');
+        $webfile = $bmanager->get('code128', $stock->getCodigo());
+        
         return $this->render('NossisBundle:Stock:show.html.twig',
-                array( 'stock' => $stock)); 
+                array( 'stock' => $stock, 'barcode_url'=>$webfile,)); 
     }
     
     public function trazladarAction($id){
@@ -130,8 +134,7 @@ class StockController extends Controller
             $em->persist($stock);
             $em->persist($estadoStock);
             $em->flush();
-            return $this->render('NossisBundle:Stock:show.html.twig',
-                array( 'form' => $form->createView(), 'stock' => $stock));
+            return $this->showAction($stock->getId());
         }
         return $this->render('NossisBundle:Stock:trazladar.html.twig',
                 array( 'form' => $form->createView(), 'stock' => $stock));
@@ -190,13 +193,17 @@ class StockController extends Controller
     public function imprimirAction($id){
         $em = $this->get('doctrine')->getManager();
         $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        
+        $bmanager = $this->container->get('mopa_barcode.barcode_service');
+        $webfile = $bmanager->get('code128', $stock->getCodigo());
+        
         $facade = $this->get('ps_pdf.facade');
         $response = new Response();
-        $this->render('NossisBundle:Stock:comprobante.pdf.twig', array("stock" => $stock), $response);
+        $this->render('NossisBundle:Stock:comprobante.pdf.twig', array("stock" => $stock, 'barcode_url' => $webfile), $response);
         
         $xml = $response->getContent();
         $content = $facade->render($xml);
-        
+                
         return new Response($content, 200, array('content-type' => 'application/pdf'));
     }
     

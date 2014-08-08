@@ -26,6 +26,8 @@ class AppKernel extends Kernel
             new Ps\PdfBundle\PsPdfBundle(),
             new APY\DataGridBundle\APYDataGridBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Mopa\Bundle\BarcodeBundle\MopaBarcodeBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

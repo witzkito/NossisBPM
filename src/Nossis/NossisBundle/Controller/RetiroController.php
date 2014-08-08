@@ -85,6 +85,10 @@ class RetiroController extends Controller
                     $em->flush();
                 }
             }
+            $retiro->codigo = "";
+            $form = $this->get('form.factory')->create(
+                new RetiroType(),
+                $retiro);
               return $this->render('NossisBundle:Retiro:edit.html.twig',
                 array('form' => $form->createView(), "retiro" => $em->getRepository('NossisBundle:Retiro')->find($id),
                     "stocks" => $em->getRepository('NossisBundle:RetiroStock')->findby(array("retiro" => $id)) ));
