@@ -15,7 +15,9 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('producto')
+            ->add('producto', 'genemu_jqueryselect2_entity', array(
+                "class" => "Nossis\NossisBundle\Entity\Producto",
+                'label' => 'Producto'))
             ->add('lote')
             ->add('fechaEnvasado', 'genemu_jquerydate', array(
                 'widget' => 'single_text'
@@ -26,7 +28,9 @@ class StockType extends AbstractType
                     'required'  => true,
                 ))
             ->add('ingresado')
-            ->add('area')
+            ->add('area', 'genemu_jqueryselect2_entity', array(
+                "class" => "Nossis\NossisBundle\Entity\Area",
+                'label' => 'Area'))
         ;
     }
     

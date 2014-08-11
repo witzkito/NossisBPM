@@ -41,6 +41,8 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
     <script>
         function setFocus()
         {

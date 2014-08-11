@@ -86,6 +86,13 @@ sonata_admin:
  
 genemu_form:
     date: ~
+    select2:
+            enabled: true
+            configs:
+                    placeholder: Selecione un Valor
+                    width: off
+                    allowClear: false
+                    minimumInputLength: 0
     
 ps_pdf:
     nodes_file: ~

@@ -790,3 +790,7 @@ th div {
     overflow: hidden;
     width: 132px;
 }
+
+.select2-container {
+    width: 100%;
+}
