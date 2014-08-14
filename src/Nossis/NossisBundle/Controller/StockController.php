@@ -62,6 +62,7 @@ class StockController extends Controller
             $em->persist($estadoStock);
             $em->flush();
             $stock->setCodigo($this->getCodigoBarra($stock));
+            $stock->setNumero($stock->getId(). '/'. $estadoStock->getFecha()->format('y'));
             $em->persist($stock);
             $em->flush();
             
