@@ -45,31 +45,31 @@
 
                 <table text-align="center" >
                     <tr>
-                        <td  height="30px" width="100px" border-color="white">
-                            <b>Numero Lote</b>
+                        <td  height="30px" width="100px" border-color="black">
+                            <b>Lote</b>
                         </td>
-                        <td width="80px" border-color="white">
+                        <td width="80px" border-color="black">
                             <b>Cantidad</b> 
                         </td>
-                        <td border-color="white">
+                        <td border-color="black">
                             <b>Producto</b>
                         </td>
-                        <td border-color="white">
+                        <td border-color="black">
                             <b>Fecha Envasado</b> 
                         </td>
                     </tr>
                     {% for stock in stocks %}
                     <tr>
-                        <td height="25px" border-color="white">
+                        <td height="25px" border-color="black">
                             {{ stock.stock.lote }}
                         </td>
-                        <td border-color="white">
+                        <td border-color="black">
                             {{ stock.cantidad }}
                         </td>
-                        <td border-color="white">
+                        <td border-color="black">
                             {{ stock.stock.producto.nombre }}
                         </td>
-                        <td border-color="white">
+                        <td border-color="black">
                             {{ stock.stock.fechaenvasado | date('d-m-Y') }}
                         </td>
 
