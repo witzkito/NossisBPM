@@ -90,6 +90,9 @@ class StockController extends Controller
         $em = $this->get('doctrine')->getManager();
         $stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $datos['codigo']));
         if ($stock == null){
+            $stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('numero' => $datos['codigo']));
+        }
+        if ($stock == null){
             return $this->redirect($this->generateUrl('nossis_homepage'));
         }else{
             return $this->showAction($stock->getId());
