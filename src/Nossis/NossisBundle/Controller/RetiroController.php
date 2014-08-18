@@ -59,7 +59,7 @@ class RetiroController extends Controller
                 $form->bind($request);
                 $retiro = $form->getData();
                 if ($request->request->get('imprimir')) {
-                    return $this->imprimirAction($retiro);
+                    return $this->confirmarAction($retiro);
                 }else{
                     $retiro->setFechaSalida(new \DateTime('NOW'));
                     if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $retiro->codigo))) != null){
@@ -117,9 +117,8 @@ class RetiroController extends Controller
         
     }
     
-    public function confirmarAction($id){
+    public function confirmarAction($retiro){
         $em = $this->get('doctrine')->getManager();
-        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
         $retiro->setConfirmado(true);
         $em->persist($retiro);
         foreach ($retiro->getStocks() as $stock) {
@@ -134,7 +133,7 @@ class RetiroController extends Controller
         
         $em->flush();
         return $this->render('NossisBundle:Retiro:show.html.twig',
-                array("retiro" => $em->getRepository('NossisBundle:Retiro')->find($id)));
+                array("retiro" => $retiro));
         
     }
     
