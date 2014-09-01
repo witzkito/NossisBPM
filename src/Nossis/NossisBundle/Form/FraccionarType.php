@@ -15,7 +15,9 @@ class FraccionarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('cantidad');
+            ->add('cantidad', 'integer', array(
+                'label' => 'Cantidad a fraccionar'
+            ));
     }
     
     /**

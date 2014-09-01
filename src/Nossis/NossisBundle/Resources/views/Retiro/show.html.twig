@@ -44,7 +44,7 @@
                     {% for stock in retiro.stocks %}
                         <tr>
                             <th></th>
-                            <td>{{ stock.cantidad }} - {{ stock.stock.producto.nombre }}</td>                
+                            <td>{{ stock.cantidad }} - {{ stock.stock.producto.nombre }} - <a href="{{ path('show_stock', {'id':stock.stock.id})}}">Ver</a></td>                
                         </tr>
                     {% endfor %}
                 </thead>

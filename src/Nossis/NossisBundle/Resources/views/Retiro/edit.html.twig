@@ -13,7 +13,8 @@
         <div class="form">
                 <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
                 {{ form_row(form.nroOrden) }}
-                {{ form_row(form.cliente) }}
+                {{ form_label(form.cliente)}}
+                {{ form_widget(form.cliente) }}
                 {{ form_row(form.empresa) }}
                 {{ form_row(form.transportista) }}
                 {{ form_row(form.patente) }}
@@ -62,6 +63,8 @@
     
 
 {% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
     <script>
         function setFocus()
         {

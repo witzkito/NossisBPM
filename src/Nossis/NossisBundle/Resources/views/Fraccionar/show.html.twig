@@ -30,7 +30,7 @@
                         {% if fraccionar.stockDestino is not null %}
                             <td>{{ fraccionar.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionar.stockDestino.id}) }}">Ver</a></td>                
                         {% else %}
-                            <td>Sin asignar aun</td>                
+                            <td>Sin asignar aun - <a href="{{ path('fraccionar_stock', {'id' : fraccionar.id}) }}">Asignar</a></td>                
                         {% endif %}    
                     </tr>
                 </thead>

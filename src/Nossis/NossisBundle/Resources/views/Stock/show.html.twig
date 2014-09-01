@@ -131,6 +131,7 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
+                        <th>Cantidad</th>
                         <th>Nro. Orden</th>
                         <th>Cliente</th>
                         <th>Transportista</th>
@@ -147,6 +148,7 @@
                 {% for retiro in stock.retiros %}
                     <tr>
                         <td>{{ retiro.retiro.fechasalida | date('d/m/y h:m A') }}</td>
+                        <td>{{ retiro.cantidad }}</td>
                         <td>{{ retiro.retiro.nroorden }}</td>
                         <td>{{ retiro.retiro.cliente }}</td>
                         <td>{{ retiro.retiro.transportista }}</td>

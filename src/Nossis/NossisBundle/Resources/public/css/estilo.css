@@ -788,9 +788,36 @@ th div {
     float: left;
     height: 81px;
     overflow: hidden;
-    width: 132px;
+    width: 177px;
 }
 
 .select2-container {
     width: 100%;
+}
+
+.field {
+    padding-left: 25px;
+}
+
+.nav-center {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 29%;
+}
+
+.nav-button-item.brand {
+    color: #0088cc;
+    float: left;
+    font-size: 16px;
+}
+
+.nav-button-item:hover {
+  background-color: transparent;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.brand > span {
+    font-size: 58%;
 }

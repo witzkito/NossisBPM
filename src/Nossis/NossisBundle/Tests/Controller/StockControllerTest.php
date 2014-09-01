@@ -40,22 +40,22 @@ class StockControllerTest extends WebTestCase
     }
     
     public function testFormIngresar(){
-        $client = static::createClient();
-        $crawlerForm = $client->request('GET', '/stock/ingresar');
-        $this->assertEquals('Nossis\NossisBundle\Controller\StockController::ingresarAction', $client->getRequest()->attributes->get('_controller'));
-        
-        $form = $crawlerForm->selectButton('Ingresar')->form();
-        
-        $form['nossis_nossisbundle_stock[producto]']->select('2');
-        $form['nossis_nossisbundle_stock[lote]'] = 'lote';
-        $form['nossis_nossisbundle_stock[fechaEnvasado]'] = '2014-03-27';
-        $form['nossis_nossisbundle_stock[palet]'] = 'palet';
-        $form['nossis_nossisbundle_stock[turno]']->select('A');
-        $form['nossis_nossisbundle_stock[ingresado]'] = '40';
-        $form['nossis_nossisbundle_stock[area]']->select('2');
-        
-        
-        $crawler = $client->submit($form);
+            $client = static::createClient();
+            $crawlerForm = $client->request('GET', '/stock/ingresar');
+            $this->assertEquals('Nossis\NossisBundle\Controller\StockController::ingresarAction', $client->getRequest()->attributes->get('_controller'));
+
+            $form = $crawlerForm->selectButton('Ingresar')->form();
+
+            $form['nossis_nossisbundle_stock[producto]']->select('2');
+            $form['nossis_nossisbundle_stock[lote]'] = 'lote';
+            $form['nossis_nossisbundle_stock[fechaEnvasado]'] = '2014-03-27';
+            $form['nossis_nossisbundle_stock[palet]'] = 'palet';
+            $form['nossis_nossisbundle_stock[turno]']->select('A');
+            $form['nossis_nossisbundle_stock[ingresado]'] = '40';
+            $form['nossis_nossisbundle_stock[area]']->select('2');
+
+
+            $crawler = $client->submit($form);
         
         $this->assertEquals('Nossis\NossisBundle\Controller\StockController::agregarAction', $client->getRequest()->attributes->get('_controller'));
         
