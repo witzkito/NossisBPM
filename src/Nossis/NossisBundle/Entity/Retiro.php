@@ -54,9 +54,9 @@ class Retiro
     protected $stocks;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Transportista", inversedBy="retiros")
-     * @ORM\JoinColumn(name="transportista", referencedColumnName="id")
-     * @GRID\Column(title="Transportista", filterable=true, field="transportista.nombre")
+     * @var string
+     *
+     * @ORM\Column(name="transportista", type="string", length=100)
      */
     private $transportista;
     
@@ -204,29 +204,6 @@ class Retiro
     }
 
     /**
-     * Set transportista
-     *
-     * @param \Nossis\NossisBundle\Entity\Transportista $transportista
-     * @return Retiro
-     */
-    public function setTransportista(\Nossis\NossisBundle\Entity\Transportista $transportista = null)
-    {
-        $this->transportista = $transportista;
-
-        return $this;
-    }
-
-    /**
-     * Get transportista
-     *
-     * @return \Nossis\NossisBundle\Entity\Transportista 
-     */
-    public function getTransportista()
-    {
-        return $this->transportista;
-    }
-
-    /**
      * Set cliente
      *
      * @param \Nossis\NossisBundle\Entity\Cliente $cliente
@@ -310,5 +287,31 @@ class Retiro
             return "NO";
         }
         
+    }
+
+    /**
+     * Set transportista.
+
+     *
+     * @param string $transportista
+     *
+     * @return Retiro
+     */
+    public function setTransportista($transportista)
+    {
+        $this->transportista = $transportista;
+
+        return $this;
+    }
+
+    /**
+     * Get transportista.
+
+     *
+     * @return string
+     */
+    public function getTransportista()
+    {
+        return $this->transportista;
     }
 }

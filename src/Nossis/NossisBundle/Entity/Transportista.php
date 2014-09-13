@@ -5,7 +5,7 @@ namespace Nossis\NossisBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Transportista
+ * Transportista -  Anulado por el momento.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\TransportistaRepository")

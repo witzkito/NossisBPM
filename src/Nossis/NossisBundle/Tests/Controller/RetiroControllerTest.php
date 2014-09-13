@@ -28,7 +28,7 @@ class RetiroControllerTest extends WebTestCase
         $form['nossis_nossisbundle_retiro[nroOrden]'] = '99';
         $form['nossis_nossisbundle_retiro[patente]'] = 'ZZZ999';
         $form['nossis_nossisbundle_retiro[empresa]']->select('1');
-        $form['nossis_nossisbundle_retiro[transportista]']->select('1');
+        $form['nossis_nossisbundle_retiro[transportista]']= 'Juan Perez';
         
         $crawler = $client->submit($form);
         
