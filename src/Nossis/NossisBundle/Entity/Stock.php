@@ -26,7 +26,7 @@ class Stock
      * @var string
      *
      * @ORM\Column(name="numero", type="string", length=20, nullable=true)
-     * @GRID\Column(title="Nro.",filterable=true)
+     * @GRID\Column(title="Nro.",filterable=true, visible=false)
      */
     private $numero;
 
