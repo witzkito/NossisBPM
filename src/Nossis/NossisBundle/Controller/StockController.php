@@ -184,11 +184,12 @@ class StockController extends Controller
          $request = $this->get('request');
          if ($request->getMethod() == 'POST'){
             $form->bind($request);
-            $stock = $form->getData();
-            $em->persist($stock);
-            $em->flush();
-            return $this->listaringresoAction();
-             
+            if($form->isValid()){
+                $stock = $form->getData();
+                $em->persist($stock);
+                $em->flush();
+                return $this->showAction($id);
+            }
          }    
          return $this->render('NossisBundle:Stock:editar.html.twig',
                 array( 'form' => $form->createView(), 'stock' => $stock));         

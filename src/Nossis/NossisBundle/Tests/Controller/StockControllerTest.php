@@ -136,7 +136,7 @@ class StockControllerTest extends WebTestCase
         $crawler = $client->submit($form);
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("|Listar Ingresos")')->count()
+            $crawler->filter('html:contains("| Stock ")')->count()
         );
     }
     

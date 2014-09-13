@@ -6,6 +6,7 @@
     <hr>
         <div class="form">
                 <form action="{{ path('editar_stock', { 'id' : stock.id}) }}" method="post">
+                {{ form_errors(form) }}
                 {{ form_rest(form) }}
                 <input class="submit" type="submit" value="Guardar"  />
             
