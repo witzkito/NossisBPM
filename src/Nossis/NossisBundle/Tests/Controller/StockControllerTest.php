@@ -195,6 +195,38 @@ class StockControllerTest extends WebTestCase
         }
     }
     
+    public function testTrazladarLote()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/stock/trazladar/lote/stock');
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("|Trazladar Lote Stock")')->count()
+        );
+    }
+    
+    public function testTrazladarLoteArea()
+    {
+        $stocks = $this->em
+            ->getRepository('NossisBundle:Stock')
+            ->findAll();
+        foreach ($stocks as $stock){
+                break;            
+        }
+        $areas = $this->em
+            ->getRepository('NossisBundle:Area')
+            ->findAll();
+        foreach ($areas as $area){
+                break;            
+        }
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/stock/trazladar/lote/stocks/'. $stock->getLote().'/'.$area->getId());
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("|Trazladar todo un lote")')->count()
+        );
+    }
+    
     /**
      * {@inheritDoc}
      */

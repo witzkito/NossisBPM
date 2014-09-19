@@ -1,0 +1,56 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Trazladar Lote Stock{% endblock %}
+
+
+{% block body %}
+<hr>
+    <div class="form">
+        <form action="{{ path('trazladar_lote_stock') }}" method="post">
+            {{ form_rest(form) }}
+            <input class="submit" type="submit" value="Buscar"  />
+        </form>
+    </div>
+    <br /><br />
+    <div class='grid'>
+        <table>
+            <tr>
+                <th>Lote</th>
+                <th>Palets</th>
+                <th>Unidades</th>
+                <th>Productos</th>
+
+            </tr>
+            {% for key, lote in lotes %}
+            <tr>
+                <td>{{ key }}</td>
+                {% set palet = 0 %}
+                {% set cant = 0 %}
+                {% set prod = [] %}
+                {% for stock in lote %}
+                    {% set palet = palet + 1 %}
+                    {% set cant = cant  + stock.actual %}
+                    {% if stock.producto.nombre not in prod %}
+                        {% set prod = prod | merge([stock.producto.nombre])%}
+                    {% endif %}
+                {% endfor %}
+                <td>{{ palet }}</td>
+                <td>{{ cant }}</td>
+                <td>
+                    {% for producto in prod %}
+                        {{ producto }}
+                        {% if not loop.last %}
+                            <span> - </span>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td><a href='{{ path('lote_trazladar_stock', {'lote' : key , 'area' : area.id})}}'>Trazladar</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+
+{% endblock %}
+    
+    

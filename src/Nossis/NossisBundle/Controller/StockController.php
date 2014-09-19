@@ -256,5 +256,56 @@ class StockController extends Controller
                     'first' => false));
          
     }
+    
+    public function trazladarLoteAction(){
+        $form = $this->createFormBuilder()
+            ->add('area', 'genemu_jqueryselect2_entity', array(
+                "class" => "Nossis\NossisBundle\Entity\Area",
+                'label' => 'Areas'))
+            ->getForm();
+        $request = $this->get('request');
+        $lotes = null; $area = null;
+         if ($request->getMethod() == 'POST'){
+            $form->bind($request);
+            $area = $form->getData()['area'];
+            $lotes = $area->getLotesStock();
+         }
+        return $this->render('NossisBundle:Stock:trazladarLote.html.twig',
+                 array('form' => $form->createView(), 'lotes' => $lotes, 'area' => $area));
+    }
+    
+    public function trazladarLoteAreaAction($lote, $area){
+        $trazlado = new Trazlado;
+        $form = $this->get('form.factory')->create(
+                new TrazladoType(),
+                $trazlado
+         );
+        $request = $this->get('request');
+         if ($request->getMethod() == 'POST'){
+            $form->bind($request);
+            $trazlado = $form->getData();
+            $em = $this->get('doctrine')->getManager();
+            $stocks = $em->getRepository('NossisBundle:Stock')->findBy(array('lote' => $lote, 'area' => $area));
+            foreach ($stocks as $stock){                    
+                $stock->setArea($trazlado->getArea());
+                $trazlado->setFecha(new DateTime('now'));
+                $trazlado->setStock($stock);
+
+                $estadoStock = new EstadoStock;
+                $estadoStock->setStock($stock);
+                $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Trazlado')));
+                $estadoStock->setDescripcion("Se trazlado al area " . $trazlado->getArea()->getNombre());
+                $estadoStock->setFecha(new DateTime('now'));
+
+                $em->persist($trazlado);
+                $em->persist($stock);
+                $em->persist($estadoStock);                
+            }
+            $em->flush();
+            return $this->indexAction();
+         }
+        return $this->render('NossisBundle:Stock:trazladarLoteArea.html.twig',
+                 array('form' => $form->createView(), 'lote' => $lote, 'area' => $area));
+    }
 
 }

@@ -238,4 +238,18 @@ class Area
     {
         return $this->trazlados;
     }
+    
+    /**
+     * Devuelve una matriz de Stock > 0 por lote
+     * @return type
+     */
+    public function getLotesStock(){
+        $lote = array();
+        foreach($this->stocks as $stock){
+           if ($stock->getActual() > 0){
+            $lote[$stock->getLote()][$stock->getId()] = $stock;
+           }
+        }
+        return $lote;
+    }
 }
