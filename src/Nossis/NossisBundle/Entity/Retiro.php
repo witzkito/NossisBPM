@@ -56,7 +56,7 @@ class Retiro
     /**
      * @var string
      *
-     * @ORM\Column(name="transportista", type="string", length=100)
+     * @ORM\Column(name="transportista", type="string", length=100, nullable=true)
      */
     private $transportista;
     

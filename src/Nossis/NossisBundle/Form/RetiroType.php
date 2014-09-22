@@ -19,7 +19,10 @@ class RetiroType extends AbstractType
             ->add('nroOrden')
             ->add('patente')
             ->add('stocks')
-            ->add('transportista')
+            ->add('transportista', 'text', array(
+                'required' => false,
+                'label' => 'Transportista'
+            ))
             ->add('cliente', 'genemu_jqueryselect2_entity', array(
                 "class" => "Nossis\NossisBundle\Entity\Cliente",
                 'label' => 'Cliente'))
