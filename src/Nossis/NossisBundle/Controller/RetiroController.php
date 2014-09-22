@@ -65,14 +65,22 @@ class RetiroController extends Controller
                     if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $retiro->codigo))) != null){
                         if ($stock->getArea()->getSalida()){
                             if (($retirostock = $em->getRepository('NossisBundle:RetiroStock')->findOneBy(array('retiro' => $retiro->getId(), 'stock' => $stock->getId()))) == null){
-                                $retirostock = new RetiroStock;
-                                $retirostock->setStock($stock);
-                                $retirostock->setRetiro($retiro);
-                                $retirostock->setCantidad($stock->getActual());
-                                $retiro->addStock($retirostock);
-                                $cantidad = $stock->getIngresado() - $retirostock->getCantidad();
-                                $stock->setActual($cantidad);
-                                $em->persist($stock);
+                                if ($this->comprobarSinConfirmar($stock)){
+                                    $retirostock = new RetiroStock;
+                                    $retirostock->setStock($stock);
+                                    $retirostock->setRetiro($retiro);
+                                    $retirostock->setCantidad($stock->getActual());
+                                    $retiro->addStock($retirostock);
+                                    $cantidad = $stock->getIngresado() - $retirostock->getCantidad();
+                                    $stock->setActual($cantidad);
+                                    $em->persist($stock);
+                                }else{
+                                    $this->get('session')->getFlashBag()->add(
+                                        'notice',
+                                    'No se puede agregar por que el articulo se encuentra en un Despacho, sin confirmar'
+                            );
+                                }
+                                
                             }
                         }else{
                             $this->get('session')->getFlashBag()->add(
@@ -95,6 +103,15 @@ class RetiroController extends Controller
          
         }
             
+    }
+    
+    private function comprobarSinConfirmar($stock){
+        foreach($stock->getRetiros() as $r){
+            if (!$r->getRetiro()->getConfirmado()){
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
