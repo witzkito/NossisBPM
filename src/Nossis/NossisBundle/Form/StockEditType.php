@@ -25,7 +25,6 @@ class StockEditType extends AbstractType
                     'choices'   => array('A' => 'A', 'B' => 'B', 'C' => 'C'),
                     'required'  => true,
                 ))
-            ->add('area')
         ;
     }
     
