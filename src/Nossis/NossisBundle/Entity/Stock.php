@@ -609,4 +609,16 @@ class Stock
     {
         return $this->numero;
     }
+    
+    public function retirar($cantidad)
+    {
+        $this->actual = $this->actual - $cantidad;
+        return $this;
+    }
+    
+    public function devolver($cantidad)
+    {
+        $this->actual = $this->actual + $cantidad;
+        return $this;
+    }
 }

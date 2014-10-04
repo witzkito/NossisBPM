@@ -49,7 +49,7 @@ class Retiro
     
     
      /**
-     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="retiro", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="retiro", cascade={"persist", "remove"})
      */
     protected $stocks;
     

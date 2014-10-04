@@ -25,3 +25,7 @@ confirmar_retiro:
 imprimir_retiro:
     pattern:  /imprimir/{id}
     defaults: { _controller: NossisBundle:Retiro:imprimir }
+    
+borrar_retiro:
+    pattern:  /borrar/{id}
+    defaults: { _controller: NossisBundle:Retiro:borrar }

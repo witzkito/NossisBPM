@@ -71,8 +71,8 @@ class RetiroController extends Controller
                                     $retirostock->setRetiro($retiro);
                                     $retirostock->setCantidad($stock->getActual());
                                     $retiro->addStock($retirostock);
-                                    $cantidad = $stock->getIngresado() - $retirostock->getCantidad();
-                                    $stock->setActual($cantidad);
+                                    //$cantidad = $stock->getIngresado() - $retirostock->getCantidad();
+                                    $stock->retirar($retirostock->getCantidad());
                                     $em->persist($stock);
                                 }else{
                                     $this->get('session')->getFlashBag()->add(
@@ -166,7 +166,22 @@ class RetiroController extends Controller
         $editar = new RowAction('Editar', 'edit_retiro');
         $editar->setRouteParametersMapping(array('retiro.id' => 'id'));
         $grid->addRowAction($editar);
-
+        
+        $borrar = new RowAction('Borrar', 'borrar_retiro');
+        $borrar->manipulateRender(
+            function($action, $row)
+            {
+                if($row->getField('confirmado')){
+                    return null;
+                }else{
+                    $action->setTitle('Borrar');
+                }
+                return $action;
+            }
+            );
+        $borrar->setRouteParametersMapping(array('borrar.id' => 'id'));
+        
+        $grid->addRowAction($borrar);
         $grid->setSource($source);
         $grid->setDefaultOrder('id', 'desc');
         return $grid->getGridResponse('NossisBundle:Retiro:listar.html.twig');
@@ -177,6 +192,25 @@ class RetiroController extends Controller
         $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
         return $this->render('NossisBundle:Retiro:show.html.twig', array("retiro" => $retiro));
         
+    }
+    
+    public function borrarAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
+        foreach ($retiro->getStocks() as $retiroStock){
+            $retiroStock->getStock()->devolver($retiroStock->getCantidad());
+            $em->persist($retiroStock->getStock());
+            
+            $estadoStock = new EstadoStock;
+            $estadoStock->setStock($retiroStock->getStock());
+            $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Cancelado Retiro')));
+            $estadoStock->setDescripcion("Se cancelo el retiro de ". $retiroStock->getCantidad() ." unidades");
+            $estadoStock->setFecha(new \DateTime('now'));
+            $em->persist($estadoStock);
+        }
+        $em->remove($retiro);
+        $em->flush();
+        return $this->listarAction();
     }
     
    
