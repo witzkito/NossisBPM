@@ -21,7 +21,7 @@
             </tr>
         </table>    
         
-        <div font-size="12" margin-top="40px">
+        <div font-size="12" margin-top="5px">
             <div margin-top="40px">
                 <b>Fecha:</b> {{ "now" | date('d-m-Y') }}<br></br>
                 <b>Hora:</b> {{ "now" | date('h:m A') }}
@@ -29,22 +29,32 @@
 
             <div margin-top="30px">
                 Por la presente se da CONFORMIDAD  a las condiciones generales de los productos cargados, y forma de carga,
-                Según orden de carga Nº: {{ retiro.nroorden }}
+                <br />Según orden de carga Nº: {{ retiro.nroorden }}
             </div>
 
-            <h3 margin-top="50px" margin-bottom="20px" >Datos del transporte:</h3>  
+	    <h3 margin-top="25px" margin-bottom="20px" >Datos del Cliente:</h3>  
 
             <div>
-                <b>Chapa patente Nº:</b> {{ retiro.patente }} <br /><br />
-                <b>Empresa:</b> {{ retiro.empresa.nombre }} <br /><br />
-                <b>Nombre del transportista:</b> {{ retiro.transportista.nombre }}
+                <b>Nombre:</b> {{ retiro.cliente }} <br />
+                <b>Ciudad:</b> {{ retiro.cliente.ciudad }} <br />
             </div>
 
-            <h3 margin-top="50px" margin-bottom="20px">Datos de la carga:</h3>
+            <h3 margin-top="25px" margin-bottom="20px" >Datos del transporte:</h3>  
+
+            <div>
+                <b>Chapa patente Nº:</b> {{ retiro.patente }} <br />
+                <b>Empresa:</b> {{ retiro.empresa.nombre }} <br />
+                <b>Nombre del transportista:</b> {{ retiro.transportista }}
+            </div>
+
+            <h3 margin-top="20px" margin-bottom="20px">Datos de la carga:</h3>
 
 
                 <table text-align="center" >
                     <tr>
+			<td  height="30px" width="100px" border-color="black">
+                            <b>Nro.</b>
+                        </td>
                         <td  height="30px" width="100px" border-color="black">
                             <b>Lote</b>
                         </td>
@@ -60,6 +70,9 @@
                     </tr>
                     {% for stock in stocks %}
                     <tr>
+			<td height="25px" border-color="black">
+                            {{ stock.stock.id }}
+                        </td>
                         <td height="25px" border-color="black">
                             {{ stock.stock.lote }}
                         </td>
@@ -77,14 +90,7 @@
                     {% endfor %}
                 </table>
 
-            <div margin-top="30px" margin-bottom="120px">
-                <p>Otros:</p>
-            </div>
-
-
-
-
-            <table text-align="center">
+            <table text-align="center" margin-top="70px">
                 <tr>
                     <td border-color="white">
                         ............................................
