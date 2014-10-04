@@ -17,6 +17,8 @@ class RetiroType extends AbstractType
         $builder
             ->add('fechaSalida')
             ->add('nroOrden')
+            ->add('formaCarga', 'choice', array(
+                    'choices' => array('Paletizada' => 'Paletizada', 'Suelta' => 'Suelta')))
             ->add('patente')
             ->add('stocks')
             ->add('transportista', 'text', array(

@@ -47,6 +47,14 @@ class Retiro
      */
     private $patente;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="formaCarga", type="string", length=100, nullable=true)
+     * @GRID\Column(title="Carga", filterable=true )
+     */
+    private $formaCarga;
+    
     
      /**
      * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="retiro", cascade={"persist", "remove"})
@@ -313,5 +321,31 @@ class Retiro
     public function getTransportista()
     {
         return $this->transportista;
+    }
+
+    /**
+     * Set formaCarga.
+
+     *
+     * @param string $formaCarga
+     *
+     * @return Retiro
+     */
+    public function setFormaCarga($formaCarga)
+    {
+        $this->formaCarga = $formaCarga;
+
+        return $this;
+    }
+
+    /**
+     * Get formaCarga.
+
+     *
+     * @return string
+     */
+    public function getFormaCarga()
+    {
+        return $this->formaCarga;
     }
 }
