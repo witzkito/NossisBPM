@@ -1,0 +1,38 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Despachar{% endblock %}
+
+{% block body %}
+    
+    <hr>
+        <div class="form">
+            <form action="{{ path('index_listado_general') }}" method="post">
+                {{form_rest(form)}}
+                <input class="submit" type="submit" value="Listar"  />
+            </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+    {% block stylesheets %} 
+            {{ form_stylesheet(form) }}
+    {% endblock %}
+    
+    <script>
+        $(function(){
+
+            $(document).on('click','input#form_fecha', function(){
+                if ($('input#form_fecha').is(':checked')){
+                    $('input#form_desde').prop('disabled' , false);
+                    $('input#form_hasta').prop('disabled' , false);
+                }else{
+                    $('input#form_desde').prop('disabled' , true);
+                    $('input#form_hasta').prop('disabled' , true);
+                }
+                
+            });
+            
+        });
+    </script>
+{% endblock %}

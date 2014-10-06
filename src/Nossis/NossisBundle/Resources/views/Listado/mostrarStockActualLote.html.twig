@@ -1,0 +1,35 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Listar Despachos{% endblock %}
+
+{% block body %}
+    
+    <hr>
+    <a class="pdf" href="{{ path('imprimir_stock_actual_lote_listado_general') }}">Imprimir</a>
+    <div class="grid">
+        <table>
+            <tr>
+                <th>Lote</th>
+                <th>Nombre</th>
+                <th>Palets</th>
+                <th>Unidades</th>
+            </tr>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{entity.lote}}</td>
+                    <td>{{entity.nombre}}</td>
+                    <td>{{entity.palets}}</td>
+                    <td>{{entity.total}}</td>
+                    
+                    
+
+                </tr>
+            {% endfor %}
+            
+        </table>
+    </div>
+
+    
+{% endblock %}
+
+    

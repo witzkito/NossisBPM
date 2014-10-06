@@ -21,6 +21,7 @@ class Builder extends ContainerAware
         $menu['Listar']->addChild('Stock Actual', array('route' => 'listar_stock'));
         $menu['Listar']->addChild('Fraccionados', array('route' => 'listar_fraccionar'));
         $menu['Listar']->addChild('Despachos', array('route' => 'list_retiro'));
+        $menu['Listar']->addChild('Generales', array('route' => 'index_listado_general'));
         
         $menu->addChild('Administrar', array('route' => 'sonata_admin_redirect'))
         ->setAttribute('divider_prepend', true);
