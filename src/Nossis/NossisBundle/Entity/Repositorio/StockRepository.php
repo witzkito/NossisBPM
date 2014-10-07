@@ -40,5 +40,22 @@ class StockRepository extends EntityRepository
         return $query->getResult();
     }
     
+    public function mostrarStockActualLoteFecha($desde, $hasta)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('s.lote, count(s.id) as palets, sum(s.actual) as total, p.nombre')
+            ->from('NossisBundle:Stock', 's')
+            ->join('s.producto', 'p')
+            ->where('s.actual > 0')
+            ->andWhere('s.fechaIngreso >= :desde')
+            ->andWhere('s.fechaIngreso <= :hasta')
+            ->GroupBy('s.lote')
+            ->orderBy('p.nombre')
+            ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
+            ->getQuery();
+        return $query->getResult();
+    }
+    
     
 }

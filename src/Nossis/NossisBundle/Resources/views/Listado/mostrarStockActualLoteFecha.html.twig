@@ -1,9 +1,10 @@
 {% extends "NossisBundle::layout.html.twig" %}
 
-{% block title %}Listar Stock Actual por Lote{% endblock %}
+{% block title %}Listar Stock Actual por Lote {% endblock %}
 
 {% block body %}
     
+    <h3>Listado de Stock Actual por lote desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}</h3>
     <hr>
     <div class="grid">
         <table>
@@ -37,7 +38,7 @@
                 <th><h4>{{total}}</h4></th>
             </tr>
         </table>
-        <a class="pdf" href="{{ path('imprimir_stock_actual_lote_listado_general') }}">Imprimir</a>
+        <a class="pdf" href="{{ path('imprimir_stock_actual_lote_fecha_listado_general') }}">Imprimir</a>
     </div>
 
     

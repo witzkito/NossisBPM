@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ListadoController extends Controller
 {
@@ -62,7 +63,7 @@ class ListadoController extends Controller
     
     private function mostrarStockActualLote($datos){
         if ($datos['fecha']){
-            $this->mostrarStockActualLoteFecha($datos);
+            return $this->mostrarStockActualLoteFechaAction($datos);
         }else{
             return $this->redirect($this->generateUrl('stock_actual_lote_listado_general'));            
         }
@@ -89,6 +90,34 @@ class ListadoController extends Controller
         $facade = $this->get('ps_pdf.facade');
         $response = new Response();
         $this->render('NossisBundle:Listado:mostrarStockActualLote.pdf.twig', array("entities" => $entities), $response);
+        
+        $xml = $response->getContent();
+        $content = $facade->render($xml);
+        
+        return new Response($content, 200, array('content-type' => 'application/pdf'));
+    }
+    
+   public function mostrarStockActualLoteFechaAction($datos){
+        $em = $this->get('doctrine')->getManager();
+        $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($datos['desde'], $datos['hasta']);
+        $session = new Session();
+        $session->set('desde', $datos['desde']);
+        $session->set('hasta', $datos['hasta']);
+        return $this->render('NossisBundle:Listado:mostrarStockActualLoteFecha.html.twig', array(
+                "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta']));        
+    }
+    
+    /**
+     * @Route("/listar/general/index/stock/actual/lote/fecha/imprimir", name="imprimir_stock_actual_lote_fecha_listado_general")
+     * @Template()
+     */
+    public function imprimirStockActualLoteFechaAction(){
+        $em = $this->get('doctrine')->getManager();
+        $session = new Session();
+        $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($session->get('desde'), $session->get('hasta'));
+        $facade = $this->get('ps_pdf.facade');
+        $response = new Response();
+        $this->render('NossisBundle:Listado:mostrarStockActualLoteFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'), "hasta" => $session->get('hasta')), $response);
         
         $xml = $response->getContent();
         $content = $facade->render($xml);

@@ -10,6 +10,10 @@
                 {{form_rest(form)}}
                 <input class="submit" type="submit" value="Listar"  />
             </form>
+        </div>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <hr>
+        
 {% endblock %}
 
 {% block javascripts %}
@@ -21,7 +25,13 @@
     
     <script>
         $(function(){
-
+            if ($('input#form_fecha').is(':checked')){
+                $('input#form_desde').prop('disabled' , false);
+                $('input#form_hasta').prop('disabled' , false);
+            }else{
+                $('input#form_desde').prop('disabled' , true);
+                $('input#form_hasta').prop('disabled' , true);
+            }
             $(document).on('click','input#form_fecha', function(){
                 if ($('input#form_fecha').is(':checked')){
                     $('input#form_desde').prop('disabled' , false);
