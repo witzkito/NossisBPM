@@ -24,7 +24,11 @@ class StockType extends AbstractType
             ))
             ->add('palet')
             ->add('turno','choice', array(
-                    'choices'   => array('A' => 'A', 'B' => 'B', 'C' => 'C'),
+                    'choices'   => array(
+                        'A' => 'A',
+                        'B' => 'B',
+                        'C' => 'C',
+                        '0' => 'SIN TURNO'),
                     'required'  => true,
                 ))
             ->add('ingresado')
