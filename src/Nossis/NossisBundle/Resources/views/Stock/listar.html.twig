@@ -3,7 +3,7 @@
 {% block title %}Listar Stock{% endblock %}
 
 {% block body %}
-
+    
     <div class="grid">
         {% for producto in productos %}
             {% if producto.stocks | length > 0 %}
