@@ -9,7 +9,7 @@
                         <td border-color="white" padding-bottom="20px" width="200px" text-align="right" font-size="130px" font-style="bold">{{ stock.id }}</td>
                     </tr>
                 </table>
-                    <table font-size="40px" >
+                    <table font-size="40px" margin-top="-20px" >
                         <tr>
                             <td border-color="white"><b>Producto:</b> {{stock.producto.nombre}}</td>
                         </tr>
@@ -33,7 +33,7 @@
                         </tr>
                     </table>
                 
-                <table margin-top="50px">
+                <table margin-top="30px">
                     <tr>
                         <td border-color="white" padding-left="30px"  >
                             <img width="350px" src="{{ pdf_image(mopa_barcode_url('code128', stock.codigo , {'barcodeOptions': {}, 'rendererOptions': {width:0, height:0}})) }}" />
