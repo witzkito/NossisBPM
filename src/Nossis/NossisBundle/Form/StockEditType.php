@@ -15,16 +15,31 @@ class StockEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('producto')
+            ->add('producto', 'genemu_jqueryselect2_entity', array(
+                "class" => "Nossis\NossisBundle\Entity\Producto",
+                'label' => 'Producto'))
             ->add('lote')
             ->add('fechaEnvasado', 'genemu_jquerydate', array(
                 'widget' => 'single_text'
             ))
             ->add('palet')
             ->add('turno','choice', array(
-                    'choices'   => array('A' => 'A', 'B' => 'B', 'C' => 'C'),
+                    'choices'   => array(
+                        'A' => 'A',
+                        'B' => 'B',
+                        'C' => 'C',
+                        '0' => 'SIN TURNO'),
                     'required'  => true,
                 ))
+            ->add('ingresado', 'integer', array(
+                    'label'     => 'Stock Ingresado'
+            ))
+            ->add('actual', 'integer', array(
+                    'label'     => 'Stock Actual'
+            ))
+            ->add('motivoEdicion', 'textarea', array(
+                    'label'     => 'Motivo de la Edicion'
+            ))
         ;
     }
     

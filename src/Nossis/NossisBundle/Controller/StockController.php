@@ -186,9 +186,17 @@ class StockController extends Controller
             $form->bind($request);
             if($form->isValid()){
                 $stock = $form->getData();
+                $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Modificado'));
+                $estadoStock = new EstadoStock;
+                $estadoStock->setEstado($estado);
+                $estadoStock->setStock($stock);
+                $estadoStock->setDescripcion("Se realizaron modificaciones por motivo: " . $stock->motivoEdicion);
+                $estadoStock->setFecha(new \DateTime('NOW'));
+                
                 $em->persist($stock);
+                $em->persist($estadoStock);
                 $em->flush();
-                return $this->showAction($id);
+                return $this->redirect($this->generateUrl('show_stock', array('id' => $stock->getId())));
             }
          }    
          return $this->render('NossisBundle:Stock:editar.html.twig',
@@ -307,5 +315,4 @@ class StockController extends Controller
         return $this->render('NossisBundle:Stock:trazladarLoteArea.html.twig',
                  array('form' => $form->createView(), 'lote' => $lote, 'area' => $area));
     }
-
 }

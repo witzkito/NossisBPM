@@ -132,7 +132,7 @@ class Stock
      */
     private $origenFraccionado;
 
-    
+    public $motivoEdicion;
     
 
 
