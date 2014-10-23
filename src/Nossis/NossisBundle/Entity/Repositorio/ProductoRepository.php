@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductoRepository extends EntityRepository
 {
+    
+    public function findAllFecha($desde, $hasta)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('p.nombre, count(s.id) as palets, sum(s.actual) as total')
+            ->from('NossisBundle:Producto', 'p')
+            ->join('p.stocks', 's')
+            ->where('s.actual > 0')
+            ->andWhere('s.fechaIngreso >= :desde')
+            ->andWhere('s.fechaIngreso <= :hasta')
+            ->GroupBy('p.nombre')
+            ->orderBy('p.nombre')
+            ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
+            ->getQuery();
+        return $query->getResult();
+    }
 }

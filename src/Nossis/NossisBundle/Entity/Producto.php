@@ -148,4 +148,14 @@ class Producto
         }
         return $total;
     }
+    
+    public function getTotalPalets(){
+        $palets = 0;
+        foreach ($this->getStocks() as $stock){
+            if ($stock->getActual() != 0){
+                $palets = $palets + 1;
+            }
+        }
+        return $palets;
+    }
 }
