@@ -57,5 +57,19 @@ class StockRepository extends EntityRepository
         return $query->getResult();
     }
     
+    public function findAllFecha($desde, $hasta)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('s')
+            ->from('NossisBundle:Stock', 's')
+            ->where('s.actual > 0')
+            ->andWhere('s.fechaIngreso >= :desde')
+            ->andWhere('s.fechaIngreso <= :hasta')
+            ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
+            ->getQuery();
+        return $query->getResult();
+    }
+    
     
 }

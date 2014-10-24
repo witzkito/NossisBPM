@@ -1,0 +1,50 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Listar Stock Actual por Unidad{% endblock %}
+
+{% block body %}
+    
+    <hr>
+    <div class="grid">
+        <table>
+            <tr>
+                <th>Nro</th>
+                <th>Lote</th>
+                <th>Producto</th>
+                <th>Area</th>
+                <th>Unidades</th>
+            </tr>
+            {% set totalUnidades = 0 %}{% set totalPalets = 0 %}
+            {% for entity in entities %}
+                {% if entity.actual > 0 %}
+                    <tr>
+                        <td>{{entity.id}}</td>
+                        <td>{{entity.lote}}</td>
+                        <td>{{entity.producto}}</td>
+                        <td>{{entity.area}}</td>
+                        <td>{{entity.actual}}</td>
+                    </tr>
+                    {% set totalUnidades = totalUnidades + entity.actual %}
+                    {% set totalPalets = totalPalets + 1 %}
+                {% endif %}
+            {% endfor %}
+            
+        </table>
+        
+        <table>
+            <tr>
+                <th><h4>Total de Palets</h4></th>
+                <th><h4>{{totalPalets}}</h4></th>
+            </tr>
+            <tr>
+                <th><h4>Total de Unidades</h4></th>
+                <th><h4>{{totalUnidades}}</h4></th>
+            </tr>
+        </table>
+        <a class="pdf" href="{{ path('imprimir_stock_actual_unidad_listado_general') }}">Imprimir</a>
+    </div>
+
+    
+{% endblock %}
+
+    

@@ -1,0 +1,60 @@
+<pdf>
+    <dynamic-page>
+        
+        <table>
+            <tr>
+                <td width="100px" border-color="white">
+                    <img src="{{ pdf_image('logo.jpg') }}" />
+                </td>
+                <td border-color="white">
+                    <div text-align="center">
+                        <p line-height="-1px">
+                            Elaboradores de Fécula de mandioca ALDEMA <br></br>
+                            INAC 6084 del 16-05-1967 – Dir. Prov. Coop. 102 del 04-07-1966 <br></br>
+                            <b>Planta Industrial:</b> Ruta Nac. 12 – TEL.: 03743-491153 – 3334 GARUHAPE – Misiones <br></br>
+                            <b>Administración:</b> Av. 9 de Julio y Asunción – TEL/Fax: 03743-420204/042 <br></br>
+                            E-mail: coopsalberto@prico.com.ar – www.coopsanalberto.com.ar <br></br>
+                            3334 PUERTO RICO – Misiones
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>    
+        
+        <h3 margin-top="30px;">Listado de Stock Actual por unidad desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}</h3>
+        <table margin-top="30px;" margin-left="20px" margin-right="20px">
+            <tr>
+                <td><b>Nro.</b></td>
+                <td><b>Lote</b></td>
+                <td><b>Producto</b></td>
+                <td><b>Area</b></td>
+                <td><b>Unidades</b></td>
+            </tr>
+            {% set totalUnidades = 0 %}{% set totalPalets = 0 %}
+            {% for entity in entities %}
+                {% if entity.actual > 0 %}
+                    <tr>
+                        <td>{{entity.id}}</td>
+                        <td>{{entity.lote}}</td>
+                        <td width="400px">{{entity.producto}}</td>
+                        <td width="100px">{{entity.area}}</td>
+                        <td>{{entity.actual}}</td>
+                    </tr>
+                    {% set totalUnidades = totalUnidades + entity.actual %}
+                    {% set totalPalets = totalPalets + 1 %}
+                {% endif %}
+            {% endfor %}
+            
+        </table>
+        <table margin-top="30px;" margin-left="20px" margin-right="20px">
+            <tr>
+                <td background-color="gray"><h4><b>Total de Palets</b></h4></td>
+                <td background-color="gray"><h4><b>{{totalPalets}}</b></h4></td>
+            </tr>
+            <tr>
+                <td background-color="gray"><h4><b>Total de Unidades</b></h4></td>
+                <td background-color="gray"><h4><b>{{totalUnidades}}</b></h4></td>
+            </tr>            
+        </table>
+    </dynamic-page>
+</pdf>
