@@ -1,48 +1,29 @@
 {% extends "NossisBundle::layout.html.twig" %}
 
-{% block title %}Despachar{% endblock %}
+{% block title %}Listados{% endblock %}
 
 {% block body %}
     
     <hr>
-        <div class="form">
-            <form action="{{ path('index_listado_general') }}" method="post">
-                {{form_rest(form)}}
-                <input class="submit" type="submit" value="Listar"  />
-            </form>
-        </div>
-    <br /><br /><br /><br /><br /><br /><br /><br />
+    <div class="tabla-listado">
+        <table class="table">
+            <tr>
+                <th>Stock</th>
+            </tr>
+            <tr>
+                <td>Por Lote</td>
+                <td><a href="{{ path('stock_actual_lote_listado_general') }}">Ver</a></td>
+            </tr>
+            <tr>
+                <td>Por Producto</td>
+                <td><a href="{{ path('stock_actual_producto_listado_general') }}">Ver</a></td>
+            </tr>
+            <tr>
+                <td>Por Unidad</td>
+                <td><a href="{{ path('stock_actual_unidad_listado_general') }}">Ver</a></td>
+            </tr>
+        </table>
+    </div>
     <hr>
         
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ form_javascript(form) }}
-    {% block stylesheets %} 
-            {{ form_stylesheet(form) }}
-    {% endblock %}
-    
-    <script>
-        $(function(){
-            if ($('input#form_fecha').is(':checked')){
-                $('input#form_desde').prop('disabled' , false);
-                $('input#form_hasta').prop('disabled' , false);
-            }else{
-                $('input#form_desde').prop('disabled' , true);
-                $('input#form_hasta').prop('disabled' , true);
-            }
-            $(document).on('click','input#form_fecha', function(){
-                if ($('input#form_fecha').is(':checked')){
-                    $('input#form_desde').prop('disabled' , false);
-                    $('input#form_hasta').prop('disabled' , false);
-                }else{
-                    $('input#form_desde').prop('disabled' , true);
-                    $('input#form_hasta').prop('disabled' , true);
-                }
-                
-            });
-            
-        });
-    </script>
 {% endblock %}

@@ -821,3 +821,8 @@ th div {
 .brand > span {
     font-size: 58%;
 }
+
+.tabla-listado {
+    margin-left: 30px;
+    width: 50%;
+}

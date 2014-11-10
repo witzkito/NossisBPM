@@ -5,6 +5,13 @@
 {% block body %}
     
     <hr>
+    
+    <div class="form">
+        <form action="{{ path('stock_actual_lote_listado_general') }}" method="post">
+        {{ form_rest(form) }}
+        <input class="submit" type="submit" value="Filtrar"  />
+    </div>
+    <br /><br /><br />
     <div class="grid">
         <table>
             <tr>
@@ -43,4 +50,8 @@
     
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+{% endblock %}
     

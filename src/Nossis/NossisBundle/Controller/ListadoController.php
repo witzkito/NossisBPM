@@ -33,58 +33,11 @@ class ListadoController extends Controller
      
      private function crearFormulario(){
         return $this->createFormBuilder()
-            ->add('mostrar', 'choice', array(
-                "choices" => array("Stock-Actual" => "Stock Actual"),
-                "label" => "¿Que mostrar?"
-            ))
-            ->add('como', 'choice', array(
-                "choices" => array("lote" => "Lote", "producto" => "Producto", "unidad" => "Unidad"),
-                "label" => "¿Como?"
-            ))
-            ->add('fecha', 'checkbox', array(
-                "label" => "¿Por Rango de Fecha?",
-                "required" => false
-            ))    
             ->add('desde', 'genemu_jquerydate', array(
                 'widget' => 'single_text'))
             ->add('hasta', 'genemu_jquerydate', array(
                 'widget' => 'single_text'))    
             ->getForm();
-    }
-    
-    private function mostrarStockActual($datos){
-        if ($datos['como'] == "lote"){
-            $retorno = $this->mostrarStockActualLote($datos);
-        }else if($datos['como'] == "producto"){
-            $retorno = $this->mostrarStockActualProducto($datos);
-        }else{
-            $retorno = $this->mostrarStockActualUnidad($datos);
-        }        
-        return $retorno;
-    }
-    
-    private function mostrarStockActualLote($datos){
-        if ($datos['fecha']){
-            return $this->mostrarStockActualLoteFechaAction($datos);
-        }else{
-            return $this->redirect($this->generateUrl('stock_actual_lote_listado_general'));            
-        }
-    }
-    
-    private function mostrarStockActualProducto($datos){
-        if ($datos['fecha']){
-            return $this->mostrarStockActualProductoFechaAction($datos);
-        }else{
-            return $this->redirect($this->generateUrl('stock_actual_producto_listado_general'));            
-        }
-    }
-    
-    private function mostrarStockActualUnidad($datos){
-        if ($datos['fecha']){
-            return $this->mostrarStockActualUnidadFechaAction($datos);
-        }else{
-            return $this->redirect($this->generateUrl('stock_actual_unidad_listado_general'));            
-        }
     }
     
     /**
@@ -94,8 +47,15 @@ class ListadoController extends Controller
     public function mostrarStockActualLoteAction(){
         $em = $this->get('doctrine')->getManager();
         $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLote();
+        $form = $this->crearFormulario();
+        $request = $this->get('request');
+        $form->bind($request);
+        if ($form->isValid()){
+            $datos = $form->getData();
+            return $this->mostrarStockActualLoteFechaAction($datos);
+        }
         return $this->render('NossisBundle:Listado:mostrarStockActualLote.html.twig', array(
-                "entities" => $entities));        
+                "entities" => $entities, "form" => $form->createView()));        
     }
     
     /**
@@ -105,8 +65,15 @@ class ListadoController extends Controller
     public function mostrarStockActualProductoAction(){
         $em = $this->get('doctrine')->getManager();
         $entities = $em->getRepository('NossisBundle:Producto')->findAll();
+        $form = $this->crearFormulario();
+        $request = $this->get('request');
+        $form->bind($request);
+        if ($form->isValid()){
+            $datos = $form->getData();
+            return $this->mostrarStockActualProductoFechaAction($datos);
+        }
         return $this->render('NossisBundle:Listado:mostrarStockActualProducto.html.twig', array(
-                "entities" => $entities));        
+                "entities" => $entities, "form" => $form->createView()));        
     }
     
     /**
@@ -116,8 +83,15 @@ class ListadoController extends Controller
     public function mostrarStockActualUnidadAction(){
         $em = $this->get('doctrine')->getManager();
         $entities = $em->getRepository('NossisBundle:Stock')->findAll();
+        $form = $this->crearFormulario();
+        $request = $this->get('request');
+        $form->bind($request);
+        if ($form->isValid()){
+            $datos = $form->getData();
+            return $this->mostrarStockActualUnidadFechaAction($datos);
+        }
         return $this->render('NossisBundle:Listado:mostrarStockActualUnidad.html.twig', array(
-                "entities" => $entities));        
+                "entities" => $entities, "form" => $form->createView()));        
     }
     
     /**
