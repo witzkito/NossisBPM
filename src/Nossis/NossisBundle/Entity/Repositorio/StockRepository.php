@@ -40,10 +40,25 @@ class StockRepository extends EntityRepository
         return $query->getResult();
     }
     
-    public function mostrarStockActualLoteFecha($desde, $hasta)
+    public function mostrarStockActualLoteFecha($desde, $hasta, $producto = null)
     {
         $em = $this->getEntityManager();
+        if ($producto != null)
+        {
         $query = $em->createQueryBuilder()
+            ->select('s.lote, count(s.id) as palets, sum(s.actual) as total, p.nombre')
+            ->from('NossisBundle:Stock', 's')
+            ->join('s.producto', 'p')
+            ->where('s.actual > 0')
+            ->andWhere('s.fechaIngreso >= :desde')
+            ->andWhere('s.fechaIngreso <= :hasta')
+            ->andWhere('p.id = :producto')
+            ->GroupBy('s.lote')
+            ->orderBy('p.nombre')
+            ->setParameters(array('desde' => $desde, 'hasta' => $hasta, 'producto' => $producto))
+            ->getQuery();
+        }else{
+            $query = $em->createQueryBuilder()
             ->select('s.lote, count(s.id) as palets, sum(s.actual) as total, p.nombre')
             ->from('NossisBundle:Stock', 's')
             ->join('s.producto', 'p')
@@ -54,20 +69,34 @@ class StockRepository extends EntityRepository
             ->orderBy('p.nombre')
             ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
             ->getQuery();
+        }
         return $query->getResult();
     }
     
-    public function findAllFecha($desde, $hasta)
+    public function findAllFecha($desde, $hasta, $producto = null)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQueryBuilder()
-            ->select('s')
-            ->from('NossisBundle:Stock', 's')
-            ->where('s.actual > 0')
-            ->andWhere('s.fechaIngreso >= :desde')
-            ->andWhere('s.fechaIngreso <= :hasta')
-            ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
-            ->getQuery();
+        if ($producto != null)
+        {
+            $query = $em->createQueryBuilder()
+                ->select('s')
+                ->from('NossisBundle:Stock', 's')
+                ->where('s.actual > 0')
+                ->andWhere('s.fechaIngreso >= :desde')
+                ->andWhere('s.fechaIngreso <= :hasta')                    
+                ->andWhere('s.producto = :producto')
+                ->setParameters(array('desde' => $desde, 'hasta' => $hasta, 'producto' => $producto))
+                ->getQuery();
+        }else{
+            $query = $em->createQueryBuilder()
+                ->select('s')
+                ->from('NossisBundle:Stock', 's')
+                ->where('s.actual > 0')
+                ->andWhere('s.fechaIngreso >= :desde')
+                ->andWhere('s.fechaIngreso <= :hasta')
+                ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
+                ->getQuery();
+        }
         return $query->getResult();
     }
     

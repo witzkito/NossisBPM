@@ -21,7 +21,7 @@
             </tr>
         </table>    
         
-        <h3 margin-top="30px;">Listado de Stock Actual por lote desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}</h3>
+        <h3 margin-top="30px;">Listado de Stock Actual por lote desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}} {% if producto != null %} del producto {{producto.nombre}}{% endif %}</h3>
         <table margin-top="10px;" margin-left="20px" margin-right="20px">
             <tr>
                 <td><b>Lote</b></td>

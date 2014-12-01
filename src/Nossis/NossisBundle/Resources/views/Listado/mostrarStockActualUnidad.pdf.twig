@@ -20,7 +20,8 @@
                 </td>
             </tr>
         </table>    
-        
+        Listado de Stock Actual por Unidad desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}
+    {% if producto != null %} del producto {{producto.nombre}}{% endif %}</h3>
         <table margin-top="30px;" margin-left="20px" margin-right="20px">
             <tr>
                 <td><b>Nro.</b></td>

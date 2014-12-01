@@ -17,6 +17,7 @@
         <table>
             <tr>
                 <th>Nro</th>
+                <th>Ingreso</th>
                 <th>Lote</th>
                 <th>Producto</th>
                 <th>Area</th>
@@ -27,6 +28,7 @@
                 {% if entity.actual > 0 %}
                     <tr>
                         <td>{{entity.id}}</td>
+                        <td>{{entity.fechaIngreso | date('d/m/Y h:i:a')}}</td>
                         <td>{{entity.lote}}</td>
                         <td>{{entity.producto}}</td>
                         <td>{{entity.area}}</td>

@@ -36,7 +36,11 @@ class ListadoController extends Controller
             ->add('desde', 'genemu_jquerydate', array(
                 'widget' => 'single_text'))
             ->add('hasta', 'genemu_jquerydate', array(
-                'widget' => 'single_text'))    
+                'widget' => 'single_text'))
+            ->add('producto', 'genemu_jqueryselect2_entity', array(
+                'class' => 'NossisBundle:Producto',
+                'required' => false
+            ))
             ->getForm();
     }
     
@@ -130,22 +134,34 @@ class ListadoController extends Controller
     
    public function mostrarStockActualLoteFechaAction($datos){
         $em = $this->get('doctrine')->getManager();
-        $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($datos['desde'], $datos['hasta']);
+        if ($datos['producto'] != null)
+        {
+            $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($datos['desde'], $datos['hasta'], $datos['producto']->getId());
+        }else{
+            $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($datos['desde'], $datos['hasta']);
+        }
         $session = new Session();
         $session->set('desde', $datos['desde']);
         $session->set('hasta', $datos['hasta']);
+        $session->set('producto', $datos['producto']);
         return $this->render('NossisBundle:Listado:mostrarStockActualLoteFecha.html.twig', array(
-                "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta']));        
+                "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta'], 'producto' => $datos['producto']));        
     }
     
     public function mostrarStockActualUnidadFechaAction($datos){
         $em = $this->get('doctrine')->getManager();
-        $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($datos['desde'], $datos['hasta']);
+        if ($datos['producto'] != null)
+        {
+            $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($datos['desde'], $datos['hasta'], $datos['producto']->getId());
+        }else{
+            $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($datos['desde'], $datos['hasta']);
+        }
         $session = new Session();
         $session->set('desde', $datos['desde']);
         $session->set('hasta', $datos['hasta']);
+        $session->set('producto', $datos['producto']);
         return $this->render('NossisBundle:Listado:mostrarStockActualUnidadFecha.html.twig', array(
-                "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta']));        
+                "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta'], 'producto' => $datos['producto']));        
     }
     
     /**
@@ -181,10 +197,11 @@ class ListadoController extends Controller
     public function imprimirStockActualLoteFechaAction(){
         $em = $this->get('doctrine')->getManager();
         $session = new Session();
-        $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($session->get('desde'), $session->get('hasta'));
+        $entities = $em->getRepository('NossisBundle:Stock')->mostrarStockActualLoteFecha($session->get('desde'), $session->get('hasta'), $session->get('producto'));
         $facade = $this->get('ps_pdf.facade');
         $response = new Response();
-        $this->render('NossisBundle:Listado:mostrarStockActualLoteFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'), "hasta" => $session->get('hasta')), $response);
+        $this->render('NossisBundle:Listado:mostrarStockActualLoteFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'),
+            "hasta" => $session->get('hasta'), "producto" => $session->get('producto')), $response);
         
         $xml = $response->getContent();
         $content = $facade->render($xml);
@@ -199,7 +216,7 @@ class ListadoController extends Controller
     public function imprimirStockActualProductoFechaAction(){
         $em = $this->get('doctrine')->getManager();
         $session = new Session();
-        $entities = $em->getRepository('NossisBundle:Producto')->findAllFecha($session->get('desde'), $session->get('hasta'));
+        $entities = $em->getRepository('NossisBundle:Producto')->findAllFecha($session->get('desde'), $session->get('hasta'), $session->get('producto'));
         $facade = $this->get('ps_pdf.facade');
         $response = new Response();
         $this->render('NossisBundle:Listado:mostrarStockActualProductoFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'), "hasta" => $session->get('hasta')), $response);
@@ -220,7 +237,7 @@ class ListadoController extends Controller
         $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($session->get('desde'), $session->get('hasta'));
         $facade = $this->get('ps_pdf.facade');
         $response = new Response();
-        $this->render('NossisBundle:Listado:mostrarStockActualUnidadFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'), "hasta" => $session->get('hasta')), $response);
+        $this->render('NossisBundle:Listado:mostrarStockActualUnidadFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'), "hasta" => $session->get('hasta'), "producto" => $session->get('producto')), $response);
         
         $xml = $response->getContent();
         $content = $facade->render($xml);

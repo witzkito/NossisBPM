@@ -4,7 +4,8 @@
 
 {% block body %}
     
-    <h3>Listado de Stock Actual por lote desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}</h3>
+    <h3>Listado de Stock Actual por lote desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}
+    {% if producto != null %} del producto {{producto.nombre}}{% endif %}</h3>
     <hr>
     <div class="grid">
         <table>

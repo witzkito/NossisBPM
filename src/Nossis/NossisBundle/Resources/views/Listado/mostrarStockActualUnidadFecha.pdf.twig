@@ -1,6 +1,5 @@
 <pdf>
     <dynamic-page>
-        
         <table>
             <tr>
                 <td width="100px" border-color="white">
@@ -19,12 +18,12 @@
                     </div>
                 </td>
             </tr>
-        </table>    
-        
-        <h3 margin-top="30px;">Listado de Stock Actual por unidad desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}}</h3>
+        </table>
+        <h3 margin-top="30px;">Listado de Stock Actual por lote desde {{desde |date('d/m/y')}} hasta {{ hasta | date ('d/m/y')}} {% if producto != null %} del producto {{producto.nombre}}{% endif %}</h3>
         <table margin-top="30px;" margin-left="20px" margin-right="20px">
             <tr>
                 <td><b>Nro.</b></td>
+                <td><b>Fecha Ingreso</b></td>
                 <td><b>Lote</b></td>
                 <td><b>Producto</b></td>
                 <td><b>Area</b></td>
@@ -35,16 +34,16 @@
                 {% if entity.actual > 0 %}
                     <tr>
                         <td>{{entity.id}}</td>
+                        <td width = "150px">{{entity.fechaIngreso | date('d/m/Y h:i:a')}}</td>
                         <td>{{entity.lote}}</td>
-                        <td width="400px">{{entity.producto}}</td>
-                        <td width="100px">{{entity.area}}</td>
+                        <td width="300px">{{entity.producto}}</td>
+                        <td width="80px">{{entity.area}}</td>
                         <td>{{entity.actual}}</td>
                     </tr>
                     {% set totalUnidades = totalUnidades + entity.actual %}
                     {% set totalPalets = totalPalets + 1 %}
                 {% endif %}
             {% endfor %}
-            
         </table>
         <table margin-top="30px;" margin-left="20px" margin-right="20px">
             <tr>
@@ -54,7 +53,7 @@
             <tr>
                 <td background-color="gray"><h4><b>Total de Unidades</b></h4></td>
                 <td background-color="gray"><h4><b>{{totalUnidades}}</b></h4></td>
-            </tr>            
+            </tr>
         </table>
     </dynamic-page>
 </pdf>
