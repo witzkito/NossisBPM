@@ -51,9 +51,8 @@ class StockController extends Controller
             $stock->setCodigo(0);
             $stock->setActual($stock->getIngresado());
             
-            $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Ingresado'));
             $estadoStock = new EstadoStock;
-            $estadoStock->setEstado($estado);
+            $estadoStock->setEstado('Ingresado');
             $estadoStock->setStock($stock);
             $estadoStock->setDescripcion("Ingresado al area ". $stock->getArea()->getNombre());
             $estadoStock->setFecha(new \DateTime('NOW'));
@@ -130,7 +129,7 @@ class StockController extends Controller
             
             $estadoStock = new EstadoStock;
             $estadoStock->setStock($stock);
-            $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Trazlado')));
+            $estadoStock->setEstado('Trazlado');
             $estadoStock->setDescripcion("Se trazlado al area " . $trazlado->getArea()->getNombre());
             $estadoStock->setFecha(new DateTime('now'));
             
@@ -186,9 +185,8 @@ class StockController extends Controller
             $form->bind($request);
             if($form->isValid()){
                 $stock = $form->getData();
-                $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Modificado'));
                 $estadoStock = new EstadoStock;
-                $estadoStock->setEstado($estado);
+                $estadoStock->setEstado('Modificado');
                 $estadoStock->setStock($stock);
                 $estadoStock->setDescripcion("Se realizaron modificaciones por motivo: " . $stock->motivoEdicion);
                 $estadoStock->setFecha(new \DateTime('NOW'));
@@ -238,9 +236,8 @@ class StockController extends Controller
             $stock->setActual($stock->getIngresado());
             $stock->setOrigenFraccionado($fraccionar);
             
-            $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Ingresado'));
             $estadoStock = new EstadoStock;
-            $estadoStock->setEstado($estado);
+            $estadoStock->setEstado("Ingresado");
             $estadoStock->setStock($stock);
             $estadoStock->setDescripcion("Ingresado al area ". $stock->getArea()->getNombre() ." origen fraccionado");
             $estadoStock->setFecha(new \DateTime('NOW'));
@@ -301,7 +298,7 @@ class StockController extends Controller
 
                 $estadoStock = new EstadoStock;
                 $estadoStock->setStock($stock);
-                $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Trazlado')));
+                $estadoStock->setEstado('Trazlado');
                 $estadoStock->setDescripcion("Se trazlado al area " . $trazlado->getArea()->getNombre());
                 $estadoStock->setFecha(new DateTime('now'));
 

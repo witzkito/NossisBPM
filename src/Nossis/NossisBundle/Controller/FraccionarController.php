@@ -31,9 +31,8 @@ class FraccionarController extends Controller
                 
                 $stock->retirarStock($fraccionar->getCantidad());
                 
-                $estado = $em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Fraccionado'));
                 $estadoStock = new EstadoStock;
-                $estadoStock->setEstado($estado);
+                $estadoStock->setEstado("Fraccionado");
                 $estadoStock->setStock($stock);
                 $estadoStock->setDescripcion("Se retiro la cantidad de ". $fraccionar->getCantidad() ." unidades para fraccionado");
                 $estadoStock->setFecha(new \DateTime('NOW'));

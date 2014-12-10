@@ -40,8 +40,7 @@ class EstadoStock
     private $stock;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="stocks")
-     * @ORM\JoinColumn(name="estado", referencedColumnName="id")
+     * @ORM\Column(name="estado", type="text")
      */
     private $estado;
 
@@ -153,30 +152,7 @@ class EstadoStock
         return $this->descripcion;
     }
 
-    /**
-     * Set estado
-     *
-     * @param \Nossis\NossisBundle\Entity\Estado $estado
-     *
-     * @return EstadoStock
-     */
-    public function setEstado(\Nossis\NossisBundle\Entity\Estado $estado = null)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return \Nossis\NossisBundle\Entity\Estado 
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
+    
     /**
      * Set fecha
      *
@@ -199,5 +175,31 @@ class EstadoStock
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set estado.
+
+     *
+     * @param string $estado
+     *
+     * @return EstadoStock
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado.
+
+     *
+     * @return string
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

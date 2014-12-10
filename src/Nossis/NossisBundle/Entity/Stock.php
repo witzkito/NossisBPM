@@ -494,11 +494,11 @@ class Stock
     /**
      * Add estados
      *
-     * @param \Nossis\NossisBundle\Entity\Estado $estados
+     * @param \Nossis\NossisBundle\Entity\EstadoStock $estados
      *
      * @return Stock
      */
-    public function addEstado(\Nossis\NossisBundle\Entity\Estado $estados)
+    public function addEstado(\Nossis\NossisBundle\Entity\EstadoStock $estados)
     {
         $this->estados[] = $estados;
 
@@ -508,9 +508,9 @@ class Stock
     /**
      * Remove estados
      *
-     * @param \Nossis\NossisBundle\Entity\Estado $estados
+     * @param \Nossis\NossisBundle\Entity\EstadoStock $estados
      */
-    public function removeEstado(\Nossis\NossisBundle\Entity\Estado $estados)
+    public function removeEstado(\Nossis\NossisBundle\Entity\EstadoStock $estados)
     {
         $this->estados->removeElement($estados);
     }

@@ -46,7 +46,7 @@ class RetiroStockController extends Controller
              
              $estadoStock = new EstadoStock;
              $estadoStock->setStock($stock);
-             $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Cancelado Retiro')));
+             $estadoStock->setEstado('Cancelado Retiro');
              $estadoStock->setDescripcion("Se cancelo el retiro de ". $retirostock->getCantidad() ." unidades");
              $estadoStock->setFecha(new \DateTime('now'));
              $em->persist($estadoStock);

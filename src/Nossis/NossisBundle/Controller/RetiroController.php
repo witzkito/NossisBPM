@@ -141,7 +141,7 @@ class RetiroController extends Controller
         foreach ($retiro->getStocks() as $stock) {
             $estadoStock = new EstadoStock;
             $estadoStock->setStock($stock->getStock());
-            $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Salida')));
+            $estadoStock->setEstado('Salida');
             $estadoStock->setDescripcion("Salida de ". $stock->getCantidad()." unidades del Almacen por " . $retiro->getTransportista() . " hacia " . $retiro->getCliente());
             $estadoStock->setFecha(new \DateTime('now'));
             $em->persist($estadoStock);
@@ -203,7 +203,7 @@ class RetiroController extends Controller
             
             $estadoStock = new EstadoStock;
             $estadoStock->setStock($retiroStock->getStock());
-            $estadoStock->setEstado($em->getRepository('NossisBundle:Estado')->findOneBy(array('nombre' => 'Cancelado Retiro')));
+            $estadoStock->setEstado('Cancelado Retiro');
             $estadoStock->setDescripcion("Se cancelo el retiro de ". $retiroStock->getCantidad() ." unidades");
             $estadoStock->setFecha(new \DateTime('now'));
             $em->persist($estadoStock);

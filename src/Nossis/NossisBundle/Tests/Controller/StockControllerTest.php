@@ -133,7 +133,9 @@ class StockControllerTest extends WebTestCase
         $this->assertEquals('Nossis\NossisBundle\Controller\StockController::editarAction', $client->getRequest()->attributes->get('_controller'));
         $crawler = $client->getCrawler();
         $form = $crawler->selectButton('Guardar')->form();
-        $crawler = $client->submit($form);
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+        var_dump($client->getResponse()->getContent());
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("| Stock ")')->count()

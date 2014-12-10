@@ -84,7 +84,7 @@
                 {% endif %}
                 {% for estado in stock.estados %}
                     <tr>
-                        <td class="show-stock-estados-nombre">{{ estado.estado.nombre }}</td>
+                        <td class="show-stock-estados-nombre">{{ estado.estado }}</td>
                         <td>{{ estado.fecha | date('d-m-y h:i a') }}</td>
                         <td class="show-stock-estados-detalle">{{ estado.descripcion }}</td>
                     </tr>
