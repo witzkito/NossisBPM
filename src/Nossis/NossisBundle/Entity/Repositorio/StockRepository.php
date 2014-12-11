@@ -100,5 +100,16 @@ class StockRepository extends EntityRepository
         return $query->getResult();
     }
     
-    
+    public function getNumeroStock()
+    {
+        $año = new \DateTime('NOW');
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('count(s.id)')
+            ->from('NossisBundle:Stock', 's')
+            ->where('s.numero LIKE :anio')
+            ->setParameters(array('anio' => '%/'. $año->format('y')))
+            ->getQuery();
+        return $query->getResult();
+    }
 }

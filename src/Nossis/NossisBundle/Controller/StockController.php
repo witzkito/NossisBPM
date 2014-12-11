@@ -61,7 +61,8 @@ class StockController extends Controller
             $em->persist($estadoStock);
             $em->flush();
             $stock->setCodigo($this->getCodigoBarra($stock));
-            $stock->setNumero($stock->getId(). '/'. $estadoStock->getFecha()->format('y'));
+            $numero = $em->getRepository('NossisBundle:Stock')->getNumeroStock();
+            $stock->setNumero($numero[0][1] + 1 . '/'. $estadoStock->getFecha()->format('y'));
             $em->persist($stock);
             $em->flush();
             
