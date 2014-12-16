@@ -1,0 +1,35 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Mostrar Devolucion{% endblock %}
+
+{% block body %}
+    <hr>
+  <div class="show">
+        <div class="grid">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha:</th>
+                        <td>{{ devolucion.fecha | date('d/m/Y H:i a') }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Cantidad:</th>
+                        <td>{{ devolucion.cantidad }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Cliente:</th>
+                        <td>{{ devolucion.retiroStock.retiro.cliente }}</td>                
+                    </tr>
+                    <tr>
+                        <th>Stock:</th>
+                        <td>{{ devolucion.retiroStock.stock }} - <a href="{{ path('show_stock', {'id' : devolucion.retiroStock.stock.id}) }}">Ver</a></td>                
+                    </tr>                    
+                </thead>
+                <tbody>
+
+                </tbody>
+             </table>
+        </div>
+  </div>
+{% endblock %}

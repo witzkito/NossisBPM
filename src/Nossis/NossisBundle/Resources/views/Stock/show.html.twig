@@ -163,4 +163,35 @@
                 {% endfor %}
             </table>
          </div>
+                
+        <h3 class="h3-stock">Devoluciones</h3>
+        <hr class="hr3-inicio">
+        <div class="datagrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Cantidad</th>
+                        <th>Cliente</th>
+                        <th>Motivo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% for retiro in stock.retiros %}
+                    {% for devolucion in retiro.devoluciones %}
+                    <tr>
+                        <td>{{ devolucion.fecha | date('d/m/y h:m A') }}</td>
+                        <td>{{ devolucion.cantidad }}</td>
+                        <td>{{ retiro.retiro.cliente }}</td>
+                        <td>{{ devolucion.motivo }}</td>
+                        <td>
+                            <a href="{{ path('mostrar_devolucion', { 'id' : devolucion.id }) }}">Ver</a>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+                
+            </table>
+         </div>
 {% endblock %}

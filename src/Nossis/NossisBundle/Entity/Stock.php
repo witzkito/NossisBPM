@@ -131,7 +131,7 @@ class Stock
      * @ORM\JoinColumn(name="es_fracciondo", referencedColumnName="id")
      */
     private $origenFraccionado;
-
+    
     public $motivoEdicion;
     
 
@@ -620,5 +620,42 @@ class Stock
     {
         $this->actual = $this->actual + $cantidad;
         return $this;
+    }
+
+    /**
+     * Add devolucione.
+
+     *
+     * @param \Nossis\NossisBundle\Entity\Devolucion $devolucione
+     *
+     * @return Stock
+     */
+    public function addDevolucione(\Nossis\NossisBundle\Entity\Devolucion $devolucione)
+    {
+        $this->devoluciones[] = $devolucione;
+
+        return $this;
+    }
+
+    /**
+     * Remove devolucione.
+
+     *
+     * @param \Nossis\NossisBundle\Entity\Devolucion $devolucione
+     */
+    public function removeDevolucione(\Nossis\NossisBundle\Entity\Devolucion $devolucione)
+    {
+        $this->devoluciones->removeElement($devolucione);
+    }
+
+    /**
+     * Get devoluciones.
+
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDevoluciones()
+    {
+        return $this->devoluciones;
     }
 }

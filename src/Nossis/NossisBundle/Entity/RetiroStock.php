@@ -39,6 +39,11 @@ class RetiroStock
      * @ORM\JoinColumn(name="retiro", referencedColumnName="id")
      */
     private $retiro;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Devolucion", mappedBy="retiroStock")
+     */
+    protected $devoluciones;
 
 
     /**
@@ -122,5 +127,49 @@ class RetiroStock
     
     public function __toString() {
         return "NO ESTOY RETORNANDO BIEN!!";
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->devoluciones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add devolucione.
+
+     *
+     * @param \Nossis\NossisBundle\Entity\Devolucion $devolucione
+     *
+     * @return RetiroStock
+     */
+    public function addDevolucione(\Nossis\NossisBundle\Entity\Devolucion $devolucione)
+    {
+        $this->devoluciones[] = $devolucione;
+
+        return $this;
+    }
+
+    /**
+     * Remove devolucione.
+
+     *
+     * @param \Nossis\NossisBundle\Entity\Devolucion $devolucione
+     */
+    public function removeDevolucione(\Nossis\NossisBundle\Entity\Devolucion $devolucione)
+    {
+        $this->devoluciones->removeElement($devolucione);
+    }
+
+    /**
+     * Get devoluciones.
+
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDevoluciones()
+    {
+        return $this->devoluciones;
     }
 }

@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class RetiroRepository extends EntityRepository
 {
+    public function findLote($lote)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('r')
+            ->from('NossisBundle:Retiro', 'r')
+            ->join('r.stocks', 'rs')
+            ->join('rs.stock', 's')
+            ->where('s.lote LIKE :lote')
+            ->GroupBy('r.nroOrden')
+            ->setParameters(array('lote' => $lote))
+            ->getQuery();
+        return $query->getResult();
+    }
 }

@@ -33,7 +33,7 @@
                         <a class="nav-button-item brand" href="{{ path('ingresar_stock')}}">Ingresar</a>
                         <a class="nav-button-item brand" href="{{ path('trazladar_lote_stock')}}">Trazladar</a>
                         <a class="nav-button-item brand" href="{{ path('index_retiro')}}">Despachar</a>
-                        <a class="nav-button-item brand" href="#">Devolucion</a>
+                        <a class="nav-button-item brand" href="{{ path('index_devolucion')}}">Devolucion</a>
                     </div>
                     <div class="nav-collapse">
                         {{ knp_menu_render('NossisBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'NossisBundle:Menu:knp_menu.html.twig'}) }}

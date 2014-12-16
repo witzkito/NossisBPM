@@ -1,0 +1,88 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Devolucion{% endblock %}
+
+{% block body %}
+    <hr>
+    
+        <div class="form">
+                <form action="{{ path('index_devolucion') }}" method="post">
+                {{ form_rest(form) }}
+                <input class="submit" type="submit" value="Buscar"  />
+            
+        </div>
+                </br></br>
+        {% if retiros is not null %}
+        
+            {% for retiro in retiros  %}
+                <div class="datagrid">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nro. Orden</th>
+                            <th>Fecha Salida</th>
+                            <th>Cliente</th>
+                            <th>Tranportista</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+
+                            <tr>
+                                <td>{{retiro.nroOrden}}</td>
+                                <td>{{retiro.fechaSalida | date('d/m/y h:i a')}}</td>
+                                <td>{{retiro.cliente}}</td>
+                                <td>{{retiro.transportista}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Numero</th>
+                                                <th>Fecha Ingreso</th>
+                                                <th>Palet</th>
+                                                <th>Turno</th>
+                                                <th>Producto</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                            {% for retirostock in retiro.stocks %}
+
+                                                {% if retirostock.stock.lote == lote %}
+                                                    <tr>
+                                                        <td>{{ retirostock.stock.numero }}</td>
+                                                        <td>{{ retirostock.stock.fechaingreso | date('d/m/y h:i a') }}</td>
+                                                        <td>{{ retirostock.stock.palet }}</td>
+                                                        <td>{{ retirostock.stock.turno }}</td>
+                                                        <td>{{ retirostock.stock.producto }}</td>
+                                                        <td><a href="{{path('nuevo_devolucion', {'id' : retirostock.id})}}">Retornar</a></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                    </table>
+                                        
+                                </td>
+                            </tr>
+                        
+                    </tbody>
+                    
+                </table>
+                </div>
+                </br></br>
+                {% endfor %}
+            
+        {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+    <script>
+        function setFocus()
+        {
+            document.getElementById("nossis_nossisbundle_retiro_codigo").focus();
+        }
+    
+     </script>
+{% endblock %}
