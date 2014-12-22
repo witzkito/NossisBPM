@@ -23,7 +23,7 @@
                     <table>
                         <tr>
                             <td><input class="guardar" type="submit" value="Guardar"  /></td>
-                            <td><input class="confirmar" type="submit" name="imprimir" value="Confirmar" onclick="confirmar('Si confirma no podra editar mas este Envio, ¿esta seguro?', '#')"  /></td>
+                            <td><input class="confirmar" type="button" name="imprimir" value="Confirmar" onclick="confirmar('Si confirma no podra editar mas este Envio, ¿esta seguro?', '{{ path('confirmar_retiro', { 'id' : retiro.id}) }}')"  /></td>
                         </tr>
                     </table>
                 </div>

@@ -58,36 +58,32 @@ class RetiroController extends Controller
             if ($request->getMethod() == 'POST'){
                 $form->bind($request);
                 $retiro = $form->getData();
-                if ($request->request->get('imprimir')) {
-                    return $this->confirmarAction($retiro);
-                }else{
-                    $retiro->setFechaSalida(new \DateTime('NOW'));
-                    if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $retiro->codigo))) != null){
-                        if ($stock->getArea()->getSalida()){
-                            if (($retirostock = $em->getRepository('NossisBundle:RetiroStock')->findOneBy(array('retiro' => $retiro->getId(), 'stock' => $stock->getId()))) == null){
-                                if ($this->comprobarSinConfirmar($stock)){
-                                    $retirostock = new RetiroStock;
-                                    $retirostock->setStock($stock);
-                                    $retirostock->setRetiro($retiro);
-                                    $retirostock->setCantidad($stock->getActual());
-                                    $retiro->addStock($retirostock);
-                                    //$cantidad = $stock->getIngresado() - $retirostock->getCantidad();
-                                    $stock->retirar($retirostock->getCantidad());
-                                    $em->persist($stock);
-                                }else{
-                                    $this->get('session')->getFlashBag()->add(
-                                        'notice',
-                                    'No se puede agregar por que el articulo se encuentra en un Despacho, sin confirmar'
-                            );
-                                }
-                                
+                $retiro->setFechaSalida(new \DateTime('NOW'));
+                if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $retiro->codigo))) != null){
+                    if ($stock->getArea()->getSalida()){
+                        if (($retirostock = $em->getRepository('NossisBundle:RetiroStock')->findOneBy(array('retiro' => $retiro->getId(), 'stock' => $stock->getId()))) == null){
+                            if ($this->comprobarSinConfirmar($stock)){
+                                $retirostock = new RetiroStock;
+                                $retirostock->setStock($stock);
+                                $retirostock->setRetiro($retiro);
+                                $retirostock->setCantidad($stock->getActual());
+                                $retiro->addStock($retirostock);
+                                //$cantidad = $stock->getIngresado() - $retirostock->getCantidad();
+                                $stock->retirar($retirostock->getCantidad());
+                                $em->persist($stock);
+                            }else{
+                                $this->get('session')->getFlashBag()->add(
+                                    'notice',
+                                'No se puede agregar por que el articulo se encuentra en un Despacho, sin confirmar'
+                        );
                             }
-                        }else{
-                            $this->get('session')->getFlashBag()->add(
-                                'notice',
-                                'El articulo se encuentra en un area de no salida'
-                            );
+
                         }
+                    }else{
+                        $this->get('session')->getFlashBag()->add(
+                            'notice',
+                            'El articulo se encuentra en un area de no salida'
+                        );
                     }
                     $em->persist($retiro);
                     $em->flush();
@@ -134,8 +130,9 @@ class RetiroController extends Controller
         
     }
     
-    public function confirmarAction($retiro){
+    public function confirmarAction($id){
         $em = $this->get('doctrine')->getManager();
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
         $retiro->setConfirmado(true);
         $em->persist($retiro);
         foreach ($retiro->getStocks() as $stock) {
