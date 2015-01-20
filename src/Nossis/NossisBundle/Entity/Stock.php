@@ -19,6 +19,7 @@ class Stock
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @GRID\Column(title="Nro.",filterable=true, visible=false)
      */
     private $id;
     
@@ -26,7 +27,7 @@ class Stock
      * @var string
      *
      * @ORM\Column(name="numero", type="string", length=20, nullable=true)
-     * @GRID\Column(title="Nro.",filterable=true, visible=false)
+     * @GRID\Column(title="Nro.",filterable=true, visible=true)
      */
     private $numero;
 
