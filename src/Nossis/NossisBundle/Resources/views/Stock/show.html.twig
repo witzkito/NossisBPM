@@ -11,7 +11,7 @@
 {% block body %}
     
     </br></br>
-    <h3>Stock {{ stock.numero }}</h3>    
+    <h3>Stock {{ stock.numero }} - <a class="imprimir" href="{{ path('imprimir_stock', { 'id': stock.id}) }}">Imprimir</a></h3>
     <hr class="hr3-inicio">
     <div class="show">
         <div class="grid">
