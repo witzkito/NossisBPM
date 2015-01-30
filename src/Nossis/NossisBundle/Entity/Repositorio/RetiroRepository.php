@@ -26,4 +26,17 @@ class RetiroRepository extends EntityRepository
             ->getQuery();
         return $query->getResult();
     }
+    
+    public function findClientes($cliente)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('r')
+            ->from('NossisBundle:Retiro', 'r')
+            ->where('r.cliente = :cliente')
+            ->orderBy('r.nroOrden', 'DESC')
+            ->setParameters(array('cliente' => $cliente))
+            ->getQuery();
+        return $query->getResult();
+    }
 }

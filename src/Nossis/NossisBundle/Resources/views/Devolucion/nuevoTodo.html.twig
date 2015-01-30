@@ -1,0 +1,16 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Devolucion {% endblock %}
+
+{% block body %}
+    <hr class="hr3-inicio">
+    <h3>Devolucion de todo el Stock del Retiro {{ retiro.cliente }}</h3>
+    </br></br>
+        <div class="form">
+                <form action="{{ path('todo_devolucion', { 'id' : retiro.id}) }}" method="post">
+                {{ form_rest(form) }}
+                <input class="submit" type="submit" value="Retornar"  />
+            
+        </div>
+    
+{% endblock %}    

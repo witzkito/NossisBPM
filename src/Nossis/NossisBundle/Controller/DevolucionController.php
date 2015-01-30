@@ -18,17 +18,18 @@ class DevolucionController extends Controller
     public function indexAction()
     {
         $form = $this->createFormBuilder()
-            ->add('buscar', 'text', array(
-                'label' => 'Buscar por lote'
-            ))
+            ->add('cliente', 'genemu_jqueryselect2_entity', array(
+                "class" => "Nossis\NossisBundle\Entity\Cliente",
+                'label' => 'Cliente'))
             ->getForm();
          $retiros = null; $lote = null;
          $request = $this->get('request');
          if ($request->getMethod() == 'POST'){
             $form->bind($request);
-            $lote = $form->getData();
+            $cliente = $form->getData();
             $em = $this->get('doctrine')->getManager();
-            $retiros = $em->getRepository('NossisBundle:Retiro')->findLote($lote['buscar']);
+            //$retiros = $em->getRepository('NossisBundle:Retiro')->findBy(array('cliente' => $cliente['cliente']->getId()));
+            $retiros = $em->getRepository('NossisBundle:Retiro')->findClientes($cliente['cliente']->getId());
          }
         
         return $this->render('NossisBundle:Devolucion:index.html.twig',
@@ -107,5 +108,49 @@ class DevolucionController extends Controller
             $em->flush();
         }
         return $this->redirect($this->generateUrl('show_stock', array('id' => $stock->getId())));
+    }
+    
+    /**
+     * @Route("/devolucion/todo/{id}", name="todo_devolucion")
+     * @Template()
+     */
+    public function todoAction($id)
+    {
+        $em = $this->get('doctrine')->getManager();
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
+        if ($retiro != null) {
+            $devolucion = new Devolucion();                    
+            $form = $this->get('form.factory')->create(
+                    new DevolucionType(), $devolucion
+            );
+            $request = $this->get('request');
+            if ($request->getMethod() == 'POST') {
+                $form->bind($request);
+                
+                $entity = $form->getData();
+                
+                foreach ($retiro->getStocks() as $retiroStock) {
+                    $devolucion = new Devolucion();
+                    $devolucion->setRetiroStock($retiroStock);
+                    $devolucion->setFecha(new \DateTime('NOW'));
+                    $devolucion->setMotivo($entity->getMotivo());
+                    $devolucion->setCantidad($entity->getCantidad());
+
+                    $estado = new \Nossis\NossisBundle\Entity\EstadoStock();
+                    $estado->setDescripcion($devolucion->getCantidad() . " productos fueron devueltos por motivo " . $devolucion->getMotivo());
+                    $estado->setEstado('Devuelto');
+                    $estado->setFecha(new \DateTime('NOW'));
+                    $estado->setStock($retiroStock->getStock());
+                    $retiroStock->getStock()->actualizarStock($devolucion->getCantidad(), 0);
+                    $em->persist($estado);
+                    $em->persist($devolucion);
+                    $em->persist($retiroStock);
+                    $em->persist($retiroStock->getStock());
+                }
+                $em->flush();
+                return new RedirectResponse($this->generateUrl('show_stock', array('id' => $retiroStock->getStock()->getId())));
+            }
+            return $this->render('NossisBundle:Devolucion:nuevoTodo.html.twig', array('retiro' => $retiro, 'form' => $form->createView()));
+        }
     }
 }

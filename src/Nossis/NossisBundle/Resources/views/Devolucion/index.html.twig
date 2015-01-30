@@ -23,6 +23,7 @@
                             <th>Fecha Salida</th>
                             <th>Cliente</th>
                             <th>Tranportista</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,9 +34,10 @@
                                 <td>{{retiro.fechaSalida | date('d/m/y h:i a')}}</td>
                                 <td>{{retiro.cliente}}</td>
                                 <td>{{retiro.transportista}}</td>
+                                <td><a href="{{ path('todo_devolucion', { 'id' : retiro.id, 'cliente' : retiro.cliente.id})}}">Retornar Todo</a></td>
                             </tr>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     <table>
                                         <thead>
                                             <tr>
@@ -49,7 +51,6 @@
                                         </thead>
                                             {% for retirostock in retiro.stocks %}
 
-                                                {% if retirostock.stock.lote == lote %}
                                                     <tr>
                                                         <td>{{ retirostock.stock.numero }}</td>
                                                         <td>{{ retirostock.stock.fechaingreso | date('d/m/y h:i a') }}</td>
@@ -58,7 +59,7 @@
                                                         <td>{{ retirostock.stock.producto }}</td>
                                                         <td><a href="{{path('nuevo_devolucion', {'id' : retirostock.id})}}">Retornar</a></td>
                                                     </tr>
-                                                {% endif %}
+                                                
                                             {% endfor %}
                                     </table>
                                         
