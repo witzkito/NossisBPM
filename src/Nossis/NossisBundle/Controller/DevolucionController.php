@@ -83,4 +83,29 @@ class DevolucionController extends Controller
         return $this->render('NossisBundle:Devolucion:mostrar.html.twig',
                 array('devolucion' => $devolucion));
     }
+    
+    /**
+     * @Route("/devolucion/eliminar/{id}/{id_stock}", name="eliminar_devolucion")
+     * @Template()
+     */
+    public function eliminarAction($id, $id_stock)
+    {
+        $em = $this->get('doctrine')->getManager();
+        $devolucion = $em->getRepository('NossisBundle:Devolucion')->find($id);
+        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        if ($devolucion != null && $stock != null)
+        {
+            $stock->retirar($devolucion->getCantidad());
+            $estado = new \Nossis\NossisBundle\Entity\EstadoStock();
+            $estado->setDescripcion("Se elimino devolucion de: ". $devolucion->getCantidad() . " productos por motivo " . $devolucion->getMotivo());
+            $estado->setEstado('Eliminacion');
+            $estado->setFecha(new \DateTime('NOW'));
+            $estado->setStock($stock);
+            $em->persist($stock);
+            $em->persist($estado);
+            $em->remove($devolucion);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('show_stock', array('id' => $stock->getId())));
+    }
 }
