@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Nossis\NossisBundle\Entity\Devolucion;
 use Nossis\NossisBundle\Form\DevolucionType;
+use Nossis\NossisBundle\Form\DevolucionTodoType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DevolucionController extends Controller
@@ -121,7 +122,7 @@ class DevolucionController extends Controller
         if ($retiro != null) {
             $devolucion = new Devolucion();                    
             $form = $this->get('form.factory')->create(
-                    new DevolucionType(), $devolucion
+                    new DevolucionTodoType(), $devolucion
             );
             $request = $this->get('request');
             if ($request->getMethod() == 'POST') {
@@ -134,7 +135,7 @@ class DevolucionController extends Controller
                     $devolucion->setRetiroStock($retiroStock);
                     $devolucion->setFecha(new \DateTime('NOW'));
                     $devolucion->setMotivo($entity->getMotivo());
-                    $devolucion->setCantidad($entity->getCantidad());
+                    $devolucion->setCantidad($retiroStock->getCantidad());
 
                     $estado = new \Nossis\NossisBundle\Entity\EstadoStock();
                     $estado->setDescripcion($devolucion->getCantidad() . " productos fueron devueltos por motivo " . $devolucion->getMotivo());
