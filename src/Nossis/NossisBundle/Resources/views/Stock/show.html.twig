@@ -186,7 +186,7 @@
                         <td>{{ devolucion.motivo }}</td>
                         <td>
                             <a href="{{ path('mostrar_devolucion', { 'id' : devolucion.id }) }}">Ver</a>
-                            &nbsp; &nbsp;<a href="{{ path('eliminar_devolucion', { 'id' : devolucion.id, 'id_stock' : stock.id }) }}">Eliminar</a>
+                            &nbsp; &nbsp;<a href="#" onclick="confirmar('¿Esta seguro de que desea borra?','{{ path('eliminar_devolucion', { 'id' : devolucion.id, 'id_stock' : stock.id }) }}')">Eliminar</a></td>
                         </td>
                         
                     </tr>

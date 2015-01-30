@@ -92,7 +92,7 @@ class DevolucionController extends Controller
     {
         $em = $this->get('doctrine')->getManager();
         $devolucion = $em->getRepository('NossisBundle:Devolucion')->find($id);
-        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        $stock = $em->getRepository('NossisBundle:Stock')->find($id_stock);
         if ($devolucion != null && $stock != null)
         {
             $stock->retirar($devolucion->getCantidad());
