@@ -43,5 +43,5 @@ trazladar_lote_stock:
     defaults: { _controller: NossisBundle:Stock:trazladarLote }
 
 lote_trazladar_stock:
-    pattern:  /trazladar/lote/stocks/{lote}/{area}
+    pattern:  /trazladar/lote/stocks/{lote}/{area}/{timestamp}
     defaults: { _controller: NossisBundle:Stock:trazladarLoteArea }

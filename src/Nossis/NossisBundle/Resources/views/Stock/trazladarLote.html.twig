@@ -16,36 +16,40 @@
         <table>
             <tr>
                 <th>Lote</th>
+                <th>Fecha</th>
                 <th>Palets</th>
                 <th>Unidades</th>
                 <th>Productos</th>
 
             </tr>
-            {% for key, lote in lotes %}
-            <tr>
-                <td>{{ key }}</td>
-                {% set palet = 0 %}
-                {% set cant = 0 %}
-                {% set prod = [] %}
-                {% for stock in lote %}
-                    {% set palet = palet + 1 %}
-                    {% set cant = cant  + stock.actual %}
-                    {% if stock.producto.nombre not in prod %}
-                        {% set prod = prod | merge([stock.producto.nombre])%}
-                    {% endif %}
-                {% endfor %}
-                <td>{{ palet }}</td>
-                <td>{{ cant }}</td>
-                <td>
-                    {% for producto in prod %}
-                        {{ producto }}
-                        {% if not loop.last %}
-                            <span> - </span>
+            {% for key, loteFecha in lotes %}
+                {% for fecha, lote in loteFecha %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ fecha | date('d/m/Y') }}</td>
+                    {% set palet = 0 %}
+                    {% set cant = 0 %}
+                    {% set prod = [] %}
+                    {% for stock in lote %}
+                        {% set palet = palet + 1 %}
+                        {% set cant = cant  + stock.actual %}
+                        {% if stock.producto.nombre not in prod %}
+                            {% set prod = prod | merge([stock.producto.nombre])%}
                         {% endif %}
                     {% endfor %}
-                </td>
-                <td><a href='{{ path('lote_trazladar_stock', {'lote' : key , 'area' : area.id})}}'>Trazladar</a></td>
-            </tr>
+                    <td>{{ palet }}</td>
+                    <td>{{ cant }}</td>
+                    <td>
+                        {% for producto in prod %}
+                            {{ producto }}
+                            {% if not loop.last %}
+                                <span> - </span>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td><a href='{{ path('lote_trazladar_stock', {'lote' : key , 'area' : area.id, 'timestamp' : fecha})}}'>Trazladar</a></td>
+                </tr>
+                {% endfor %}
             {% endfor %}
         </table>
     </div>

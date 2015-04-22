@@ -6,7 +6,7 @@
 {% block body %}
 <hr>
         <div class="form">
-            <form action="{{ path('lote_trazladar_stock', {'lote' : lote , 'area' : area}) }}" method="post">
+            <form action="{{ path('lote_trazladar_stock', {'lote' : lote , 'area' : area, 'timestamp' : fecha}) }}" method="post">
                 {{ form_rest(form) }}            
                 <input class="submit" type="submit" value="Trazladar"  />
             </form>

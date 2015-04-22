@@ -275,23 +275,30 @@ class StockController extends Controller
             $form->bind($request);
             $area = $form->getData()['area'];
             $lotes = $area->getLotesStock();
+            ld($lotes);
          }
         return $this->render('NossisBundle:Stock:trazladarLote.html.twig',
                  array('form' => $form->createView(), 'lotes' => $lotes, 'area' => $area));
     }
     
-    public function trazladarLoteAreaAction($lote, $area){
+    public function trazladarLoteAreaAction($lote, $area, $timestamp){
         $trazlado = new Trazlado;
         $form = $this->get('form.factory')->create(
                 new TrazladoType(),
                 $trazlado
          );
+            $fecha = DateTime::createFromFormat( 'U', $timestamp );
+            $fecha = $fecha->sub(\DateInterval::createFromDateString('+ 3 hours'));
+            ld($fecha);
         $request = $this->get('request');
          if ($request->getMethod() == 'POST'){
             $form->bind($request);
             $trazlado = $form->getData();
             $em = $this->get('doctrine')->getManager();
-            $stocks = $em->getRepository('NossisBundle:Stock')->findBy(array('lote' => $lote, 'area' => $area));
+            $fecha = DateTime::createFromFormat( 'U', $timestamp );
+            $fecha = $fecha->sub(\DateInterval::createFromDateString('+ 3 hours'));
+            $stocks = $em->getRepository('NossisBundle:Stock')->findBy(array('lote' => $lote, 'area' => $area, 'fechaEnvasado' => $fecha));
+            ld($stocks);
             foreach ($stocks as $stock){                    
                 $stock->setArea($trazlado->getArea());
                 $trazlado->setFecha(new DateTime('now'));
@@ -311,6 +318,6 @@ class StockController extends Controller
             return $this->indexAction();
          }
         return $this->render('NossisBundle:Stock:trazladarLoteArea.html.twig',
-                 array('form' => $form->createView(), 'lote' => $lote, 'area' => $area));
+                 array('form' => $form->createView(), 'lote' => $lote, 'area' => $area, 'fecha' => $timestamp));
     }
 }

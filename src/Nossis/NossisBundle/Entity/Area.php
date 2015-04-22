@@ -247,7 +247,7 @@ class Area
         $lote = array();
         foreach($this->stocks as $stock){
            if ($stock->getActual() > 0){
-            $lote[$stock->getLote()][$stock->getId()] = $stock;
+            $lote[$stock->getLote()][$stock->getFechaEnvasado()->getTimestamp()][$stock->getId()] = $stock;
            }
         }
         return $lote;
