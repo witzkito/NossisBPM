@@ -20,6 +20,12 @@ class Producto
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /** @var integer
+     *
+     * @ORM\Column(name="orde ", type="integer")
+    **/ 
+    private $orden;
 
     /**
      * @var string
@@ -157,5 +163,28 @@ class Producto
             }
         }
         return $palets;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param integer $orden
+     * @return Producto
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return integer 
+     */
+    public function getOrden()
+    {
+        return $this->orden;
     }
 }

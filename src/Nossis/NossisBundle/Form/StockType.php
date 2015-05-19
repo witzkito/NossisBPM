@@ -5,6 +5,7 @@ namespace Nossis\NossisBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Nossis\NossisBundle\Entity\Repositorio\ProductoRepository;
 
 class StockType extends AbstractType
 {
@@ -17,6 +18,9 @@ class StockType extends AbstractType
         $builder
             ->add('producto', 'genemu_jqueryselect2_entity', array(
                 "class" => "Nossis\NossisBundle\Entity\Producto",
+                'query_builder' => function (ProductoRepository $er) {
+                    return $er->createQueryBuilder('p')
+                    ->orderBy('p.orden', 'DESC');},
                 'label' => 'Producto'))
             ->add('lote')
             ->add('fechaEnvasado', 'genemu_jquerydate', array(

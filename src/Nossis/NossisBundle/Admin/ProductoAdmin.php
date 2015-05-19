@@ -13,7 +13,8 @@ class ProductoAdmin extends Admin {
     {
         $formMapper
             ->add('nombre', 'text', array('label' => 'Nombre'))
-            ->add('codigo', 'text', array('label' => 'Codigo'))            
+            ->add('codigo', 'text', array('label' => 'Codigo'))
+            ->add('orden')
         ;
     }
     
@@ -22,6 +23,7 @@ class ProductoAdmin extends Admin {
         $datagridMapper
             ->add('nombre')
             ->add('codigo')
+            ->add('orden')
         ;
     }
 
@@ -32,6 +34,7 @@ class ProductoAdmin extends Admin {
             ->addIdentifier('id')
             ->add('nombre')
             ->add('codigo')
+            ->add('orden')
         ;
     }
     
