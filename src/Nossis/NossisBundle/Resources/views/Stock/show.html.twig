@@ -6,6 +6,9 @@
        
         <a class="boton-blue" id="btt-1" href="{{ path('trazladar_stock', { 'id': stock.id})}}">Trazladar</a>
         <a class="boton-blue" id="btt-3" href="{{ path('index_fraccionar', { 'id': stock.id})}}">Fraccionar</a>
+        {% if stock.area.destruccion and stock.actual > 0 %}
+            <a class="boton-blue" id="btt-3" href="#" onclick="confirmar('Va a destruir el stock, el mismo quedara en 0, ¿esta seguro?', '{{ path('destruir_stock', { 'id': stock.id})}}')"/>Destruir</a>
+        {% endif %}    
        
 {% endblock %}
 {% block body %}

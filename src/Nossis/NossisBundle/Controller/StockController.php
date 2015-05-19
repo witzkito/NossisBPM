@@ -320,4 +320,24 @@ class StockController extends Controller
         return $this->render('NossisBundle:Stock:trazladarLoteArea.html.twig',
                  array('form' => $form->createView(), 'lote' => $lote, 'area' => $area, 'fecha' => $timestamp));
     }
+    
+    public function destruirAction($id)
+    {
+        $em = $this->get('doctrine')->getManager();
+        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
+        $stock->setActual(0);
+
+        $estadoStock = new EstadoStock;
+        $estadoStock->setStock($stock);
+        $estadoStock->setEstado('Destruido');
+        $estadoStock->setDescripcion("El stock fue destruido y pasado a re-produccion");
+        $estadoStock->setFecha(new DateTime('now'));
+
+        $em->persist($stock);
+        $em->persist($estadoStock);                
+        
+        $em->flush();            
+         
+        return $this->indexAction();
+    }
 }

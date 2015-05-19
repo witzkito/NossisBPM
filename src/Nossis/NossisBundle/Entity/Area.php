@@ -36,6 +36,13 @@ class Area
     private $salida;
     
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="destruccion", type="boolean", nullable=true)
+     */
+    private $destruccion;
+    
+    /**
      * @var integer
      * @ORM\Column(name="capacidad", type="integer") 
      */
@@ -251,5 +258,31 @@ class Area
            }
         }
         return $lote;
+    }
+
+    /**
+     * Set destruccion.
+
+     *
+     * @param boolean $destruccion
+     *
+     * @return Area
+     */
+    public function setDestruccion($destruccion)
+    {
+        $this->destruccion = $destruccion;
+
+        return $this;
+    }
+
+    /**
+     * Get destruccion.
+
+     *
+     * @return boolean
+     */
+    public function getDestruccion()
+    {
+        return $this->destruccion;
     }
 }

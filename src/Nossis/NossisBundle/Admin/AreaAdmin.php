@@ -12,7 +12,8 @@ class AreaAdmin extends Admin {
     {
         $formMapper
             ->add('nombre', 'text', array('label' => 'Nombre'))
-            ->add('salida', 'sonata_type_boolean', array('label' => "Salida"))
+            ->add('salida', null, array('label' => "Salida"))
+            ->add('destruccion',null, array('label' => "¿Area de Destruccion?"))
             ->add('capacidad', 'integer', array('label' => 'Capacidad'))
             ->add('almacen', 'entity', array('class' => 'Nossis\NossisBundle\Entity\Almacen'))
         ;
@@ -23,6 +24,7 @@ class AreaAdmin extends Admin {
         $datagridMapper
             ->add('nombre')
             ->add('salida')
+            ->add('destruccion')
             ->add('capacidad')
             ->add('almacen')
         ;
@@ -34,7 +36,8 @@ class AreaAdmin extends Admin {
         $listMapper
             ->addIdentifier('id')
             ->add('nombre')
-            ->add('salida')
+            ->add('salida')                
+            ->add('destruccion')
             ->add('capacidad')
             ->add('almacen')    
         ;
