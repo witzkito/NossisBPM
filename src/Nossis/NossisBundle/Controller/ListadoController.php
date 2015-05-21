@@ -63,6 +63,33 @@ class ListadoController extends Controller
     }
     
     /**
+     * @Route("/listar/general/movimiento/producto", name="movimiento_producto_listado_general")
+     * @Template()
+     */
+    public function mostrarMovimientoProductoAction(){
+        $em = $this->get('doctrine')->getManager();
+        $entities = $em->getRepository('NossisBundle:Stock')->mostrarMovimientoProducto();
+        $form = $this->crearFormularioMovimientoProducto();
+        $request = $this->get('request');
+        $form->bind($request);
+        if ($form->isValid()){
+            $datos = $form->getData();
+            return $this->mostrarMovimientoProductoFechaAction($datos);
+        }
+        return $this->render('NossisBundle:Listado:mostrarMovimientoProducto.html.twig', array(
+                "entities" => $entities, "form" => $form->createView()));        
+    }
+    
+    private function crearFormularioMovimientoProducto(){
+        return $this->createFormBuilder()
+            ->add('desde', 'genemu_jquerydate', array(
+                'widget' => 'single_text'))
+            ->add('hasta', 'genemu_jquerydate', array(
+                'widget' => 'single_text'))
+            ->getForm();
+    }
+    
+    /**
      * @Route("/listar/general/index/stock/actual/producto", name="stock_actual_producto_listado_general")
      * @Template()
      */
@@ -148,6 +175,60 @@ class ListadoController extends Controller
                 "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta'], 'producto' => $datos['producto']));        
     }
     
+    public function mostrarMovimientoProductoFechaAction($datos){
+        $session = new Session();
+        $session->set('desde', $datos['desde']);
+        $session->set('hasta', $datos['hasta']);
+        $entities = $this->generarArrayMovimientoProducto($datos['desde'], $datos['hasta']);
+        
+        return $this->render('NossisBundle:Listado:mostrarMovimientoProductoFecha.html.twig', array(
+                "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta']));        
+    }
+    
+    private function generarArrayMovimientoProducto($desde, $hasta)
+    {
+        $em = $this->get('doctrine')->getManager();
+        $productos = $em->getRepository('NossisBundle:Producto')->findAll();
+        $entities = array();
+        foreach ($productos as $producto)
+        {
+            $entities[$producto->getNombre()]['ingresos'] = 0;
+            $entities[$producto->getNombre()]['despachos'] = 0;
+            $entities[$producto->getNombre()]['devolucion'] = 0;
+            $entities[$producto->getNombre()]['bajas'] = 0;
+            foreach ($producto->getStocks() as $stock)
+            {
+                if ($stock->getFechaIngreso() >= $desde && $stock->getFechaIngreso() <= $hasta)
+                {
+                    $entities[$producto->getNombre()]['ingresos'] = $entities[$producto->getNombre()]['ingresos'] + $stock->getIngresado();
+                }
+                foreach ($stock->getRetiros() as $retiro)
+                {
+                    if ($retiro->getRetiro()->getFechaSalida() >= $desde && $retiro->getRetiro()->getFechaSalida() <= $hasta)
+                    {
+                        $entities[$producto->getNombre()]['despachos'] = $entities[$producto->getNombre()]['despachos'] + $retiro->getCantidad();
+                    }
+                    foreach ($retiro->getDevoluciones() as $devolucion)
+                    {
+                        if ($devolucion->getFecha() >= $desde && $devolucion->getFecha() <= $hasta)
+                        {
+                            $entities[$producto->getNombre()]['devolucion'] = $entities[$producto->getNombre()]['devolucion'] + $devolucion->getCantidad();
+                        }
+                    }
+                }
+                foreach ($stock->getBajas() as $baja)
+                {
+                    if ($baja->getFecha() >= $desde && $baja->getFecha() <= $hasta)
+                    {
+                        $entities[$producto->getNombre()]['bajas'] = $entities[$producto->getNombre()]['bajas'] + $baja->getCantidad();
+                    }
+                }
+                
+            }
+        }
+        return $entities;
+    }
+    
     public function mostrarStockActualUnidadFechaAction($datos){
         $em = $this->get('doctrine')->getManager();
         if ($datos['producto'] != null)
@@ -180,6 +261,22 @@ class ListadoController extends Controller
         return new Response($content, 200, array('content-type' => 'application/pdf'));
     }
     
+    /**
+     * @Route("/listar/general/movimiento/producto/imprimir", name="imprimir_movimiento_producto_listado_general")
+     * @Template()
+     */
+    public function imprimirMovimientoProductoAction(){
+        $em = $this->get('doctrine')->getManager();
+        $entities = $em->getRepository('NossisBundle:Stock')->mostrarMovimientoProducto();
+        $response = new Response();
+        $this->render('NossisBundle:Listado:mostrarMovimientoProducto.pdf.twig', array("entities" => $entities), $response);
+        $facade = $this->get('ps_pdf.facade');
+        $xml = $response->getContent();
+        $content = $facade->render($xml);
+        
+        return new Response($content, 200, array('content-type' => 'application/pdf'));
+    }
+    
     public function mostrarStockActualProductoFechaAction($datos){
         $em = $this->get('doctrine')->getManager();
         $entities = $em->getRepository('NossisBundle:Producto')->findAllFecha($datos['desde'], $datos['hasta']);
@@ -202,6 +299,25 @@ class ListadoController extends Controller
         $response = new Response();
         $this->render('NossisBundle:Listado:mostrarStockActualLoteFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'),
             "hasta" => $session->get('hasta'), "producto" => $session->get('producto')), $response);
+        
+        $xml = $response->getContent();
+        $content = $facade->render($xml);
+        
+        return new Response($content, 200, array('content-type' => 'application/pdf'));
+    }
+    
+    /**
+     * @Route("/listar/general/movimiento/producto/fecha/imprimir", name="imprimir_movimiento_producto_fecha_listado_general")
+     * @Template()
+     */
+    public function imprimirMovimientoProductoFechaAction(){
+        $em = $this->get('doctrine')->getManager();
+        $session = new Session();
+        $entities = $this->generarArrayMovimientoProducto($session->get('desde'), $session->get('hasta'));
+        $facade = $this->get('ps_pdf.facade');
+        $response = new Response();
+        $this->render('NossisBundle:Listado:mostrarMovimientoProductoFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'),
+            "hasta" => $session->get('hasta')), $response);
         
         $xml = $response->getContent();
         $content = $facade->render($xml);

@@ -1,0 +1,49 @@
+<pdf>
+    <dynamic-page page-size="a4-landscape">
+        
+        <table>
+            <tr>
+                <td width="100px" border-color="white">
+                    <img src="{{ pdf_image('logo.jpg') }}" />
+                </td>
+                <td border-color="white">
+                    <div text-align="center">
+                        <p line-height="-1px">
+                            Elaboradores de Fécula de mandioca ALDEMA <br></br>
+                            INAC 6084 del 16-05-1967 – Dir. Prov. Coop. 102 del 04-07-1966 <br></br>
+                            <b>Planta Industrial:</b> Ruta Nac. 12 – TEL.: 03743-491153 – 3334 GARUHAPE – Misiones <br></br>
+                            <b>Administración:</b> Av. 9 de Julio y Asunción – TEL/Fax: 03743-420204/042 <br></br>
+                            E-mail: coopsalberto@prico.com.ar – www.coopsanalberto.com.ar <br></br>
+                            3334 PUERTO RICO – Misiones
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+                <br/><br/>
+                <h2>Movimiento Historico de Productos desde {{ desde | date ('d-m-y') }} hasta {{ hasta | date ('d-m-y') }}</h2>
+        <table margin-left="20px" margin-right="20px">
+            <tr>
+                <td width="50%"><b>Producto</b></td>
+                <td><b>Ingresos</b></td>
+                <td><b>Despachos</b></td>
+                <td><b>Devoluciones</b></td>
+                <td><b>Bajas</b></td>
+                <td><b>Total</b></td>
+            </tr>
+           {% for  key, entity in entities %}
+                {% set total = 0 %}
+                <tr>
+                    <td>{{key}} </td>
+                    <td>{{entity['ingresos']}} {% set total = total + entity['ingresos'] %} </td>
+                    <td>{{entity['despachos']}} {% set total = total - entity['despachos'] %}</td>
+                    <td>{{entity['devolucion']}} {% set total = total + entity['devolucion'] %}</td>
+                    <td>{{entity['bajas']}} {% set total = total - entity['bajas'] %}</td>
+                    <td>{{ total }}</td>
+                </tr>                
+            {% endfor %}
+            
+        </table>
+            <h6 text-align="right">Impreso el {{ 'now' |date('d-m-Y') }} </h6>
+    </dynamic-page>
+</pdf>

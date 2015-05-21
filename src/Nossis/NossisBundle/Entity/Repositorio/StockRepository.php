@@ -40,6 +40,48 @@ class StockRepository extends EntityRepository
         return $query->getResult();
     }
     
+    public function mostrarMovimientoProducto()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('p.nombre as producto, sum(s.ingresado) as ingresado, sum(rs.cantidad) as despachos,'
+                    . 'sum(d.cantidad) as devoluciones, sum(b.cantidad) as bajas')
+            ->from('NossisBundle:Stock', 's')
+            ->leftjoin('s.producto', 'p')
+            ->leftjoin('s.retiros', 'rs')
+            ->leftjoin('rs.devoluciones', 'd')
+            ->leftJoin('s.bajas', 'b')
+            ->GroupBy('s.producto')
+            ->getQuery();
+        return $query->getResult();
+    }
+    
+    public function mostrarMovimientoProductoFecha($desde, $hasta)
+    {
+        /*$em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('p.nombre as producto, sum(s.ingresado) as ingresado, sum(rs.cantidad) as despachos,'
+                    . 'sum(d.cantidad) as devoluciones, sum(b.cantidad) as bajas')
+            ->from('NossisBundle:Stock', 's')
+            ->leftjoin('s.producto', 'p')
+            ->leftjoin('s.retiros', 'rs')
+            ->leftjoin('rs.retiro', 'r', 'r.fechaSalida >= :desde AND r.fechaSalida <= :hasta')
+            ->leftjoin('rs.devoluciones', 'd')
+            ->leftJoin('s.bajas', 'b')
+            ->andWhere('s.fechaIngreso >= :desde')
+            ->andWhere('s.fechaIngreso <= :hasta')
+            //->andWhere('r.fechaSalida >= :desde')
+            //->andWhere('r.fechaSalida <= :hasta')
+            //->orWhere('d.fecha >= :desde')
+            //->andWhere('d.fecha <= :hasta')
+            //->orWhere('b.fecha >= :desde')
+            //->andWhere('b.fecha <= :hasta')    
+            ->GroupBy('s.producto')
+            ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
+            ->getQuery();
+        return $query->getResult();*/
+    }
+    
     public function mostrarStockActualLoteFecha($desde, $hasta, $producto = null)
     {
         $em = $this->getEntityManager();

@@ -1,0 +1,51 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Listar Movimiento por Producto{% endblock %}
+
+{% block body %}
+    
+    <hr>
+    
+    <div class="form">
+        <form action="{{ path('movimiento_producto_listado_general') }}" method="post">
+        {{ form_rest(form) }}
+        <input class="submit" type="submit" value="Filtrar"  />
+    </div>
+    <br /><br /><br />
+    
+    <div class="grid">
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Ingresos</th>
+                <th>Despachos</th>
+                <th>Devoluciones</th>
+                <th>Bajas</th>
+                <th>Total</th>
+            </tr>
+            {% for entity in entities %}
+                {% set total = 0 %}
+                <tr>
+                    <td>{{entity.producto}} </td>
+                    <td>{{entity.ingresado}} {% set total = total + entity.ingresado %}</td>
+                    <td>{{entity.despachos}} {% set total = total - entity.despachos %}</td>
+                    <td>{{entity.devoluciones}} {% set total = total + entity.devoluciones %}</td>
+                    <td>{{entity.bajas}} {% set total = total - entity.bajas %}</td>
+                    <th>{{ total }}</th>
+                </tr>                
+            {% endfor %}
+            
+        </table>
+        
+        <a class="pdf" href="{{ path('imprimir_movimiento_producto_listado_general')}}">Imprimir</a>
+    </div>
+
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+{% endblock %}
+
+    

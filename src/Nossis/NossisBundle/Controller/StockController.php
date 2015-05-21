@@ -15,6 +15,7 @@ use APY\DataGridBundle\Grid\Action\RowAction;
 use PHPPdf\Core\Node\Barcode as Barcode;
 use Zend\Barcode\Object;
 use Nossis\NossisBundle\Entity\EstadoStock;
+use Nossis\NossisBundle\Entity\Baja;
 
 class StockController extends Controller
 {
@@ -325,14 +326,19 @@ class StockController extends Controller
     {
         $em = $this->get('doctrine')->getManager();
         $stock = $em->getRepository('NossisBundle:Stock')->find($id);
-        $stock->setActual(0);
-
+        
         $estadoStock = new EstadoStock;
         $estadoStock->setStock($stock);
         $estadoStock->setEstado('Destruido');
-        $estadoStock->setDescripcion("El stock fue destruido y pasado a re-produccion");
+        $estadoStock->setDescripcion($stock->getActual() . " unidades del producto fueron destruido y pasado a re-produccion");
         $estadoStock->setFecha(new DateTime('now'));
-
+                
+        $baja = new Baja();
+        $baja->setFecha(new \DateTime());
+        $baja->setStock($stock);
+        $baja->setCantidad($stock->getActual());
+        $stock->setActual(0);
+        $em->persist($baja);
         $em->persist($stock);
         $em->persist($estadoStock);                
         

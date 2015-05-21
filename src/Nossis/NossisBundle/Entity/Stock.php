@@ -133,7 +133,13 @@ class Stock
      */
     private $origenFraccionado;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Baja", mappedBy="stock")
+     */
+    protected $bajas;
+    
     public $motivoEdicion;
+    
     
 
 
@@ -658,5 +664,38 @@ class Stock
     public function getDevoluciones()
     {
         return $this->devoluciones;
+    }
+
+    /**
+     * Add bajas
+     *
+     * @param \Nossis\NossisBundle\Entity\Baja $bajas
+     * @return Stock
+     */
+    public function addBaja(\Nossis\NossisBundle\Entity\Baja $bajas)
+    {
+        $this->bajas[] = $bajas;
+
+        return $this;
+    }
+
+    /**
+     * Remove bajas
+     *
+     * @param \Nossis\NossisBundle\Entity\Baja $bajas
+     */
+    public function removeBaja(\Nossis\NossisBundle\Entity\Baja $bajas)
+    {
+        $this->bajas->removeElement($bajas);
+    }
+
+    /**
+     * Get bajas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBajas()
+    {
+        return $this->bajas;
     }
 }
