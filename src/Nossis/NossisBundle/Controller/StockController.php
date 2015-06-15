@@ -276,7 +276,6 @@ class StockController extends Controller
             $form->bind($request);
             $area = $form->getData()['area'];
             $lotes = $area->getLotesStock();
-            ld($lotes);
          }
         return $this->render('NossisBundle:Stock:trazladarLote.html.twig',
                  array('form' => $form->createView(), 'lotes' => $lotes, 'area' => $area));
@@ -290,7 +289,6 @@ class StockController extends Controller
          );
             $fecha = DateTime::createFromFormat( 'U', $timestamp );
             $fecha = $fecha->sub(\DateInterval::createFromDateString('+ 3 hours'));
-            ld($fecha);
         $request = $this->get('request');
          if ($request->getMethod() == 'POST'){
             $form->bind($request);
@@ -299,7 +297,6 @@ class StockController extends Controller
             $fecha = DateTime::createFromFormat( 'U', $timestamp );
             $fecha = $fecha->sub(\DateInterval::createFromDateString('+ 3 hours'));
             $stocks = $em->getRepository('NossisBundle:Stock')->findBy(array('lote' => $lote, 'area' => $area, 'fechaEnvasado' => $fecha));
-            ld($stocks);
             foreach ($stocks as $stock){                    
                 $stock->setArea($trazlado->getArea());
                 $trazlado->setFecha(new DateTime('now'));
