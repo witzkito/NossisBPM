@@ -34,8 +34,8 @@ class StockRepository extends EntityRepository
             ->from('NossisBundle:Stock', 's')
             ->join('s.producto', 'p')
             ->where('s.actual > 0')
-            ->GroupBy('s.lote')
-            ->orderBy('p.nombre')
+            ->GroupBy('s.lote, p.nombre')
+            ->orderBy('s.lote, p.nombre')
             ->getQuery();
         return $query->getResult();
     }
@@ -95,8 +95,8 @@ class StockRepository extends EntityRepository
             ->andWhere('s.fechaIngreso >= :desde')
             ->andWhere('s.fechaIngreso <= :hasta')
             ->andWhere('p.id = :producto')
-            ->GroupBy('s.lote')
-            ->orderBy('p.nombre')
+            ->GroupBy('s.lote, p.nombre')
+            ->orderBy('s.lote, p.nombre')
             ->setParameters(array('desde' => $desde, 'hasta' => $hasta, 'producto' => $producto))
             ->getQuery();
         }else{
@@ -107,8 +107,8 @@ class StockRepository extends EntityRepository
             ->where('s.actual > 0')
             ->andWhere('s.fechaIngreso >= :desde')
             ->andWhere('s.fechaIngreso <= :hasta')
-            ->GroupBy('s.lote')
-            ->orderBy('p.nombre')
+            ->GroupBy('s.lote, p.nombre')
+            ->orderBy('s.lote, p.nombre')
             ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
             ->getQuery();
         }

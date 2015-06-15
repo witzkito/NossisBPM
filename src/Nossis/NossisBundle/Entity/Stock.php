@@ -88,14 +88,14 @@ class Stock
     
     /**
      * @var integer
-     * @orm\Column(name="ingresado", type="decimal", scale=2)
+     * @orm\Column(name="ingresado", type="decimal", scale=1)
      * @GRID\Column(title="Cant. Ingresada",filterable=true)
      */
     private $ingresado;
     
     /**
      * @var integer
-     * @orm\Column(name="actual", type="decimal" , scale=2)
+     * @orm\Column(name="actual", type="decimal" , scale=1)
      * @GRID\Column(title="Cant. Actual",filterable=true)
      */
     private $actual;
