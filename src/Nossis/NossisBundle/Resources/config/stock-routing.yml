@@ -45,3 +45,7 @@ trazladar_lote_stock:
 destruir_stock:
     pattern:  /destruir/stock/{id}
     defaults: { _controller: NossisBundle:Stock:destruir }
+    
+lote_trazladar_stock:
+    pattern:  /trazladar/lote/stocks/{lote}/{area}/{timestamp}
+    defaults: { _controller: NossisBundle:Stock:trazladarLoteArea }
