@@ -31,10 +31,10 @@ class StockEditType extends AbstractType
                         '0' => 'SIN TURNO'),
                     'required'  => true,
                 ))
-            ->add('ingresado', 'integer', array(
+            ->add('ingresado', null, array(
                     'label'     => 'Stock Ingresado'
             ))
-            ->add('actual', 'integer', array(
+            ->add('actual', null, array(
                     'label'     => 'Stock Actual'
             ))
             ->add('motivoEdicion', 'textarea', array(

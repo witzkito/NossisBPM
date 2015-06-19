@@ -24,7 +24,7 @@ class RetiroStock
     /**
      * @var integer
      *
-     * @ORM\Column(name="cantidad", type="integer")
+     * @ORM\Column(name="cantidad", type="decimal", scale=1)
      */
     private $cantidad;
     
