@@ -33,3 +33,7 @@ Listado:
 Devolucion:
     resource: "@NossisBundle/Controller/DevolucionController.php"
     type:     annotation
+    
+Exportacion:
+    resource: "@NossisBundle/Controller/ExportacionAlmaController.php"
+    type:     annotation

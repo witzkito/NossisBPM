@@ -1,0 +1,60 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block body -%}
+    <div class="grid">
+        <h1>Exportacion Alma</h1>
+        <br/><br/>
+        <ul>
+            <li>
+                <a href="{{ path('exportacionalma_new') }}">
+                    Generar Nueva Exportacion
+                </a>                
+            </li>
+            <li>
+                <a href="{{ path('exportacionalma_automatica')}}">
+                    Generacion Automatica
+                </a>
+            </li>
+        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Numero</th>
+                    <th>Automatico</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td align="center"><a href="{{ path('exportacionalma_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    {% if entity.automatico %}
+                        <td align="center">Si</td>
+                    {% else %}
+                        <td align="center">No</td>
+                    {% endif %}
+                    <td align="center">{% if entity.fechaInicio %}{{ entity.fechaInicio|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td align="center">{% if entity.fechaFin %}{{ entity.fechaFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('exportacionalma_show', { 'id': entity.id }) }}">Ver</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('exportacionalma_edit', { 'id': entity.id }) }}">Editar</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('exportacionalma_exportxls', { 'id': entity.id }) }}">Exportar XLS</a>
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        
+    </div>
+    {% endblock %}
