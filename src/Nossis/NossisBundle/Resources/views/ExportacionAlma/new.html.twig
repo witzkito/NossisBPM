@@ -1,0 +1,22 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>Creacion de una exportacion personalizada</h1>
+    <div class="form">
+        {{ form(form) }}
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('exportacionalma') }}">
+                    Volver a la lista
+                </a>
+            </li>    
+        </ul>
+    </div>        
+            
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}    
+{% endblock %}

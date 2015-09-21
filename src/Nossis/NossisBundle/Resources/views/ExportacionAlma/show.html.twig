@@ -1,0 +1,55 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>ExportacionAlma</h1>
+    <div class="grid">
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Fechainicio</th>
+                    <td>{{ entity.fechaInicio|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Fechafin</th>
+                    <td>{{ entity.fechaFin|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            </tbody>
+        </table>
+                
+        <table>
+            <tbody>
+                <tr>
+                    <td>Fecha</td>
+                    <td>Codigo Alma</td>
+                    <td>Cantidad</td>
+                </tr>
+            </tbody>
+            <tbody>
+                {% for prod in entity.items %}
+                    <tr>
+                        <td>{{prod.fechaFin | date('m/d/Y')}}</td>
+                        <td>{{prod.codigo}}</td>
+                        <td>{{prod.cantidad}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </div>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('exportacionalma') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('exportacionalma_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
