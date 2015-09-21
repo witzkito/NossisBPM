@@ -32,8 +32,8 @@
         "mopa/barcode-bundle": "dev-master",
         "avalanche123/imagine-bundle": "dev-master",
         "zendframework/zendframework": "2.5.0",
-        "mopa/bootstrap-sandbox-bundle": "dev-master",
-        "liuggio/excelbundle": "dev-master"
+        "liuggio/excelbundle": "dev-master",
+        "mopa/bootstrap-sandbox-bundle": "dev-master"        
     },"minimum-stability": "dev", 
     "scripts": {
         "post-install-cmd": [

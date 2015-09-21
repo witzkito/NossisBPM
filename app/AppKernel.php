@@ -27,7 +27,8 @@ class AppKernel extends Kernel
             new APY\DataGridBundle\APYDataGridBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new Mopa\Bundle\BarcodeBundle\MopaBarcodeBundle()
+            new Mopa\Bundle\BarcodeBundle\MopaBarcodeBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
