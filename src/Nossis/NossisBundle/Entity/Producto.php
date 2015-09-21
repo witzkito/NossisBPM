@@ -42,6 +42,13 @@ class Producto
     private $codigo;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="codigoAlma", type="string", length=10)
+     */
+    private $codAlma;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="producto")
      */
     protected $stocks;
@@ -186,5 +193,28 @@ class Producto
     public function getOrden()
     {
         return $this->orden;
+    }
+
+    /**
+     * Set codAlma
+     *
+     * @param string $codAlma
+     * @return Producto
+     */
+    public function setCodAlma($codAlma)
+    {
+        $this->codAlma = $codAlma;
+
+        return $this;
+    }
+
+    /**
+     * Get codAlma
+     *
+     * @return string 
+     */
+    public function getCodAlma()
+    {
+        return $this->codAlma;
     }
 }
