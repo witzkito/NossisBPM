@@ -13,7 +13,7 @@ class Builder extends ContainerAware
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav pull-right');
         
-        $menu->addChild('Inicio', array ('route' => 'nossis_homepage'))->setAttribute('divider_prepend', true);
+        $menu->addChild('Inicio', array ('route' => 'exportacionalma'))->setAttribute('divider_prepend', true);
         
         $menu->addChild('Listar')->setAttribute('dropdown', true)->setAttribute('divider_prepend', true);
         
