@@ -29,10 +29,6 @@ FraccionarStock:
 Listado:
     resource: "@NossisBundle/Controller/ListadoController.php"
     type:     annotation
-
-Devolucion:
-    resource: "@NossisBundle/Controller/DevolucionController.php"
-    type:     annotation
     
 Exportacion:
     resource: "@NossisBundle/Controller/ExportacionAlmaController.php"

@@ -23,9 +23,6 @@ class Builder extends ContainerAware
         $menu['Listar']->addChild('Despachos', array('route' => 'list_retiro'));
         $menu['Listar']->addChild('Generales', array('route' => 'index_listado_general'));
         
-        $menu->addChild('Administrar', array('route' => 'sonata_admin_redirect'))
-        ->setAttribute('divider_prepend', true);
-
         return $menu;
     }
     

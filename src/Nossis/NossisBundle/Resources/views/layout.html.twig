@@ -28,13 +28,7 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="{{ path('nossis_homepage')}}">NossisBPM <span>0.6.1 Beta</span></a>
-                    <div class="nav-center">
-                        <a class="nav-button-item brand" href="{{ path('ingresar_stock')}}">Ingresar</a>
-                        <a class="nav-button-item brand" href="{{ path('trazladar_lote_stock')}}">Trazladar</a>
-                        <a class="nav-button-item brand" href="{{ path('index_retiro')}}">Despachar</a>
-                        <a class="nav-button-item brand" href="{{ path('index_devolucion')}}">Devolucion</a>
-                    </div>
+                    <a class="brand" href="{{ path('nossis_homepage')}}">NossisBPM - Exportacion <span>0.1 Beta</span></a>
                     <div class="nav-collapse">
                         {{ knp_menu_render('NossisBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'NossisBundle:Menu:knp_menu.html.twig'}) }}
                     </div>
