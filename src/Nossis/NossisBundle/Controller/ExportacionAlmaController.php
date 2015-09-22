@@ -369,6 +369,9 @@ class ExportacionAlmaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $exportacion = $em->getRepository('NossisBundle:ExportacionAlma')->findOneBy(array("automatico" => true), array('id' => 'DESC'));
         $fechaFin = new \DateTime("now");
+        if ($exportacion == null){
+            $exportacion = $em->getRepository('NossisBundle:ExportacionAlma')->findOneBy(array(), array('id' => 'DESC'));
+        }
         $productos = $this->generarArrayExportacion($exportacion->getFechaFin(), $fechaFin);
         $exp = new ExportacionAlma();
         $exp->setFechaFin($fechaFin);
