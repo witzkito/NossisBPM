@@ -62,7 +62,11 @@ class ExportacionAlmaController extends Controller
                 $item = new ItemExportacionAlma;
                 $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']));
                 $producto = $em->getRepository('NossisBundle:Producto')->find($key);
-                $item->setCodigo($producto->getCodAlma());
+                if ($producto->getAlma() != null){
+                    $item->setCodigo($producto->getAlma()->getCodAlma());
+                }else{
+                    $item->setCodigo(0);
+                }
                 $item->setFechaFin($entity->getFechaFin());
                 $item->setExportacion($entity);
                 $em->persist($item);                
@@ -383,7 +387,11 @@ class ExportacionAlmaController extends Controller
             $item = new ItemExportacionAlma;
             $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']));
             $producto = $em->getRepository('NossisBundle:Producto')->find($key);
-            $item->setCodigo($producto->getCodAlma());
+            if ($producto->getAlma() != null){
+                $item->setCodigo($producto->getAlma()->getCodAlma());
+            }else{
+                $item->setCodigo(0);
+            }
             $item->setFechaFin($fechaFin);
             $item->setExportacion($exp);
             $em->persist($item);
