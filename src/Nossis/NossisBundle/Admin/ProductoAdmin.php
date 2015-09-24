@@ -5,6 +5,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Nossis\NossisBundle\Entity\Producto;
 
 class ProductoAdmin extends Admin {
     
@@ -13,7 +14,6 @@ class ProductoAdmin extends Admin {
     {
         $formMapper
             ->add('nombre', 'text', array('label' => 'Nombre'))
-            ->add('codAlma', 'text', array('label' => 'Codigo Alma'))
             ->add('orden')
         ;
     }
@@ -22,7 +22,6 @@ class ProductoAdmin extends Admin {
     {
         $datagridMapper
             ->add('nombre')
-            ->add('codAlma')
             ->add('orden')
         ;
     }
@@ -33,7 +32,6 @@ class ProductoAdmin extends Admin {
         $listMapper
             ->addIdentifier('id')
             ->add('nombre')
-            ->add('codAlma')
             ->add('orden')
         ;
     }

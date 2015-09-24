@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\ProductoRepository")
  */
 class Producto
-{
+{    
+    
     /**
      * @var integer
      *
@@ -39,20 +40,19 @@ class Producto
      *
      * @ORM\Column(name="codigo", type="string", length=255)
      */
-    private $codigo;
+    private $codigo;   
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="codigoAlma", type="string", length=10)
-     */
-    private $codAlma;
     
     /**
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="producto")
      */
     protected $stocks;
-
+    
+    /**
+     * @ORM\OneToOne(targetEntity="ProductoAlma")
+     */
+    protected $alma;
+        
 
     /**
      * Get id
@@ -195,26 +195,27 @@ class Producto
         return $this->orden;
     }
 
+
     /**
-     * Set codAlma
+     * Set alma
      *
-     * @param string $codAlma
+     * @param \Nossis\NossisBundle\Entity\ProductoAlma $alma
      * @return Producto
      */
-    public function setCodAlma($codAlma)
+    public function setAlma(\Nossis\NossisBundle\Entity\ProductoAlma $alma = null)
     {
-        $this->codAlma = $codAlma;
+        $this->alma = $alma;
 
         return $this;
     }
 
     /**
-     * Get codAlma
+     * Get alma
      *
-     * @return string 
+     * @return \Nossis\NossisBundle\Entity\ProductoAlma 
      */
-    public function getCodAlma()
+    public function getAlma()
     {
-        return $this->codAlma;
+        return $this->alma;
     }
 }

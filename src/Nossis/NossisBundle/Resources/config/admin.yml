@@ -65,7 +65,9 @@ services:
             - ~
             - Nossis\NossisBundle\Entity\Ciudad
             - ~
-    
-          
-        
 
+    nossis.admin.producto_alma:
+        class: Nossis\NossisBundle\Admin\ProductoAlmaAdmin
+        arguments: [~, Nossis\NossisBundle\Entity\ProductoAlma, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Alma, label: ProductoAlma}
