@@ -1,10 +1,14 @@
 {% extends "NossisBundle::layout.html.twig" %}
 
-{% block title%} Ingresar los Permisos{% endblock %}
+{% block title %} Ingresar los Permisos {% endblock %}
 
 {% block fos_user_content %}
         {% if error %}
-            <div>{{ error|trans }}</div>
+                    {% if "Bad credentials." in (error|trans({}, 'FOSUserBundle')) %}
+                        <div class="alert alert-danger alert-error">El usuario o contraseña fueron mal ingresados</div>
+                    {% else %}
+                        <div class="alert alert-danger alert-error">{{error|trans({}, 'FOSUserBundle')}}</div>
+                    {% endif %}
         {% endif %}
         <div class="form">
             <form action="{{ path("fos_user_security_check") }}" method="post">
