@@ -60,8 +60,10 @@ class ExportacionAlmaController extends Controller
             foreach($productos as $key => $prod)
             {
                 $item = new ItemExportacionAlma;
-                $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']));
                 $producto = $em->getRepository('NossisBundle:Producto')->find($key);
+                $productoAlma = $em->getRepository('NossisBundle:ProductoAlma')->findOneBy(array('producto' => $key));
+                
+                $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']) * $productoAlma->getFactorMult());
                 if ($producto->getAlma() != null){
                     $item->setCodigo($producto->getAlma()->getCodAlma());
                 }else{
@@ -385,7 +387,8 @@ class ExportacionAlmaController extends Controller
         foreach($productos as $key => $prod)
         {
             $item = new ItemExportacionAlma;
-            $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']));
+            $productoAlma = $em->getRepository('NossisBundle:ProductoAlma')->findOneBy(array('producto' => $key));
+            $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']) * $productoAlma->getFactorMult());
             $producto = $em->getRepository('NossisBundle:Producto')->find($key);
             if ($producto->getAlma() != null){
                 $item->setCodigo($producto->getAlma()->getCodAlma());
