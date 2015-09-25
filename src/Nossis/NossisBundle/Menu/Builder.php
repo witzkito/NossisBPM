@@ -20,6 +20,7 @@ class Builder extends ContainerAware
         $menu->addChild('Listar')->setAttribute('dropdown', true)->setAttribute('divider_prepend', true);
         
         $menu['Listar']->addChild('Stock Actual', array('route' => 'listar_stock'));
+        $menu['Listar']->addChild('Envios', array('route' => 'list_retiro'));
         $menu['Listar']->addChild('Generales', array('route' => 'index_listado_general'));
         
         $menu->addChild('Administracion', array ('route' => 'sonata_admin_dashboard'))->setAttribute('divider_prepend', true);
