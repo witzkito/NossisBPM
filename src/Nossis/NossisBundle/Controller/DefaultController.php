@@ -20,10 +20,26 @@ class DefaultController extends Controller
             
         }
         
+        $version = $this->getArchivoVersion();
+        
         return $this->render('NossisBundle:Default:index.html.twig', array(
                 'form'    => $form->createView(),
                 'almacenes' => $almacenes,
                 'productos' => $productos,
+                'version' => $version
         ));
-    }    
+    }
+    
+    private function getArchivoVersion()
+    {
+        //abrimos el archivo en lectura
+        $archivo = 'version.txt';
+        $fp = fopen($archivo,'r');
+        //leemos el archivo
+        $texto = fread($fp, filesize($archivo));
+
+        return $texto;
+        
+    }
+    
 }
