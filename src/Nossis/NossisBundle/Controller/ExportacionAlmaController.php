@@ -63,7 +63,7 @@ class ExportacionAlmaController extends Controller
                 $producto = $em->getRepository('NossisBundle:Producto')->find($key);
                 $productoAlma = $em->getRepository('NossisBundle:ProductoAlma')->findOneBy(array('producto' => $key));
                 
-                $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']) * $productoAlma->getFactorMult());
+                $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas'] + $prod['fraccion']) * $productoAlma->getFactorMult());
                 if ($producto->getAlma() != null){
                     $item->setCodigo($producto->getAlma()->getCodAlma());
                 }else{
@@ -278,11 +278,12 @@ class ExportacionAlmaController extends Controller
             $entities[$producto->getId()]['despachos'] = 0;
             $entities[$producto->getId()]['devolucion'] = 0;
             $entities[$producto->getId()]['bajas'] = 0;
+            $entities[$producto->getId()]['fraccion'] = 0;
             foreach ($producto->getStocks() as $stock)
             {
                 if ($stock->getFechaIngreso() >= $desde && $stock->getFechaIngreso() <= $hasta)
                 {
-                    $entities[$producto->getId()]['ingresos'] = $entities[$producto->getId()]['ingresos'] + $stock->getIngresado();
+                        $entities[$producto->getId()]['ingresos'] = $entities[$producto->getId()]['ingresos'] + $stock->getIngresado();
                 }
                 foreach ($stock->getRetiros() as $retiro)
                 {
@@ -303,6 +304,13 @@ class ExportacionAlmaController extends Controller
                     if ($baja->getFecha() >= $desde && $baja->getFecha() <= $hasta)
                     {
                         $entities[$producto->getId()]['bajas'] = $entities[$producto->getId()]['bajas'] + $baja->getCantidad();
+                    }
+                }
+                foreach ($stock->getFraccionados() as $fraccionado)
+                {
+                    if ($fraccionado->getFecha() >= $desde && $fraccionado->getFecha() <= $hasta)
+                    {
+                        $entities[$producto->getId()]['fraccion'] = $entities[$producto->getId()]['fraccion'] + $fraccionado->getCantidad();
                     }
                 }
                 
@@ -388,7 +396,7 @@ class ExportacionAlmaController extends Controller
         {
             $item = new ItemExportacionAlma;
             $productoAlma = $em->getRepository('NossisBundle:ProductoAlma')->findOneBy(array('producto' => $key));
-            $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas']) * $productoAlma->getFactorMult());
+            $item->setCantidad(($prod['ingresos'] + $prod['devolucion']) - ($prod['despachos'] + $prod['bajas'] + $prod['fraccion']) * $productoAlma->getFactorMult());
             $producto = $em->getRepository('NossisBundle:Producto')->find($key);
             if ($producto->getAlma() != null){
                 $item->setCodigo($producto->getAlma()->getCodAlma());
