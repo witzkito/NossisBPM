@@ -382,7 +382,7 @@ class ExportacionAlmaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $exportacion = $em->getRepository('NossisBundle:ExportacionAlma')->findOneBy(array("automatico" => true), array('id' => 'DESC'));
-        $fechaFin = new \DateTime("now");
+        $fechaFin = $this->getFechaFin();
         if ($exportacion == null){
             $exportacion = $em->getRepository('NossisBundle:ExportacionAlma')->findOneBy(array(), array('id' => 'DESC'));
         }
@@ -411,7 +411,18 @@ class ExportacionAlmaController extends Controller
 
         return $this->redirect($this->generateUrl('exportacionalma_exportxls', array('id' => $exp->getId())));
         
-
+    }
+    
+    private function getFechaFin(){
+        //abrimos el archivo en lectura
+        $archivo = 'version.txt';
+        $fp = fopen($archivo,'r');
+        //leemos el archivo
+        $texto = fread($fp, filesize($archivo));
+        
+        $date = substr($texto, 0, 19);
+        ld($date);
+        return new \DateTime($date);
         
     }
 }
