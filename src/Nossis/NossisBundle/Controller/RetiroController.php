@@ -11,6 +11,8 @@ use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use Ps\PdfBundle\Annotation\Pdf;
 use Nossis\NossisBundle\Entity\EstadoStock;
+use Nossis\NossisBundle\Entity\Repositorio\ClienteRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RetiroController extends Controller
 {
@@ -42,7 +44,7 @@ class RetiroController extends Controller
             $em->persist($retiro);
             $em->flush();
             
-            return $this->editAction($retiro->getId());
+            return new RedirectResponse($this->generateUrl('edit_retiro', array('id' => $retiro->getId())));
                 
         
     }
@@ -50,16 +52,13 @@ class RetiroController extends Controller
     public function editAction($id)
     {
         $em = $this->get('doctrine')->getManager();
-        if (($retiro = $em->getRepository('NossisBundle:Retiro')->find($id)) != null){
-            $form = $this->get('form.factory')->create(
-                new RetiroType(),
-                $retiro);
+        $retiro = $em->getRepository('NossisBundle:Retiro')->find($id);
+            $formStock = $this->getFormStock($retiro);
             $request = $this->get('request');
             if ($request->getMethod() == 'POST'){
-                $form->bind($request);
-                $retiro = $form->getData();
-                $retiro->setFechaSalida(new \DateTime('NOW'));
-                if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $retiro->codigo))) != null){
+                $formStock->bind($request);
+                $datos = $formStock->getData();
+                if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $datos['codigo']))) != null){
                     if ($stock->getArea()->getSalida()){
                         if (($retirostock = $em->getRepository('NossisBundle:RetiroStock')->findOneBy(array('retiro' => $retiro->getId(), 'stock' => $stock->getId()))) == null){
                             if ($this->comprobarSinConfirmar($stock)){
@@ -84,21 +83,48 @@ class RetiroController extends Controller
                             'notice',
                             'El articulo se encuentra en un area de no salida'
                         );
-                    }
-                    $em->persist($retiro);
-                    $em->flush();
+                    }                    
+                    
+                    
                 }
-            }
+                $em->flush();
+                foreach ($retiro->getStocks() as $stock){
+                    if (isset($datos[$stock->getId()])){
+                        $stock->setCliente($datos[$stock->getId()]);
+                        $em->persist($stock);
+                    }
+                }
+                $em->persist($retiro);
+                $em->flush();
+                if ($request->request->has('imprimir')){
+                    return new RedirectResponse($this->generateUrl('confirmar_retiro', array('id' => $retiro->getId())));
+                }
+            }            
             $retiro->codigo = "";
-            $form = $this->get('form.factory')->create(
-                new RetiroType(),
-                $retiro);
+            $formStock = $this->getFormStock($retiro);
               return $this->render('NossisBundle:Retiro:edit.html.twig',
-                array('form' => $form->createView(), "retiro" => $em->getRepository('NossisBundle:Retiro')->find($id),
-                    "stocks" => $em->getRepository('NossisBundle:RetiroStock')->findby(array("retiro" => $id)) ));
+                array("retiro" => $em->getRepository('NossisBundle:Retiro')->find($id),
+                    "stocks" => $em->getRepository('NossisBundle:RetiroStock')->findby(array("retiro" => $id)),
+                    'formStock' => $formStock->createView()));
          
-        }
+        
             
+    }
+    
+    private function getFormStock($retiro) {
+        $formStock = $this->createFormBuilder();
+        $formStock->add('codigo', 'text', array('required' => false, 'label' => null));
+        foreach ($retiro->getStocks() as $stock){
+            $formStock->add($stock->getId(), 'entity', array('class' => 'NossisBundle:Cliente',
+                'query_builder' => function (ClienteRepository $er) {
+                return $er->createQueryBuilder('u')
+                ->orderBy('u.nombre', 'ASC');
+              }
+            ));
+            $formStock->get($stock->getId())->setData($stock->getCliente());
+            
+        }
+        return $formStock->getForm();
     }
     
     private function comprobarSinConfirmar($stock){
@@ -139,7 +165,7 @@ class RetiroController extends Controller
             $estadoStock = new EstadoStock;
             $estadoStock->setStock($stock->getStock());
             $estadoStock->setEstado('Salida');
-            $estadoStock->setDescripcion("Salida de ". $stock->getCantidad()." unidades del Almacen por " . $retiro->getTransportista() . " hacia " . $retiro->getCliente());
+            $estadoStock->setDescripcion("Salida de ". $stock->getCantidad()." unidades del Almacen por " . $retiro->getTransportista());
             $estadoStock->setFecha(new \DateTime('now'));
             $em->persist($estadoStock);
         }

@@ -44,6 +44,12 @@ class RetiroStock
      * @ORM\OneToMany(targetEntity="Devolucion", mappedBy="retiroStock")
      */
     protected $devoluciones;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="retiros")
+     * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
+     */
+    private $cliente;
 
 
     /**
@@ -171,5 +177,28 @@ class RetiroStock
     public function getDevoluciones()
     {
         return $this->devoluciones;
+    }
+
+    /**
+     * Set cliente
+     *
+     * @param \Nossis\NossisBundle\Entity\Cliente $cliente
+     * @return RetiroStock
+     */
+    public function setCliente(\Nossis\NossisBundle\Entity\Cliente $cliente = null)
+    {
+        $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    /**
+     * Get cliente
+     *
+     * @return \Nossis\NossisBundle\Entity\Cliente 
+     */
+    public function getCliente()
+    {
+        return $this->cliente;
     }
 }

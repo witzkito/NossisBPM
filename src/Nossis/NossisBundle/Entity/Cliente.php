@@ -49,7 +49,7 @@ class Cliente
     private $ciudad;
     
     /**
-     * @ORM\OneToMany(targetEntity="Retiro", mappedBy="cliente")
+     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="cliente")
      */
     protected $retiros;
 
@@ -160,15 +160,19 @@ class Cliente
     public function __construct()
     {
         $this->retiros = new \Doctrine\Common\Collections\ArrayCollection();
+    }    
+    
+    public function __toString(){
+        return $this->nombre;
     }
 
     /**
      * Add retiros
      *
-     * @param \Nossis\NossisBundle\Entity\Retiro $retiros
+     * @param \Nossis\NossisBundle\Entity\RetiroStock $retiros
      * @return Cliente
      */
-    public function addRetiro(\Nossis\NossisBundle\Entity\Retiro $retiros)
+    public function addRetiro(\Nossis\NossisBundle\Entity\RetiroStock $retiros)
     {
         $this->retiros[] = $retiros;
 
@@ -178,9 +182,9 @@ class Cliente
     /**
      * Remove retiros
      *
-     * @param \Nossis\NossisBundle\Entity\Retiro $retiros
+     * @param \Nossis\NossisBundle\Entity\RetiroStock $retiros
      */
-    public function removeRetiro(\Nossis\NossisBundle\Entity\Retiro $retiros)
+    public function removeRetiro(\Nossis\NossisBundle\Entity\RetiroStock $retiros)
     {
         $this->retiros->removeElement($retiros);
     }
@@ -193,9 +197,5 @@ class Cliente
     public function getRetiros()
     {
         return $this->retiros;
-    }
-    
-    public function __toString(){
-        return $this->nombre;
     }
 }

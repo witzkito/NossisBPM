@@ -5,40 +5,19 @@
 {% block body %}
     <hr>
     
-    <div class="despachar">
+    <div class="container">
         
         <div class="form">
                 <form action="{{ path('new_retiro') }}" method="post">
                 {{ form_row(form.nroOrden) }}
-                {{ form_label(form.cliente)}}
-                {{ form_widget(form.cliente) }}
                 {{ form_row(form.empresa) }}
                 {{ form_row(form.transportista) }}
                 {{ form_row(form.patente) }}
                 {{ form_row(form.formaCarga) }}
-                <input class="submit" type="submit" value="Guardar"  />
+                <input class="submit" type="submit" value="Comenzar"  />
             
         </div>
-        <div class="formcodigo">
-            {{ form_row(form.codigo) }}
-                </form>
-            <div class="datagrid">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Numero</th>
-                            <th>Producto</th>
-                            <th>Stock Restante</th>
-                            <th>Retira</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>    
+           
     </div> 
 {% endblock %}
 

@@ -153,7 +153,7 @@
                         <td>{{ retiro.retiro.fechasalida | date('d/m/y h:m A') }}</td>
                         <td>{{ retiro.cantidad }}</td>
                         <td>{{ retiro.retiro.nroorden }}</td>
-                        <td>{{ retiro.retiro.cliente }}</td>
+                        <td>{{ retiro.retiro.clientesString }}</td>
                         <td>{{ retiro.retiro.transportista }}</td>
                         <td class="grid-column-confirmado align-center">
                             <span class="grid_boolean_{{ retiro.retiro.stringconfirmado }}">{{ retiro.retiro.stringconfirmado }}</span>

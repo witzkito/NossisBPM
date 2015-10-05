@@ -11,44 +11,40 @@
                 <thead>
                     <tr>
                         <th>Numero:</th>
-                        <td>{{ retiro.id }}</td>                
+                        <td  colspan="4">{{ retiro.id }}</td>                
                     </tr>
                     <tr>
                         <th>Fecha Salida:</th>
-                        <td>{{ retiro.fechasalida | date('d/m/Y H:i a') }}</td>                
+                        <td  colspan="4">{{ retiro.fechasalida | date('d/m/Y H:i a') }}</td>                
                     </tr>
                     <tr>
                         <th>Numero de Orden:</th>
-                        <td>{{ retiro.nroOrden }}</td>                
-                    </tr>
-                    <tr>
-                        <th>Cliente:</th>
-                        <td>{{ retiro.cliente }}</td>                
+                        <td  colspan="4">{{ retiro.nroOrden }}</td>                
                     </tr>
                     <tr>
                         <th>Empresa:</th>
-                        <td>{{ retiro.empresa }}</td>                
+                        <td  colspan="4">{{ retiro.empresa }}</td>                
                     </tr>
                     <tr>
                         <th>Transportista:</th>
-                        <td>{{ retiro.transportista }}</td>                
+                        <td  colspan="4">{{ retiro.transportista }}</td>                
                     </tr>
                     <tr>
                         <th>Patente:</th>
-                        <td>{{ retiro.patente }}</td>                
+                        <td  colspan="4">{{ retiro.patente }}</td>                
                     </tr>
                     <tr>
                         <th>Forma Carga:</th>
-                        <td>{{ retiro.formaCarga }}</td>                
+                        <td  colspan="4">{{ retiro.formaCarga }}</td>                
                     </tr>
                     <tr>
                         <th>Retiro:</th>
-                        <td></td>                
+                        <td colspan="4"></td>                
                     </tr>
                     {% for stock in retiro.stocks %}
                         <tr>
                             <th></th>
-                            <td>{{ stock.cantidad }} - {{ stock.stock.producto.nombre }} - <a href="{{ path('show_stock', {'id':stock.stock.id})}}">Ver</a></td>                
+                            <td>{{ stock.cantidad }}</td><td> {{ stock.stock.producto.nombre }}</td><td>{{stock.cliente}}</td> <td><a href="{{ path('show_stock', {'id':stock.stock.id})}}">Ver</a></td>                
                         </tr>
                     {% endfor %}
                 </thead>

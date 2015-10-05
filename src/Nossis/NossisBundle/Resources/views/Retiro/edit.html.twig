@@ -9,28 +9,10 @@
         </div>
     {% endfor %}
     <hr>
-    <div class="despachar">
-        <div class="form">
-                <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
-                {{ form_row(form.nroOrden) }}
-                {{ form_label(form.cliente)}}
-                {{ form_widget(form.cliente) }}
-                {{ form_row(form.empresa) }}
-                {{ form_row(form.transportista) }}
-                {{ form_row(form.patente) }}
-                {{ form_row(form.formaCarga) }}
-                <div class="botones">
-                    <table>
-                        <tr>
-                            <td><input class="guardar" type="submit" value="Guardar"  /></td>
-                            <td><input class="confirmar" type="button" name="imprimir" value="Confirmar" onclick="confirmar('Si confirma no podra editar mas este Envio, ¿esta seguro?', '{{ path('confirmar_retiro', { 'id' : retiro.id}) }}')"  /></td>
-                        </tr>
-                    </table>
-                </div>
-            
-        </div>
+    <div class="despachar">        
+        <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
         <div class="formcodigo">
-            {{ form_row(form.codigo) }}
+            {{ form_row(formStock.codigo) }}
                 </form>
             <div class="datagrid">
                 <table>
@@ -40,6 +22,7 @@
                             <th>Producto</th>
                             <th>Stock Restante</th>
                             <th>Retira</th>
+                            <th>Cliente</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -49,14 +32,20 @@
                                 <td>{{ stock.stock.numero }}</td>
                                 <td>{{ stock.stock.producto.nombre }}</td>
                                 <td>{{ stock.stock.actual | number_format(2, '.') }}</td>
-                                <td>{{ stock.cantidad | number_format(2, '.') }}</td>
+                                <td>{{ stock.cantidad }}</td>
+                                <td>{{ form_widget(formStock[stock.id])}}</td>
                                 <td><a href="{{ path('edit_retiro_stock', { 'id' : stock.id}) }}">Editar</a>
                                 <a href="#" onclick="confirmar('¿Esta seguro de querer borra?','{{ path('eliminar_retiro_stock', { 'id' : stock.id}) }}')">Eliminar</a></td>
                             </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </tbody>                    
+                </table>               
             </div>
+                <div class="botones">
+                    <input class="btn btn-success" type="submit" value="Guardar"  />
+                    <input class="btn btn-info" type="submit" name="imprimir" value="Confirmar" onclick="confirmar('Si confirma no podra editar mas este Envio, ¿esta seguro?', '{{ path('confirmar_retiro', { 'id' : retiro.id}) }}')"  />
+                    
+                </div>
         </div>    
     </div>
     
@@ -65,11 +54,11 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ form_javascript(form) }}
+    {{ form_javascript(formStock) }}
     <script>
         function setFocus()
         {
-            document.getElementById("nossis_nossisbundle_retiro_codigo").focus();
+            document.getElementById("form_codigo").focus();
         }
         
         

@@ -69,13 +69,6 @@ class Retiro
     private $transportista;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="retiros")
-     * @ORM\JoinColumn(name="cliente", referencedColumnName="id")
-     * @GRID\Column(title="Transportista", filterable=true, field="cliente.nombre")
-     */
-    private $cliente;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="retiros")
      * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
      * @GRID\Column(title="Empresa", filterable=true, field="empresa.nombre")
@@ -212,31 +205,6 @@ class Retiro
     }
 
     /**
-     * Set cliente
-     *
-     * @param \Nossis\NossisBundle\Entity\Cliente $cliente
-     * @return Retiro
-     */
-    public function setCliente(\Nossis\NossisBundle\Entity\Cliente $cliente = null)
-    {
-        $this->cliente = $cliente;
-
-        return $this;
-    }
-
-    /**
-     * Get cliente
-     *
-     * @return \Nossis\NossisBundle\Entity\Cliente 
-     */
-    public function getCliente()
-    {
-        return $this->cliente;
-    }
-    
-    
-
-    /**
      * Set empresa
      *
      * @param \Nossis\NossisBundle\Entity\Empresa $empresa
@@ -347,5 +315,34 @@ class Retiro
     public function getFormaCarga()
     {
         return $this->formaCarga;
+    }
+    
+    
+    /**
+     * Retorna un los clientes
+     * @return Array
+     */
+    public function getClientes()
+    {
+       $clientes = array();
+       foreach ($this->stocks as $stock)
+       {
+           $clientes[$stock->getCliente()->getId()] = $stock->getCliente();
+       }
+       return $clientes;
+    }
+    
+    /**
+     * Retorna un String de clientes
+     * @return String
+     */
+    public function getClientesString()
+    {
+       $retornar = "";
+       foreach ($this->getClientes() as $cli)
+       {
+           $retornar = $retornar . " - " . $cli->getNombre();
+       }
+       return $retornar;
     }
 }

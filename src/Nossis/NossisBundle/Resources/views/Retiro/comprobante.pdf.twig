@@ -32,13 +32,6 @@
                 según orden de carga Nº: {{ retiro.nroorden }}
             </div>
 
-	    <h3 margin-top="25px" margin-bottom="20px" >Datos del Cliente:</h3>  
-
-            <div>
-                <b>Nombre:</b> {{ retiro.cliente }} <br />
-                <b>Ciudad:</b> {{ retiro.cliente.ciudad }} <br />
-            </div>
-
             <h3 margin-top="25px" margin-bottom="20px" >Datos del transporte:</h3>  
 
             <div>
@@ -52,14 +45,14 @@
 
                 <table text-align="center" >
                     <tr>
-			<td  height="30px" width="100px" border-color="black">
+			<td  height="30px" width="60px" border-color="black">
                             <b>Nro.</b>
                         </td>
                         <td  height="30px" width="100px" border-color="black">
                             <b>Lote</b>
                         </td>
-                        <td width="80px" border-color="black">
-                            <b>Cantidad</b> 
+                        <td width="60px" border-color="black">
+                            <b>Cant.</b> 
                         </td>
                         <td border-color="black">
                             <b>Producto</b>
@@ -67,24 +60,28 @@
                         <td border-color="black">
                             <b>Fecha Envasado</b> 
                         </td>
+                        <td border-color="black">
+                            <b>Cliente</b> 
+                        </td>
                     </tr>
                     {% for stock in stocks %}
                     <tr>
-			<td height="25px" border-color="black">
+			<td height="25px" border-color="black" font-size="10">
                             {{ stock.stock.numero }}
                         </td>
-                        <td height="25px" border-color="black">
+                        <td height="25px" border-color="black" font-size="10">
                             {{ stock.stock.lote }}
                         </td>
-                        <td border-color="black">
+                        <td border-color="black" font-size="10">
                             {{ stock.cantidad }}
                         </td>
-                        <td border-color="black">
+                        <td border-color="black" font-size="8">
                             {{ stock.stock.producto.nombre }}
                         </td>
-                        <td border-color="black">
+                        <td border-color="black" font-size="10">
                             {{ stock.stock.fechaenvasado | date('d-m-Y') }}
                         </td>
+                        <td font-size="8">{{ stock.cliente }}</td>
 
                     </tr>
                     {% endfor %}
