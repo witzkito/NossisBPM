@@ -185,7 +185,7 @@
                     <tr>
                         <td>{{ devolucion.fecha | date('d/m/y h:m A') }}</td>
                         <td>{{ devolucion.cantidad }}</td>
-                        <td>{{ retiro.retiro.cliente }}</td>
+                        <td>{{ retiro.cliente }}</td>
                         <td>{{ devolucion.motivo }}</td>
                         <td>
                             <a href="{{ path('mostrar_devolucion', { 'id' : devolucion.id }) }}">Ver</a>
