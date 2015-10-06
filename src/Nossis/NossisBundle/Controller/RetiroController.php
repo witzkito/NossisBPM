@@ -113,6 +113,7 @@ class RetiroController extends Controller
     
     private function getFormStock($retiro) {
         $formStock = $this->createFormBuilder();
+        $ultimoCliente = null;
         $formStock->add('codigo', 'text', array('required' => false, 'label' => null));
         foreach ($retiro->getStocks() as $stock){
             $formStock->add($stock->getId(), 'entity', array('class' => 'NossisBundle:Cliente',
@@ -121,7 +122,12 @@ class RetiroController extends Controller
                 ->orderBy('u.nombre', 'ASC');
               }
             ));
-            $formStock->get($stock->getId())->setData($stock->getCliente());
+            if($stock->getCliente() == null){
+                $formStock->get($stock->getId())->setData($ultimoCliente);
+            }else{
+                $formStock->get($stock->getId())->setData($stock->getCliente());
+                $ultimoCliente = $stock->getCliente();
+            }
             
         }
         return $formStock->getForm();
