@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Devolucion
@@ -44,6 +45,7 @@ class Devolucion
     /**
      * @ORM\ManyToOne(targetEntity="RetiroStock", inversedBy="devoluciones")
      * @ORM\JoinColumn(name="stock", referencedColumnName="id")
+     * @GRID\Column(title="Cliente", filterable=true, field="retiroStock.cliente.nombre")
      */
     private $retiroStock;
     

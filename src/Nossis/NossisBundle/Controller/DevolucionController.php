@@ -9,6 +9,8 @@ use Nossis\NossisBundle\Entity\Devolucion;
 use Nossis\NossisBundle\Form\DevolucionType;
 use Nossis\NossisBundle\Form\DevolucionTodoType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 class DevolucionController extends Controller
 {
@@ -153,5 +155,37 @@ class DevolucionController extends Controller
             }
             return $this->render('NossisBundle:Devolucion:nuevoTodo.html.twig', array('retiro' => $retiro, 'form' => $form->createView()));
         }
+    }
+    
+    /**
+     * @Route("/devolucion/listar", name="list_devolucion")
+     * @Template()
+     */
+    public function listarAction(){
+        $source = new Entity('NossisBundle:Devolucion');
+
+        /* @var $grid \APY\DataGridBundle\Grid\Grid */
+        $grid = $this->get('grid');
+        
+        $ver = new RowAction('Ver', 'show_devolucion');
+        $grid->addRowAction($ver);
+        /*$editar = new RowAction('Editar', 'edit_devolucion');
+        $editar->setRouteParametersMapping(array('devolucion.id' => 'id'));
+        $grid->addRowAction($editar);*/
+        
+        $grid->setSource($source);
+        $grid->setDefaultOrder('id', 'desc');
+        return $grid->getGridResponse('NossisBundle:Devolucion:listar.html.twig');
+    }
+    
+    /**
+     * @Route("/devolucion/show/{id}", name="show_devolucion")
+     * @Template()
+     */
+    public function showAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $entity = $em->getRepository('NossisBundle:Devolucion')->find($id);
+        return $this->render('NossisBundle:Devolucion:show.html.twig', array("entity" => $entity));
+        
     }
 }
