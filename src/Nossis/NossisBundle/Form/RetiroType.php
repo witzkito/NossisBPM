@@ -25,9 +25,6 @@ class RetiroType extends AbstractType
                 'required' => false,
                 'label' => 'Transportista'
             ))
-            ->add('cliente', 'genemu_jqueryselect2_entity', array(
-                "class" => "Nossis\NossisBundle\Entity\Cliente",
-                'label' => 'Cliente'))
             ->add('empresa','genemu_jqueryselect2_entity', array(
                 "class" => "Nossis\NossisBundle\Entity\Empresa",
                 'label' => 'Empresa'))
