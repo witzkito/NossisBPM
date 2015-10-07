@@ -60,8 +60,6 @@ class RetiroController extends Controller
                 $datos = $formStock->getData();
                 if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $datos['codigo']))) != null){
                     if ($stock->getArea()->getSalida()){
-                        if (($retirostock = $em->getRepository('NossisBundle:RetiroStock')->findOneBy(array('retiro' => $retiro->getId(), 'stock' => $stock->getId()))) == null){
-                            if ($this->comprobarSinConfirmar($stock)){
                                 $retirostock = new RetiroStock;
                                 $retirostock->setStock($stock);
                                 $retirostock->setRetiro($retiro);
@@ -70,14 +68,7 @@ class RetiroController extends Controller
                                 //$cantidad = $stock->getIngresado() - $retirostock->getCantidad();
                                 $stock->retirar($retirostock->getCantidad());
                                 $em->persist($stock);
-                            }else{
-                                $this->get('session')->getFlashBag()->add(
-                                    'notice',
-                                'No se puede agregar por que el articulo se encuentra en un Despacho, sin confirmar'
-                        );
-                            }
-
-                        }
+                            
                     }else{
                         $this->get('session')->getFlashBag()->add(
                             'notice',
