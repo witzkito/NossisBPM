@@ -74,4 +74,23 @@ class FraccionarController extends Controller
         return $grid->getGridResponse('NossisBundle:Fraccionar:listar.html.twig');
     }
     
+    public function loteAction($id){
+        $em = $this->get('doctrine')->getManager();
+        $fraccionar = $em->getRepository('NossisBundle:Fraccionar')->find($id);
+        $form = $this->createFormBuilder();
+        $form->add('lote', 'text', array('required' => true, 'label' => 'Lote Destino'));
+        $form = $form->getForm();
+        $request = $this->get('request');
+            if ($request->getMethod() == 'POST'){
+                $form->bind($request);
+                $datos = $form->getData();
+                $fraccionar->setLoteDestino($datos['lote']);
+                $em->persist($fraccionar);
+                $em->flush();
+                return new RedirectResponse($this->generateUrl('show_stock',array('id' => $fraccionar->getStock()->getId())));
+            }
+        return $this->render('NossisBundle:Fraccionar:lote.html.twig',
+                array('fraccionar' => $fraccionar, 'form' => $form->createView()));     
+    }
+    
 }

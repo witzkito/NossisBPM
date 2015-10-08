@@ -28,13 +28,10 @@ class FraccionarType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Nossis\NossisBundle\Entity\Fraccionar'
         ));
-    }
+    }    
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
+    public function getName() {
         return 'nossis_nossisbundle_fraccionar';
     }
+
 }

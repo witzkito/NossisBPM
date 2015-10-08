@@ -1,0 +1,18 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Fraccionar Lote{% endblock %}
+
+{% block body %}
+    <hr>
+    
+    <div class="container">
+        
+        <div class="form">
+                <form action="{{ path('fraccionar_lote_stock', {'id': fraccionar.id}) }}" method="post">
+                    {{ form_rest(form)}}
+                <input class="submit" type="submit" class="btn btn-success" value="Guardar"  />
+            
+        </div>
+           
+    </div> 
+{% endblock %}

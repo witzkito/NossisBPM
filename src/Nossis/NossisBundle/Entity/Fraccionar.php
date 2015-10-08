@@ -45,6 +45,13 @@ class Fraccionar
      * @GRID\Column(title="Cantidad",filterable=true)
      */
     private $cantidad;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lotedestino", type="string", nullable=true)
+     */
+    private $loteDestino;
         
     /** 
      * @ORM\OneToOne(targetEntity="Stock") 
@@ -167,4 +174,27 @@ class Fraccionar
     }
     
     
+
+    /**
+     * Set loteDestino
+     *
+     * @param string $loteDestino
+     * @return Fraccionar
+     */
+    public function setLoteDestino($loteDestino)
+    {
+        $this->loteDestino = $loteDestino;
+
+        return $this;
+    }
+
+    /**
+     * Get loteDestino
+     *
+     * @return string 
+     */
+    public function getLoteDestino()
+    {
+        return $this->loteDestino;
+    }
 }

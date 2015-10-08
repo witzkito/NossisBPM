@@ -116,10 +116,14 @@
                     <tr>
                         <td>{{ fraccionado.fecha | date('d/m/y h:m A') }}</td>
                         <td>{{ fraccionado.cantidad }}</td>
-                        {% if fraccionado.stockDestino is null %}
-                        <td>Todavia sin destino - <a href=" {{ path('fraccionar_stock', { 'id' : fraccionado.id }) }}">Ingresar</a></td>
+                        {% if fraccionado.stockDestino is null and fraccionado.loteDestino is null %}
+                        <td>Todavia sin destino - <a href=" {{ path('fraccionar_stock', { 'id' : fraccionado.id }) }}">Ingresar Stock</a> - <a href=" {{ path('fraccionar_lote_stock', { 'id' : fraccionado.id }) }}">Ingresar Lote</a></td>
                         {% else %}
-                        <td>{{ fraccionado.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionado.stockDestino.id}) }}">Ver</a></td>
+                            {% if fraccionado.stockDestino is not null %}
+                            <td>{{ fraccionado.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionado.stockDestino.id}) }}">Ver</a></td>
+                            {% else %}
+                            <td>Lote {{ fraccionado.loteDestino }}</td>
+                            {% endif %}
                         {% endif %}
                     </tr>
                 {% endfor %}
