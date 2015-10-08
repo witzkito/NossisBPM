@@ -4,7 +4,7 @@
 
 {% block body %}
     <hr class="hr3-inicio">
-    <h3>Stock {{ fraccionar.stock.id }} - Cantidad actual {{ fraccionar.stock.actual }}</h3>
+    <h3>Stock {{ fraccionar.stock.numero }} - Cantidad actual {{ fraccionar.stock.actual }}</h3>
     </br></br>
         <div class="form">
                 <form action="{{ path('index_fraccionar', { 'id' : fraccionar.stock.id}) }}" method="post">
