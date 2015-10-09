@@ -29,11 +29,8 @@ class RetiroStockType extends AbstractType
         ));
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'nossis_nossisbundle_retirostock';
+    public function getName() {
+        return 'nossis_nossisbundle_retirostock';    
     }
+
 }
