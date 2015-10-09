@@ -16,6 +16,7 @@ use PHPPdf\Core\Node\Barcode as Barcode;
 use Zend\Barcode\Object;
 use Nossis\NossisBundle\Entity\EstadoStock;
 use Nossis\NossisBundle\Entity\Baja;
+use APY\DataGridBundle\Grid\Source\Vector;
 
 class StockController extends Controller
 {
@@ -327,7 +328,7 @@ class StockController extends Controller
         $estadoStock = new EstadoStock;
         $estadoStock->setStock($stock);
         $estadoStock->setEstado('Destruido');
-        $estadoStock->setDescripcion($stock->getActual() . " unidades del producto fueron destruido y pasado a re-produccion");
+        $estadoStock->setDescripcion($stock->getActual() . " unidades del producto fueron destruido");
         $estadoStock->setFecha(new DateTime('now'));
                 
         $baja = new Baja();
@@ -342,5 +343,41 @@ class StockController extends Controller
         $em->flush();            
          
         return $this->indexAction();
+    }
+    
+     public function listarDestruidoAction(){
+        $em = $this->get('doctrine')->getManager();
+        $stock = $em->getRepository('NossisBundle:Stock')->findAll();
+        $vector = array();
+        foreach ($stock as $s)
+        {
+            foreach ($s->getEstados() as $estado)
+            {
+                if ($estado->getEstado() == "Destruido"){
+                    $vector[] = array(
+                        'id' => $s->getId(),
+                        'fecha' => $estado->getFecha(),
+                        'nro' => $s->getNumero(),
+                        'producto' => $s->getProducto(),
+                        'descripcion' => $estado->getDescripcion(),
+                    );
+                    
+                }
+            }
+            
+        }
+        
+        $source = new Vector($vector);
+
+        /* @var $grid \APY\DataGridBundle\Grid\Grid */
+        $grid = $this->get('grid');
+        
+        $ver = new RowAction('Ver', 'show_stock');
+        $ver->setRouteParametersMapping(array('stock.id' => 'id'));
+        $grid->addRowAction($ver);
+        
+        $grid->setSource($source);
+        $grid->setDefaultOrder('id', 'desc');
+        return $grid->getGridResponse('NossisBundle:Stock:listarDestruido.html.twig');
     }
 }
