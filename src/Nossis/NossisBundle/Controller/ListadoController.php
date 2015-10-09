@@ -185,7 +185,7 @@ class ListadoController extends Controller
                 "entities" => $entities, 'desde' => $datos['desde'], 'hasta' => $datos['hasta']));        
     }
     
-    private function generarArrayMovimientoProducto($desde, $hasta)
+    public function generarArrayMovimientoProducto($desde, $hasta)
     {
         $em = $this->get('doctrine')->getManager();
         $productos = $em->getRepository('NossisBundle:Producto')->findAll();
@@ -350,7 +350,12 @@ class ListadoController extends Controller
     public function imprimirStockActualUnidadFechaAction(){
         $em = $this->get('doctrine')->getManager();
         $session = new Session();
-        $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($session->get('desde'), $session->get('hasta'));
+        if ($session->get('producto') != null)
+        {
+            $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($session->get('desde'), $session->get('hasta'), $session->get('producto')->getId());
+        }else{
+            $entities = $em->getRepository('NossisBundle:Stock')->findAllFecha($session->get('desde'), $session->get('hasta'));
+        }
         $facade = $this->get('ps_pdf.facade');
         $response = new Response();
         $this->render('NossisBundle:Listado:mostrarStockActualUnidadFecha.pdf.twig', array("entities" => $entities, "desde" => $session->get('desde'), "hasta" => $session->get('hasta'), "producto" => $session->get('producto')), $response);
