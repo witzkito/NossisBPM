@@ -59,6 +59,7 @@ class RetiroController extends Controller
                 $formStock->bind($request);
                 $datos = $formStock->getData();
                 if (($stock = $em->getRepository('NossisBundle:Stock')->findOneBy(array('codigo' => $datos['codigo']))) != null){
+                    $this->get('session')->getFlashBag()->add('error', false);
                     if ($stock->getArea()->getSalida()){
                                 $retirostock = new RetiroStock;
                                 $retirostock->setStock($stock);
@@ -77,6 +78,8 @@ class RetiroController extends Controller
                     }                    
                     
                     
+                }else{
+                    $this->get('session')->getFlashBag()->add('error', true);
                 }
                 $em->flush();
                 foreach ($retiro->getStocks() as $stock){

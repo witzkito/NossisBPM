@@ -833,3 +833,11 @@ th div {
     font-size: 14px;
     width: 84px;
 }
+
+.green {
+    background-color: lightgreen;
+}
+
+.red {
+    background-color: red;
+}

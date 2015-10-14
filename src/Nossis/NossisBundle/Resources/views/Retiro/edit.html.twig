@@ -7,9 +7,19 @@
         <div class='flash'>
             {{ flashMessage }}
         </div>
-    {% endfor %}
+   {% endfor %}
     <hr>
-    <div class="despachar">        
+    {% set class= null %}
+    {% for error in app.session.flashbag.get('error') %}
+        {% if error %}
+            {% set class = "despachar " ~ "red" %}
+        {% else %}
+            {% set class = "despachar " ~ "green" %}
+        {% endif %}
+    {% else %}
+        {% set class = "despachar" %}
+    {% endfor %}
+    <div class="{{ class }}">        
         <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
         <div class="formcodigo">
             {{ form_row(formStock.codigo) }}
