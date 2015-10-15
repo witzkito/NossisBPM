@@ -9,6 +9,7 @@
         
         <div class="form">
                 <form action="{{ path('new_retiro') }}" method="post">
+                {{ form_row(form.fechaSalida) }}
                 {{ form_row(form.nroOrden) }}
                 {{ form_row(form.empresa) }}
                 {{ form_row(form.transportista) }}

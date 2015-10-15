@@ -15,7 +15,10 @@ class RetiroType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fechaSalida')
+            ->add('fechaSalida', 'genemu_jquerydate', array(
+                'widget' => 'single_text',
+                'format' => 'd/M/yyyy'
+            ))
             ->add('nroOrden')
             ->add('formaCarga', 'choice', array(
                     'choices' => array('Paletizada' => 'Paletizada', 'Suelta' => 'Suelta')))
