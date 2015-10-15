@@ -20,6 +20,7 @@ class RetiroController extends Controller
     public function indexAction()
     {
         $retiro = new Retiro;
+        $retiro->setFechaSalida(new \DateTime());
         $form = $this->get('form.factory')->create(
                 new RetiroType(),
                 $retiro
@@ -38,7 +39,6 @@ class RetiroController extends Controller
         $request = $this->get('request');
         $form->bind($request);
             $retiro = $form->getData();
-            $retiro->setFechaSalida(new \DateTime('NOW'));
             $retiro->setConfirmado(false);
             $em = $this->get('doctrine')->getManager();
             $em->persist($retiro);
