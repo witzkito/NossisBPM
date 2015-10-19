@@ -1,0 +1,19 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Nuevo Ingreso de Envase{% endblock %}
+
+
+{% block body -%}
+    <h1>Ingresar nuevo envase</h1>
+    <div class="form">
+        {{ form(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+    {% block stylesheets %} 
+            {{ form_stylesheet(form) }}
+    {% endblock %}
+{% endblock %}

@@ -52,6 +52,11 @@ class Producto
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="producto")
      */
     protected $stocks;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Envase", mappedBy="producto")
+     */
+    protected $envases;
 
 
     /**
@@ -216,5 +221,38 @@ class Producto
     public function getCodAlma()
     {
         return $this->codAlma;
+    }
+
+    /**
+     * Add envases
+     *
+     * @param \Nossis\NossisBundle\Entity\Envase $envases
+     * @return Producto
+     */
+    public function addEnvase(\Nossis\NossisBundle\Entity\Envase $envases)
+    {
+        $this->envases[] = $envases;
+
+        return $this;
+    }
+
+    /**
+     * Remove envases
+     *
+     * @param \Nossis\NossisBundle\Entity\Envase $envases
+     */
+    public function removeEnvase(\Nossis\NossisBundle\Entity\Envase $envases)
+    {
+        $this->envases->removeElement($envases);
+    }
+
+    /**
+     * Get envases
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEnvases()
+    {
+        return $this->envases;
     }
 }

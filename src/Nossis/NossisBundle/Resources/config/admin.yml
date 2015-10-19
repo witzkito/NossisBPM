@@ -48,6 +48,12 @@ services:
             - ~
             - Nossis\NossisBundle\Entity\Empresa
             - ~
+
+    nossis.admin.envase:
+        class: Nossis\NossisBundle\Admin\EnvaseAdmin
+        arguments: [~, Nossis\NossisBundle\Entity\Envase, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: General, label: Envase}
             
     sonata.admin.pais:
         class: Nossis\NossisBundle\Admin\PaisAdmin
@@ -65,7 +71,5 @@ services:
             - ~
             - Nossis\NossisBundle\Entity\Ciudad
             - ~
-    
-          
-        
 
+    

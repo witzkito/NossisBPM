@@ -37,3 +37,11 @@ Devolucion:
 ExportacionAlma:
     resource: "@NossisBundle/Controller/ExportacionAlmaController.php"
     type:     annotation
+    
+EnvaseIngreso:
+    resource: "@NossisBundle/Controller/EnvaseIngresoController.php"
+    type:     annotation
+    
+Envase:
+    resource: "@NossisBundle/Controller/EnvaseController.php"
+    type:     annotation

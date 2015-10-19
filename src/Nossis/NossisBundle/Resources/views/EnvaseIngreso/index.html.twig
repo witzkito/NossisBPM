@@ -1,0 +1,54 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Envase Ingreso{% endblock %}
+
+{% block body -%}
+    <h1>Lista de Envases</h1>
+    
+    <div class="container">
+        
+        <br/>
+        <div class="grid">
+            <ul><li>
+            <a href="{{ path('envase_ingreso_new', { 'id' : envase.id}) }}">
+                Ingresar Envases
+            </a></li>
+            <li><a href="{{ path('envase') }}">
+                Volver a la lista
+            </a></li></ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Lote</th>
+                        <th>Identificador</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.fecha | date('d/m/Y') }}</td>
+                        <td>{{ entity.lote }}</td>
+                        <td>{{ entity.envase.identificador }}</td>
+                        <td>{{ entity.envase.nombre }}</td>
+                        <td>{{ entity.cantidad }}</td>
+                        <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('envase_ingreso_show', { 'id': entity.id }) }}">Ver</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('envase_ingreso_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
+                        </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}
