@@ -7,6 +7,7 @@ use Nossis\NossisBundle\Entity\Stock;
 use Nossis\NossisBundle\Form\StockType;
 use Nossis\NossisBundle\Form\StockEditType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Nossis\NossisBundle\Entity\Trazlado;
 use Nossis\NossisBundle\Form\TrazladoType;
 use \DateTime;
@@ -46,7 +47,7 @@ class StockController extends Controller
          );
         $request = $this->get('request');
         $form->bind($request);
-        if ($form->isValid()){
+        //if ($form->isValid()){
 
             $stock = $form->getData();
             $stock->setFechaIngreso(new \DateTime('NOW'));
@@ -69,9 +70,9 @@ class StockController extends Controller
             $em->flush();
             
            
-            return $this->ingresarAction(true); 
+            return new RedirectResponse($this->generateUrl('envase_retiro_new', array('id' => $stock->getId())));
                 
-        }
+        //}
     }
     
     private function getCodigoBarra($stock){

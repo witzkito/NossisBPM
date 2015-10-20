@@ -47,6 +47,11 @@ class EnvaseIngreso
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EnvaseRetiro", mappedBy="envase")
+     */
+    private $retiros;
 
 
     /**
@@ -149,5 +154,62 @@ class EnvaseIngreso
     public function getFecha()
     {
         return $this->fecha;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->retiros = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add retiros
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseRetiro $retiros
+     * @return EnvaseIngreso
+     */
+    public function addRetiro(\Nossis\NossisBundle\Entity\EnvaseRetiro $retiros)
+    {
+        $this->retiros[] = $retiros;
+
+        return $this;
+    }
+
+    /**
+     * Remove retiros
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseRetiro $retiros
+     */
+    public function removeRetiro(\Nossis\NossisBundle\Entity\EnvaseRetiro $retiros)
+    {
+        $this->retiros->removeElement($retiros);
+    }
+
+    /**
+     * Get retiros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetiros()
+    {
+        return $this->retiros;
+    }
+    
+    public function __toString() {
+        return $this->getLote();
+    }
+    
+    /**
+     * Devuelve el total de envases actuales
+     * @return integer
+     */
+    public function getTotal()
+    {
+        $cantidad = $this->cantidad;
+        foreach ($this->getRetiros() as $retiro){
+            $cantidad = $cantidad - $retiro->getCantidad();
+        }
+        return $cantidad;
     }
 }
