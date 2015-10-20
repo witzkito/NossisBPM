@@ -1,0 +1,26 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Nuevo Ingreso de Envase{% endblock %}
+
+
+{% block body -%}
+    <h1>Ingresar lote envase</h1>
+    <div class="form">
+        {{ form(form) }}
+    </div>
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('envase_retiro') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+    {% block stylesheets %} 
+            {{ form_stylesheet(form) }}
+    {% endblock %}
+{% endblock %}

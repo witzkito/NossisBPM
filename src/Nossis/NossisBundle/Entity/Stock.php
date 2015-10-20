@@ -138,6 +138,11 @@ class Stock
      */
     protected $bajas;
     
+     /**
+     * @ORM\OneToMany(targetEntity="EnvaseRetiro", mappedBy="stock")
+     */
+    protected $envases;
+    
     public $motivoEdicion;
     
     
@@ -697,5 +702,38 @@ class Stock
     public function getBajas()
     {
         return $this->bajas;
+    }
+
+    /**
+     * Add envases
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseRetiro $envases
+     * @return Stock
+     */
+    public function addEnvase(\Nossis\NossisBundle\Entity\EnvaseRetiro $envases)
+    {
+        $this->envases[] = $envases;
+
+        return $this;
+    }
+
+    /**
+     * Remove envases
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseRetiro $envases
+     */
+    public function removeEnvase(\Nossis\NossisBundle\Entity\EnvaseRetiro $envases)
+    {
+        $this->envases->removeElement($envases);
+    }
+
+    /**
+     * Get envases
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEnvases()
+    {
+        return $this->envases;
     }
 }

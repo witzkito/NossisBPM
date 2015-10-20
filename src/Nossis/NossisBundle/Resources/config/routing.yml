@@ -45,3 +45,7 @@ EnvaseIngreso:
 Envase:
     resource: "@NossisBundle/Controller/EnvaseController.php"
     type:     annotation
+    
+EnvaseRetiro:
+    resource: "@NossisBundle/Controller/EnvaseRetiroController.php"
+    type:     annotation
