@@ -57,8 +57,8 @@ class Producto
      * @ORM\OneToMany(targetEntity="Envase", mappedBy="producto")
      */
     protected $envases;
-    
-   
+
+
     /**
      * Get id
      *

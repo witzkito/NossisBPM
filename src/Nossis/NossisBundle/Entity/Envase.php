@@ -182,10 +182,9 @@ class Envase
         $cantidad = 0;
         foreach ($this->ingresos as $ingreso){
             $cantidad = $cantidad + $ingreso->getCantidad();
-            foreach ($ingreso->getRetiros() as $retiro){
-                $cantidad = $cantidad - $retiro->getCantidad();
-            }
         }
+        
+        //Aca falta los egresos
         return $cantidad;
     }
 }
