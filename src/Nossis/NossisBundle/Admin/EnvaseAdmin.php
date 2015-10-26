@@ -18,6 +18,7 @@ class EnvaseAdmin extends Admin
         $datagridMapper
             ->add('nombre')
             ->add('identificador')
+            ->add('producto')
         ;
     }
 
@@ -29,7 +30,8 @@ class EnvaseAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('nombre')
-            ->add('identificador')
+            ->add('identificador')                
+            ->add('producto')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -60,7 +62,8 @@ class EnvaseAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('nombre')
-            ->add('identificador')
+            ->add('identificador')                
+            ->add('producto')
         ;
     }
 }
