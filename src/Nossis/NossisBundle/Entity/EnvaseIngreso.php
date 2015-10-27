@@ -52,6 +52,12 @@ class EnvaseIngreso
      * @ORM\OneToMany(targetEntity="EnvaseRetiro", mappedBy="envase")
      */
     private $retiros;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="EnvaseEmpresa", inversedBy="empresas")
+     * @ORM\JoinColumn(name="empresa", referencedColumnName="id")
+     */
+    private $empresa;
 
 
     /**
@@ -197,7 +203,7 @@ class EnvaseIngreso
     }
     
     public function __toString() {
-        return $this->getLote();
+        return $this->getLote() . " - " .  $this->getTotal() . " restantes";
     }
     
     /**
@@ -211,5 +217,48 @@ class EnvaseIngreso
             $cantidad = $cantidad - $retiro->getCantidad();
         }
         return $cantidad;
+    }
+
+    /**
+     * Set empresa
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseEmpresa $empresa
+     * @return EnvaseIngreso
+     */
+    public function setEmpresa(\Nossis\NossisBundle\Entity\EnvaseEmpresa $empresa = null)
+    {
+        $this->empresa = $empresa;
+
+        return $this;
+    }
+
+    /**
+     * Get empresa
+     *
+     * @return \Nossis\NossisBundle\Entity\EnvaseEmpresa 
+     */
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+    
+    /**
+     * Devuelve los movimientos en un array
+     * @return array
+     */
+    public function getMovimientos()
+    {
+        $retornar = array();
+        $total = $this->getCantidad();
+        foreach ($this->getRetiros() as $retiro)
+        {
+           $retornar[$retiro->getFecha()->getTimeStamp()]['fecha'] = $retiro->getFecha();
+           $retornar[$retiro->getFecha()->getTimeStamp()]['mov'] = "Envasado de producto " .  $retiro->getStock()->getNumero();
+           $retornar[$retiro->getFecha()->getTimeStamp()]['ingreso'] = 0;
+           $retornar[$retiro->getFecha()->getTimeStamp()]['egreso'] = $retiro->getCantidad();
+           $retornar[$retiro->getFecha()->getTimeStamp()]['total'] = $total - $retiro->getCantidad();
+           $retornar[$retiro->getFecha()->getTimeStamp()]['stock'] = $retiro->getStock()->getId();
+        }
+        return $retornar;
     }
 }

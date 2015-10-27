@@ -95,6 +95,33 @@
             </table>
          </div>
         
+        <h3 class="h3-stock">Empaques usados</h3>
+        <hr class="hr3-inicio">
+        <div class="datagrid">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Lote</th>
+                        <th>Provedor</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                {% for envase in stock.envases %}
+                    <tr>
+                        <td>{{ envase.envase.envase.nombre }}</td>
+                        <td>{{ envase.fecha | date('d/m/Y') }}</td>
+                        <td>{{ envase.envase.lote }}</td>
+                        <td>{{ envase.envase.empresa}}</td>
+                        <td>{{ envase.cantidad}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+         </div>
+            
+            
         <h3 class="h3-stock">Fraccionados</h3>
         <hr class="hr3-inicio">
         <div class="datagrid">

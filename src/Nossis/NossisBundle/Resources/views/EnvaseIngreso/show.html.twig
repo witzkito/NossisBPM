@@ -1,36 +1,45 @@
-{% extends '::base.html.twig' %}
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Lista envase ingreso{% endblock %}
 
 {% block body -%}
-    <h1>EnvaseIngreso</h1>
-
+    
+    <h1>Resumen Envases {{entity.envase.nombre}} - Lote {{entity.lote}}</h1>
+    <hr>
+    <div class="grid">
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('envase_ingreso', { 'id' : entity.envase.id}) }}">
+                Volver al lote
+            </a>
+        </li>
+    </ul>
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>Fecha</th>
+                <th>Movimiento</th>
+                <th>Ingreso</th>
+                <th>Egreso</th>
+                <th>Total</th>
             </tr>
             <tr>
-                <th>Lote</th>
-                <td>{{ entity.lote }}</td>
+                <td>{{entity.fecha | date('d/m/Y')}}</td>
+                <td>Ingreso del lote</td>
+                <td>{{entity.cantidad}}</td>
+                <td>0</td>
+                <td>{{entity.cantidad}}</td>
             </tr>
-            <tr>
-                <th>Cantidad</th>
-                <td>{{ entity.cantidad }}</td>
-            </tr>
+            {% for key,movimiento in entity.movimientos %}
+                <tr>
+                    <td>{{movimiento['fecha'] | date('d/m/Y')}}</td>
+                    <td>{{movimiento['mov']}} - <a href="{{ path('show_stock', {'id' : movimiento['stock']}) }}">Ver</a> </td>
+                    <td>{{movimiento['ingreso']}}</td>
+                    <td>{{movimiento['egreso']}}</td>
+                    <td>{{movimiento['total']}}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('envase_ingreso') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('envase_ingreso_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    </div>        
 {% endblock %}

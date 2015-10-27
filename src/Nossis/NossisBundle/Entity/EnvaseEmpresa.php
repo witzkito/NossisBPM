@@ -5,12 +5,12 @@ namespace Nossis\NossisBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cliente
+ * EnvaseEmpresa
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repositorio\ClienteRepository")
+ * @ORM\Entity(repositoryClass="Nossis\NossisBundle\Entity\Repository\EnvaseEmpresaRepositorio")
  */
-class Cliente
+class EnvaseEmpresa
 {
     /**
      * @var integer
@@ -27,18 +27,18 @@ class Cliente
      * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
-
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="string", length=255)
+     * @ORM\Column(name="direccion", type="string", length=255, nullable = true)
      */
     private $direccion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono", type="string", length=255)
+     * @ORM\Column(name="telefono", type="string", length=255, nullable = true)
      */
     private $telefono;
 
@@ -49,9 +49,10 @@ class Cliente
     private $ciudad;
     
     /**
-     * @ORM\OneToMany(targetEntity="RetiroStock", mappedBy="cliente")
+     * @ORM\OneToMany(targetEntity="EnvaseIngreso", mappedBy="empresa")
      */
-    protected $retiros;
+    protected $envases;
+
 
     /**
      * Get id
@@ -67,7 +68,7 @@ class Cliente
      * Set nombre
      *
      * @param string $nombre
-     * @return Cliente
+     * @return EnvaseEmpresa
      */
     public function setNombre($nombre)
     {
@@ -85,12 +86,19 @@ class Cliente
     {
         return $this->nombre;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->emvases = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set direccion
      *
      * @param string $direccion
-     * @return Cliente
+     * @return EnvaseEmpresa
      */
     public function setDireccion($direccion)
     {
@@ -113,7 +121,7 @@ class Cliente
      * Set telefono
      *
      * @param string $telefono
-     * @return Cliente
+     * @return EnvaseEmpresa
      */
     public function setTelefono($telefono)
     {
@@ -136,7 +144,7 @@ class Cliente
      * Set ciudad
      *
      * @param \Nossis\NossisBundle\Entity\Ciudad $ciudad
-     * @return Cliente
+     * @return EnvaseEmpresa
      */
     public function setCiudad(\Nossis\NossisBundle\Entity\Ciudad $ciudad = null)
     {
@@ -154,15 +162,43 @@ class Cliente
     {
         return $this->ciudad;
     }
+
+
     /**
-     * Constructor
+     * Add envases
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseIngresa $envases
+     * @return EnvaseEmpresa
      */
-    public function __construct()
+    public function addEnvase(\Nossis\NossisBundle\Entity\EnvaseIngreso $envases)
     {
-        $this->retiros = new \Doctrine\Common\Collections\ArrayCollection();
-    }    
+        $this->envases[] = $envases;
+
+        return $this;
+    }
+
+    /**
+     * Remove envases
+     *
+     * @param \Nossis\NossisBundle\Entity\EnvaseIngresa $envases
+     */
+    public function removeEnvase(\Nossis\NossisBundle\Entity\EnvaseIngreso $envases)
+    {
+        $this->envases->removeElement($envases);
+    }
+
+    /**
+     * Get envases
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEnvases()
+    {
+        return $this->envases;
+    }
     
-    public function __toString(){
+    public function __toString()
+    {
         return $this->nombre;
     }
 }

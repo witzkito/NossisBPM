@@ -15,6 +15,11 @@ class Builder extends ContainerAware
         
         $menu->addChild('Inicio', array ('route' => 'nossis_homepage'))->setAttribute('divider_prepend', true);
         
+        $menu->addChild('Envases')->setAttribute('dropdown', true)->setAttribute('divider_prepend', true);
+        
+        $menu['Envases']->addChild('Stock', array('route' => 'envase'));
+        $menu['Envases']->addChild('Ingresar Lote', array('route' => 'envase_ingreso_nuevo'));
+        
         $menu->addChild('Listar')->setAttribute('dropdown', true)->setAttribute('divider_prepend', true);
         
         $menu['Listar']->addChild('Ingresos', array('route' => 'listar_ingreso_stock'));

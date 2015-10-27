@@ -103,11 +103,29 @@ class EnvaseIngresoController extends Controller
             'form'   => $form->createView(),
         );
     }
+    
+    /**
+     * Displays a form to create a new EnvaseIngreso entity.
+     *
+     * @Route("/nuevo/", name="envase_ingreso_nuevo")
+     */
+    public function nuevoAction()
+    {
+        $entity = new EnvaseIngreso();
+        $entity->setFecha(new \DateTime('NOW'));
+        
+        $form   = $this->createCreateForm($entity);
+        
+        return $this->render('NossisBundle:EnvaseIngreso:new.html.twig',
+                array( 'form' => $form->createView(), 'entity' => $entity,
+                )); 
+        
+    }
 
     /**
      * Finds and displays a EnvaseIngreso entity.
      *
-     * @Route("/{id}", name="envase_ingreso_show")
+     * @Route("/mostrar/{id}", name="envase_ingreso_show")
      * @Method("GET")
      * @Template()
      */
@@ -120,12 +138,8 @@ class EnvaseIngresoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find EnvaseIngreso entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity,            
         );
     }
 

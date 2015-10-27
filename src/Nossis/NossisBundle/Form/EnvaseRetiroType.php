@@ -24,10 +24,11 @@ class EnvaseRetiroType extends AbstractType
                             'query_builder' => function(EnvaseIngresoRepository $e){
                                 return $e->createQueryBuilder('e')
                                         ->join('e.envase', 'en')
-                                        ->join('e.retiros', 'r')
+                                        ->leftjoin('e.retiros', 'r')
                                         ->where('en.producto = :producto')
                                         ->groupBy('e')
-                                        ->having('sum (r.cantidad) < e.cantidad')
+                                        ->having('SUM(r.cantidad) < e.cantidad')
+                                        ->orHaving('COUNT(r.cantidad) = 0')
                                         ->setParameter('producto', $this->id_producto);
                             },
             ))

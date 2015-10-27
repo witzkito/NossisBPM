@@ -45,7 +45,6 @@ class Envase
      * @ORM\OneToMany(targetEntity="EnvaseIngreso", mappedBy="envase")
      */
     protected $ingresos;
-
     
 
     /**

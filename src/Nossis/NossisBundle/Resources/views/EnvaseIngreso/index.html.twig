@@ -3,8 +3,8 @@
 {% block title %}Envase Ingreso{% endblock %}
 
 {% block body -%}
-    <h1>Lista de Envases</h1>
-    
+    <h1>Lista de Ingresos de Envases</h1>
+    <hr>
     <div class="container">
         
         <br/>
@@ -14,15 +14,16 @@
                 Ingresar Envases
             </a></li>
             <li><a href="{{ path('envase') }}">
-                Volver a la lista
+                Volver al Stock
             </a></li></ul>
             <table>
                 <thead>
                     <tr>
-                        <th>Fecha</th>
                         <th>Lote</th>
+                        <th>Fecha</th>
                         <th>Identificador</th>
                         <th>Nombre</th>
+                        <th>Proveedor</th>
                         <th>Cantidad</th>
                         <th>Acciones</th>
                     </tr>
@@ -30,10 +31,11 @@
                 <tbody>
                 {% for entity in entities %}
                     <tr>
-                        <td>{{ entity.fecha | date('d/m/Y') }}</td>
                         <td>{{ entity.lote }}</td>
+                        <td>{{ entity.fecha | date('d/m/Y') }}</td>
                         <td>{{ entity.envase.identificador }}</td>
                         <td>{{ entity.envase.nombre }}</td>
+                        <td>{{ entity.empresa }}</td>
                         <td>{{ entity.total }}</td>
                         <td>
                         <ul>
