@@ -255,4 +255,18 @@ class Producto
     {
         return $this->envases;
     }
+    
+    /**
+     * Funcion que retorna la cantidad actual de envases
+     * @return type
+     */
+    public function getTotalEnvases()
+    {
+        $retornar = 0;
+        foreach ($this->envases as $envase)
+        {
+            $retornar = $retornar + $envase->getCantidad();
+        }
+        return $retornar;
+    }
 }

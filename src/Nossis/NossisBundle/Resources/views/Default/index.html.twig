@@ -30,6 +30,7 @@
                     {% for area in almacen.areas %}
                         <th>{{ area.nombre }}</th>
                     {%endfor%}
+                    <th> Envases</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +46,7 @@
                                 {% endfor %}
                                 <td>{{ count }}</td>
                             {%endfor%}
+                            <td>{{producto.totalEnvases}}</td>                                
                         </tr>   
                     {% endfor %}
                            
