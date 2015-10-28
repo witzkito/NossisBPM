@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Nossis\NossisBundle\Entity\Envase;
 use Nossis\NossisBundle\Form\EnvaseType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Envase controller.
@@ -243,5 +244,68 @@ class EnvaseController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    /**
+     * Resumen de Ingresos y rotacion de envases
+     *
+     * @Route("/resumen/filtro", name="envase_resumen")
+     * @Template()
+     */
+    public function resumenAction(Request $request)
+    {
+        $form = $this->createResumenForm();
+        $form->handleRequest($request);
+        $entities = null;
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            $entities = $em->getRepository('NossisBundle:EnvaseIngreso')->findByFecha($data['desde'], $data['hasta']);
+            //$retiros = $em->getRepository('NossisBundle:EnvaseRetiro')->findByFecha($data['desde'], $data['hasta']);
+            $session = $request->getSession();
+            $session->set('desde', $data['desde']);
+            $session->set('hasta', $data['hasta']);
+        }
+        return array(
+            'entities'      => $entities,
+            'filtro_form'   => $form->createView()
+        );
+    }
+    
+    /**
+     * Crea el formulario para filtrar los resumenes
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createResumenForm()
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('envase_resumen'))
+            ->setMethod('POST')
+            ->add('desde', 'genemu_jquerydate', array("label" => "Desde", "widget" => "single_text", "format" => "dd/MM/yyyy"))
+            ->add('hasta', 'genemu_jquerydate', array("label" => "Hasta", "widget" => "single_text", "format" => "dd/MM/yyyy"))
+            ->add('submit', 'submit', array('label' => 'Filtrar', 'attr' => array("class" => "btn btn-success")))
+            ->getForm();
+    }
+    
+    /**
+     * @Route("/resumen/filtro/imprimir", name="envase_resumen_imprimir")
+     * @Template()
+     */
+    public function imprimirResumenAction(Request $request){
+        $em = $this->get('doctrine')->getManager();
+        $session = $request->getSession();
+        $desde = $session->get('desde');
+        $hasta = $session->get('hasta');
+        $entities = $em->getRepository('NossisBundle:EnvaseIngreso')->findByFecha($desde, $hasta);
+        $response = new Response();
+        $this->render('NossisBundle:Envase:resumen.pdf.twig', array("entities" => $entities, "desde" => $desde, "hasta" => $hasta), $response);
+        $facade = $this->get('ps_pdf.facade');
+        $xml = $response->getContent();
+        $content = $facade->render($xml);
+        
+        return new Response($content, 200, array('content-type' => 'application/pdf'));
     }
 }

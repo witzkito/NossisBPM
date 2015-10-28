@@ -3,6 +3,7 @@
 namespace Nossis\NossisBundle\Entity\Repositorio;
 
 use Doctrine\ORM\EntityRepository;
+use DateTime;
 
 /**
  * EnvaseIngresoRepository
@@ -12,4 +13,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class EnvaseRetiroRepository extends EntityRepository
 {
+    
+    public function findByFecha(DateTime $desde, DateTime $hasta)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+            ->select('e')
+            ->from('NossisBundle:EnvaseRetiro', 'e')
+            ->andwhere ('e.fecha >= :desde')
+            ->andWhere('e.fecha <= :hasta')
+            ->setParameters(array('desde' => $desde, 'hasta' => $hasta))
+            ->getQuery();
+        return $query->getResult();
+        
+    }
+    
 }

@@ -1,0 +1,76 @@
+<pdf>
+    <dynamic-page>
+        
+        <table>
+            <tr>
+                <td width="100px" border-color="white">
+                    <img src="{{ pdf_image('logo.jpg') }}" />
+                </td>
+                <td border-color="white">
+                    <div text-align="center">
+                        <p line-height="-1px">
+                            Elaboradores de Fécula de mandioca ALDEMA <br></br>
+                            INAC 6084 del 16-05-1967 – Dir. Prov. Coop. 102 del 04-07-1966 <br></br>
+                            <b>Planta Industrial:</b> Ruta Nac. 12 – TEL.: 03743-491153 – 3334 GARUHAPE – Misiones <br></br>
+                            <b>Administración:</b> Av. 9 de Julio y Asunción – TEL/Fax: 03743-420204/042 <br></br>
+                            E-mail: coopsalberto@prico.com.ar – www.coopsanalberto.com.ar <br></br>
+                            3334 PUERTO RICO – Misiones
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>    
+        <br/>
+        <br/>
+        <h3>Ingresos de Envases desde {{desde | date('d/m/Y')}} hasta {{hasta | date('d/m/Y')}}</h3>
+        <table>
+            <tr background-color="gray" text-align="center">
+                    <td height="15"  background-color="gray" padding-left="3px"><b>Tipo</b></td>
+                    <td ><b>Fecha</b></td>
+                    <td ><b>Identificador</b></td>
+                    <td ><b>Lote</b></td>
+                    <td ><b>Cantidad</b></td>                    
+                    <td ><b>Restante</b></td>
+                </tr>
+            {% for entity in entities %}
+                
+                    
+                <tr>
+                    <td height="15" text-align="left" padding-left="3px">Ingreso</td>
+                    <td padding-left="3px">{{entity.fecha | date('d/m/Y')}}</td>
+                    <td padding-left="3px">{{entity.envase.identificador}}</td>
+                    <td padding-left="3px">{{entity.lote}}</td>
+                    <td padding-left="3px">{{entity.cantidad}}</td>                    
+                    <td padding-left="3px">{{entity.cantidad}}</td>
+                </tr>
+                    
+                {% set total = entity.cantidad %}
+                {% if entity.retiros | length > 0 %}
+                <tr background-color="lightgray">
+                    <td height="15" text-align="left" padding-left="3px"></td>
+                    <td></td>
+                    <td text-align="left" padding-left="3px"><b>Fecha</b></td>
+                    <td text-align="left" padding-left="3px"><b>Retiro</b></td>
+                    <td text-align="left" padding-left="3px"><b>Lote Destino</b></td>
+                    <td text-align="left" padding-left="3px"><b>Stock Restante</b></td>                    
+                </tr>
+                {% endif %}
+                {% for retiro in entity.retiros %}
+                    {% set total = total - retiro.cantidad %}
+                    <tr>
+                        <td colspan="2" height="15" padding-left="3px"></td>
+                        <td padding-left="3px">{{retiro.fecha | date('d/m/Y')}}</td>                    
+                        <td padding-left="3px">{{retiro.cantidad}}</td>
+                        <td padding-left="3px">{{retiro.stock.lote}}</td>
+                        <td padding-left="3px">{{total}}</td>
+                    </tr>
+                 {% endfor %}
+                 
+            {% else %}
+                <tr>
+                    <td>No hay ingreso de envases en la fechas seleccionadas</td>
+                </tr>
+            {% endfor %}
+            </table>
+    </dynamic-page>
+</pdf>
