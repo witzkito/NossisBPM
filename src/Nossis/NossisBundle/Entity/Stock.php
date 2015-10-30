@@ -143,6 +143,11 @@ class Stock
      */
     protected $envases;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Destruccion", mappedBy="stock")
+     */
+    protected $destrucciones;
+    
     public $motivoEdicion;
     
     
@@ -735,5 +740,38 @@ class Stock
     public function getEnvases()
     {
         return $this->envases;
+    }
+
+    /**
+     * Add destrucciones
+     *
+     * @param \Nossis\NossisBundle\Entity\Destruccion $destrucciones
+     * @return Stock
+     */
+    public function addDestruccione(\Nossis\NossisBundle\Entity\Destruccion $destrucciones)
+    {
+        $this->destrucciones[] = $destrucciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove destrucciones
+     *
+     * @param \Nossis\NossisBundle\Entity\Destruccion $destrucciones
+     */
+    public function removeDestruccione(\Nossis\NossisBundle\Entity\Destruccion $destrucciones)
+    {
+        $this->destrucciones->removeElement($destrucciones);
+    }
+
+    /**
+     * Get destrucciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDestrucciones()
+    {
+        return $this->destrucciones;
     }
 }

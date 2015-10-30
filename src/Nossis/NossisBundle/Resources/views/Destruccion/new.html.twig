@@ -1,0 +1,20 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Destruccion{% endblock %}
+
+{% block body %}
+    <hr class="hr3-inicio">
+    <h3>Destruccion del Stock {{ entity.stock.numero }}</h3>
+    </br></br>
+        <div class="form">
+                <form action="{{ path('destruccion_crear') }}" method="post">
+                {{ form_rest(form) }}
+                <input class="submit" type="submit" value="Destruir"  />     
+                </form>
+        </div>    
+{% endblock %}    
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ form_javascript(form) }}    
+{% endblock %}

@@ -7,7 +7,7 @@
         <a class="boton-blue" id="btt-1" href="{{ path('trazladar_stock', { 'id': stock.id})}}">Trazladar</a>
         <a class="boton-blue" id="btt-3" href="{{ path('index_fraccionar', { 'id': stock.id})}}">Fraccionar</a>
         {% if stock.area.destruccion and stock.actual > 0 %}
-            <a class="boton-blue" id="btt-3" href="#" onclick="confirmar('Va a destruir el stock, el mismo quedara en 0, ¿esta seguro?', '{{ path('destruir_stock', { 'id': stock.id})}}')"/>Destruir</a>
+            <a class="boton-blue" id="btt-3" href="{{ path('destruccion_new', { 'id': stock.id})}}"/>Destruir</a>
         {% endif %}    
        
 {% endblock %}
@@ -229,4 +229,28 @@
                 
             </table>
          </div>
+                
+        <h3 class="h3-stock">Destruccion</h3>
+        <hr class="hr3-inicio">
+        <div class="datagrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Cantidad</th>
+                        <th>Motivo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% for des in stock.destrucciones %}
+                    <tr>
+                        <td>{{ des.fecha | date('d/m/y h:m A') }}</td>
+                        <td>{{ des.cantidad }}</td>
+                        <td>{{ des.motivo }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}                
+            </table>
+         </div>
+         </br>
 {% endblock %}

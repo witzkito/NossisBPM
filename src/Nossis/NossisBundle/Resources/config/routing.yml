@@ -49,3 +49,7 @@ Envase:
 EnvaseRetiro:
     resource: "@NossisBundle/Controller/EnvaseRetiroController.php"
     type:     annotation
+    
+Destruccion:
+    resource: "@NossisBundle/Controller/DestruccionController.php"
+    type:     annotation
