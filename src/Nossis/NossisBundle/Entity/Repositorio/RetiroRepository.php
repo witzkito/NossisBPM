@@ -33,7 +33,8 @@ class RetiroRepository extends EntityRepository
         $query = $em->createQueryBuilder()
             ->select('r')
             ->from('NossisBundle:Retiro', 'r')
-            ->where('r.cliente = :cliente')
+            ->innerJoin('r.stocks', 'rs')
+            ->where('rs.cliente = :cliente')
             ->orderBy('r.nroOrden', 'DESC')
             ->setParameters(array('cliente' => $cliente))
             ->getQuery();

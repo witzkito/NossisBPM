@@ -32,9 +32,9 @@
                             <tr>
                                 <td>{{retiro.nroOrden}}</td>
                                 <td>{{retiro.fechaSalida | date('d/m/y h:i a')}}</td>
-                                <td>{{retiro.cliente}}</td>
+                                <td></td>
                                 <td>{{retiro.transportista}}</td>
-                                <td><a href="{{ path('todo_devolucion', { 'id' : retiro.id, 'cliente' : retiro.cliente.id})}}">Retornar Todo</a></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td colspan="5">
@@ -45,21 +45,25 @@
                                                 <th>Fecha Ingreso</th>
                                                 <th>Palet</th>
                                                 <th>Turno</th>
+                                                <th>Lote</th>
                                                 <th>Producto</th>
+                                                <th>Cliente</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                             {% for retirostock in retiro.stocks %}
-
+                                                    {% if retirostock.cliente.id == cliente.id %}
                                                     <tr>
                                                         <td>{{ retirostock.stock.numero }}</td>
                                                         <td>{{ retirostock.stock.fechaingreso | date('d/m/y h:i a') }}</td>
                                                         <td>{{ retirostock.stock.palet }}</td>
                                                         <td>{{ retirostock.stock.turno }}</td>
+                                                        <td>{{ retirostock.stock.lote }}</td>
                                                         <td>{{ retirostock.stock.producto }}</td>
+                                                        <td>{{ retirostock.cliente }}</td>
                                                         <td><a href="{{path('nuevo_devolucion', {'id' : retirostock.id})}}">Retornar</a></td>
                                                     </tr>
-                                                
+                                                    {% endif %}
                                             {% endfor %}
                                     </table>
                                         
