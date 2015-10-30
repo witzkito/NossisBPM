@@ -36,7 +36,7 @@ class DevolucionController extends Controller
          }
         
         return $this->render('NossisBundle:Devolucion:index.html.twig',
-                array('lote' => $lote['buscar'], 'retiros' => $retiros, 'form' => $form->createView()));     
+                array('lote' => $lote['buscar'], 'retiros' => $retiros, 'form' => $form->createView(), 'cliente' => $cliente['cliente']));     
     }
     
     /**
