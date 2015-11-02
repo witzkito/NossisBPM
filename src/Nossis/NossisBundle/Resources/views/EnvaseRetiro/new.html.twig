@@ -4,7 +4,13 @@
 
 
 {% block body -%}
-    <h1>Ingresar lote envase</h1>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class='flash'>
+            {{ flashMessage }}
+        </div>
+   {% endfor %}
+   
+    <h1>Despachar Envases</h1>
     <div class="form">
         {{ form(form) }}
     </div>

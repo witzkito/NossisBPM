@@ -9,7 +9,7 @@ use Nossis\NossisBundle\Entity\Repositorio\EnvaseIngresoRepository;
 
 class EnvaseRetiroType extends AbstractType
 {
-    private $id_producto;
+    //private $id_producto;
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -17,7 +17,7 @@ class EnvaseRetiroType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fecha', 'genemu_jquerydate', array('widget' => 'single_text'))
+            ->add('fecha', 'genemu_jquerydate', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy'))
             ->add('cantidad')
             ->add('envase', 'entity', array('label' => 'Lote Envase', 'required' => true,
                             'class' => 'NossisBundle:EnvaseIngreso',
@@ -25,12 +25,11 @@ class EnvaseRetiroType extends AbstractType
                                 return $e->createQueryBuilder('e')
                                         ->join('e.envase', 'en')
                                         ->leftjoin('e.retiros', 'r')
-                                        ->where('en.producto = :producto')
                                         ->groupBy('e')
                                         ->having('SUM(r.cantidad) < e.cantidad')
                                         ->orHaving('COUNT(r.cantidad) = 0')
-                                        ->setParameter('producto', $this->id_producto);
-                            },
+                                        ->orderBy('en.identificador');
+                            }
             ))
         ;
     }
@@ -53,9 +52,9 @@ class EnvaseRetiroType extends AbstractType
         return 'nossis_nossisbundle_envaseretiro';
     }
     
-    public function __construct($id_producto)
+    /*public function __construct($id_producto)
     {
     $this->id_producto = $id_producto;
 
-    }
+    }*/
 }

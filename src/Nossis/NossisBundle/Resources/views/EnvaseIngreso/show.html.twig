@@ -33,7 +33,7 @@
             {% for key,movimiento in entity.movimientos %}
                 <tr>
                     <td>{{movimiento['fecha'] | date('d/m/Y')}}</td>
-                    <td>{{movimiento['mov']}} - <a href="{{ path('show_stock', {'id' : movimiento['stock']}) }}">Ver</a> </td>
+                    <td>{{movimiento['mov']}}</td>
                     <td>{{movimiento['ingreso']}}</td>
                     <td>{{movimiento['egreso']}}</td>
                     <td>{{movimiento['total']}}</td>

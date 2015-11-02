@@ -21,8 +21,7 @@ class EnvaseRetiroController extends Controller
     /**
      * Lists all EnvaseRetiro entities.
      *
-     * @Route("/mostrar", name="envase_retiro")
-     * @Method("GET")
+     * @Route("/index", name="envase_retiro")
      * @Template()
      */
     public function indexAction()
@@ -38,31 +37,30 @@ class EnvaseRetiroController extends Controller
     /**
      * Creates a new EnvaseRetiro entity.
      *
-     * @Route("/crear/{id}", name="envase_retiro_create")
-     * @Method("POST")
+     * @Route("/crear", name="envase_retiro_create")
      * @Template("NossisBundle:EnvaseRetiro:new.html.twig")
      */
-    public function createAction(Request $request, $id)
+    public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $stock = $em->getRepository('NossisBundle:Stock')->find($id);
         $entity = new EnvaseRetiro();
-        $entity->setStock($stock);
+        $entity->setFecha(new \DateTime('NOW'));
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             
-            $em->persist($entity);
-            $em->flush();
-            $total = 0;
-            foreach ($entity->getStock()->getEnvases() as $envases){
-                $total = $total + $envases->getCantidad();
-            }
-            if ($total < $entity->getStock()->getIngresado()){
-                return $this->redirect($this->generateUrl('envase_retiro_new', array('id' => $entity->getStock()->getId())));
+            if ($entity->getCantidad() > $entity->getEnvase()->getTotal()){
+                $this->get('session')->getFlashBag()->add(
+                            'notice',
+                            'La cantidad a despachar es mayor a la cantidad actual'
+                        );
             }else{
-                return $this->redirect($this->generateUrl('ingresar_stock', array('nuevo' => true)));
+                $em->persist($entity);
+                $em->flush();
+                
+                return $this->redirect($this->generateUrl('envase_ingreso_show', array('id' => $entity->getEnvase()->getId())));
+            
             }
         }
 
@@ -81,9 +79,8 @@ class EnvaseRetiroController extends Controller
      */
     private function createCreateForm(EnvaseRetiro $entity)
     {
-        $id_producto = $entity->getStock()->getProducto()->getId();
-        $form = $this->createForm(new EnvaseRetiroType($id_producto), $entity, array(
-            'action' => $this->generateUrl('envase_retiro_create', array('id' => $entity->getStock()->getId())),
+        $form = $this->createForm(new EnvaseRetiroType(), $entity, array(
+            'action' => $this->generateUrl('envase_retiro_create'),
             'method' => 'POST',
         ));
 
@@ -124,7 +121,7 @@ class EnvaseRetiroController extends Controller
     /**
      * Finds and displays a EnvaseRetiro entity.
      *
-     * @Route("/{id}", name="envase_retiro_show")
+     * @Route("/mostrar/{id}", name="envase_retiro_show")
      * @Method("GET")
      * @Template()
      */

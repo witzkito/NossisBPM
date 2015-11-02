@@ -203,7 +203,7 @@ class EnvaseIngreso
     }
     
     public function __toString() {
-        return $this->getLote() . " - " .  $this->getTotal() . " restantes";
+        return $this->getEnvase()->getIdentificador() . " - " . $this->getLote() . " - " .  $this->getTotal() . " restantes";
     }
     
     /**
@@ -253,11 +253,11 @@ class EnvaseIngreso
         foreach ($this->getRetiros() as $retiro)
         {
            $retornar[$retiro->getFecha()->getTimeStamp()]['fecha'] = $retiro->getFecha();
-           $retornar[$retiro->getFecha()->getTimeStamp()]['mov'] = "Envasado de producto " .  $retiro->getStock()->getNumero();
+           $retornar[$retiro->getFecha()->getTimeStamp()]['mov'] = "Salida para envasado ";
            $retornar[$retiro->getFecha()->getTimeStamp()]['ingreso'] = 0;
            $retornar[$retiro->getFecha()->getTimeStamp()]['egreso'] = $retiro->getCantidad();
            $retornar[$retiro->getFecha()->getTimeStamp()]['total'] = $total - $retiro->getCantidad();
-           $retornar[$retiro->getFecha()->getTimeStamp()]['stock'] = $retiro->getStock()->getId();
+           $retornar[$retiro->getFecha()->getTimeStamp()]['stock'] = "";
         }
         return $retornar;
     }
