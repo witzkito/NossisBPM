@@ -19,7 +19,7 @@
                     <th width="200px">{{entity.envase.identificador}}</th>
                     <th width="200px">{{entity.lote}}</th>
                      <th width="200px">{{entity.cantidad}}</th>                    
-                    <th width="200px">{{entity.cantidad}}</th>
+                    <th width="200px">{{entity.cantidad}} {{entity.envase.unidad}}</th>
                 </tr>
                     </tbody>
                 {% set total = entity.cantidad %}
@@ -39,8 +39,8 @@
                         <td colspan="2" width="200px">Retiro</td>
                         <td width="200px">{{retiro.fecha | date('d/m/Y')}}</td>                    
                         <td width="200px">{{retiro.cantidad}}</td>
-                        <td width="200px" >{{retiro.stock.lote}}</td>
-                        <td width="200px">{{total}}</td>
+                        <td width="200px" >{{retiro.loteDestino}}</td>
+                        <td width="200px">{{total}} {{entity.envase.unidad}}</td>
                     </tr>
                  {% endfor %}
                  

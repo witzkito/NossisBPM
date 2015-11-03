@@ -20,7 +20,8 @@ class EnvaseIngresoType extends AbstractType
             ))
             ->add('lote')
             ->add('cantidad')
-            ->add('empresa')
+            ->add('empresa', null, array('label' => 'Provedor'))
+            ->add('remito')
             ->add('envase', null, array('required' => true))
         ;
     }

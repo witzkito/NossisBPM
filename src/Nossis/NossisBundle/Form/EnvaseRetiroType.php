@@ -9,7 +9,7 @@ use Nossis\NossisBundle\Entity\Repositorio\EnvaseIngresoRepository;
 
 class EnvaseRetiroType extends AbstractType
 {
-    //private $id_producto;
+    private $entity;
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -19,6 +19,7 @@ class EnvaseRetiroType extends AbstractType
         $builder
             ->add('fecha', 'genemu_jquerydate', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy'))
             ->add('cantidad')
+            ->add('loteDestino')
             ->add('envase', 'entity', array('label' => 'Lote Envase', 'required' => true,
                             'class' => 'NossisBundle:EnvaseIngreso',
                             'query_builder' => function(EnvaseIngresoRepository $e){
@@ -52,9 +53,9 @@ class EnvaseRetiroType extends AbstractType
         return 'nossis_nossisbundle_envaseretiro';
     }
     
-    /*public function __construct($id_producto)
+    public function __construct($entity)
     {
-    $this->id_producto = $id_producto;
+    $this->entity = $entity;
 
-    }*/
+    }
 }

@@ -36,6 +36,13 @@ class Envase
     private $identificador;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="unidad", type="string", length=255) 
+     */
+    private $unidad;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Producto", inversedBy="envases")
      * @ORM\JoinColumn(name="producto", referencedColumnName="id")
      */
@@ -186,5 +193,28 @@ class Envase
             }
         }
         return $cantidad;
+    }
+
+    /**
+     * Set unidad
+     *
+     * @param string $unidad
+     * @return Envase
+     */
+    public function setUnidad($unidad)
+    {
+        $this->unidad = $unidad;
+
+        return $this;
+    }
+
+    /**
+     * Get unidad
+     *
+     * @return string 
+     */
+    public function getUnidad()
+    {
+        return $this->unidad;
     }
 }

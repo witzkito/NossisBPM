@@ -18,6 +18,7 @@ class EnvaseAdmin extends Admin
         $datagridMapper
             ->add('nombre')
             ->add('identificador')
+            ->add('unidad')
             ->add('producto')
         ;
     }
@@ -31,6 +32,7 @@ class EnvaseAdmin extends Admin
             ->add('id')
             ->add('nombre')
             ->add('identificador')                
+            ->add('unidad')    
             ->add('producto')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -50,6 +52,9 @@ class EnvaseAdmin extends Admin
         $formMapper
             ->add('nombre')
             ->add('identificador')
+            ->add('unidad', 'choice', array(
+                'choices' => array("Kg" => "Kg", "Unidades" => "Unidades")
+            ))
             ->add('producto')
         ;
     }
@@ -62,7 +67,8 @@ class EnvaseAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('nombre')
-            ->add('identificador')                
+            ->add('identificador')
+            ->add('unidad')
             ->add('producto')
         ;
     }

@@ -79,7 +79,7 @@ class EnvaseRetiroController extends Controller
      */
     private function createCreateForm(EnvaseRetiro $entity)
     {
-        $form = $this->createForm(new EnvaseRetiroType(), $entity, array(
+        $form = $this->createForm(new EnvaseRetiroType($entity), $entity, array(
             'action' => $this->generateUrl('envase_retiro_create'),
             'method' => 'POST',
         ));

@@ -36,6 +36,14 @@ class EnvaseRetiro
     private $cantidad;
     
     /**
+     *
+     * @var string
+     * @ORM\Column(name="lote_destino", type="string", length=100)
+     */
+    private $loteDestino;
+    
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Stock", inversedBy="envases")
      * @ORM\JoinColumn(name="stock", referencedColumnName="id")
      */
@@ -150,5 +158,28 @@ class EnvaseRetiro
     public function getEnvase()
     {
         return $this->envase;
+    }
+
+    /**
+     * Set loteDestino
+     *
+     * @param string $loteDestino
+     * @return EnvaseRetiro
+     */
+    public function setLoteDestino($loteDestino)
+    {
+        $this->loteDestino = $loteDestino;
+
+        return $this;
+    }
+
+    /**
+     * Get loteDestino
+     *
+     * @return string 
+     */
+    public function getLoteDestino()
+    {
+        return $this->loteDestino;
     }
 }

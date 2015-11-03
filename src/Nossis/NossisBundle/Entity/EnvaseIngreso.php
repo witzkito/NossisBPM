@@ -31,7 +31,7 @@ class EnvaseIngreso
     /**
      * @var integer
      *
-     * @ORM\Column(name="cantidad", type="integer")
+     * @ORM\Column(name="cantidad", type="decimal", scale=1)
      */
     private $cantidad;
     
@@ -47,6 +47,13 @@ class EnvaseIngreso
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
+    
+    /**
+     *
+     * @var type @var string
+     * @ORM\Column(name="remito", type="string", length=100)
+     */
+    private $remito;
     
     /**
      * @ORM\OneToMany(targetEntity="EnvaseRetiro", mappedBy="envase")
@@ -203,7 +210,8 @@ class EnvaseIngreso
     }
     
     public function __toString() {
-        return $this->getEnvase()->getIdentificador() . " - " . $this->getLote() . " - " .  $this->getTotal() . " restantes";
+        return $this->getEnvase()->getIdentificador() . " - " . $this->getLote() . " - " .
+                $this->getTotal() . " " . $this->getEnvase()->getUnidad() ." restantes";
     }
     
     /**
@@ -260,5 +268,28 @@ class EnvaseIngreso
            $retornar[$retiro->getFecha()->getTimeStamp()]['stock'] = "";
         }
         return $retornar;
+    }
+
+    /**
+     * Set remito
+     *
+     * @param string $remito
+     * @return EnvaseIngreso
+     */
+    public function setRemito($remito)
+    {
+        $this->remito = $remito;
+
+        return $this;
+    }
+
+    /**
+     * Get remito
+     *
+     * @return string 
+     */
+    public function getRemito()
+    {
+        return $this->remito;
     }
 }
