@@ -70,7 +70,7 @@ class StockController extends Controller
             $em->flush();
             
            
-            return new RedirectResponse($this->generateUrl('envase_retiro_new', array('id' => $stock->getId())));
+            return $this->ingresarAction(true); 
                 
         //}
     }
