@@ -68,7 +68,7 @@ class ListadoController extends Controller
      */
     public function mostrarMovimientoProductoAction(){
         $em = $this->get('doctrine')->getManager();
-        $entities = $em->getRepository('NossisBundle:Stock')->mostrarMovimientoProducto();
+        $entities = $this->generarArrayMovimientoProductos();
         $form = $this->crearFormularioMovimientoProducto();
         $request = $this->get('request');
         $form->bind($request);
@@ -78,6 +78,41 @@ class ListadoController extends Controller
         }
         return $this->render('NossisBundle:Listado:mostrarMovimientoProducto.html.twig', array(
                 "entities" => $entities, "form" => $form->createView()));        
+    }
+    
+    public function generarArrayMovimientoProductos()
+    {
+        $em = $this->get('doctrine')->getManager();
+        $productos = $em->getRepository('NossisBundle:Producto')->findAll();
+        $entities = array();
+        foreach ($productos as $producto)
+        {
+            $entities[$producto->getNombre()]['producto'] = $producto;
+            $entities[$producto->getNombre()]['ingresos'] = 0;
+            $entities[$producto->getNombre()]['despachos'] = 0;
+            $entities[$producto->getNombre()]['devolucion'] = 0;
+            $entities[$producto->getNombre()]['bajas'] = 0;
+            foreach ($producto->getStocks() as $stock)
+            {
+                $entities[$producto->getNombre()]['ingresos'] = $entities[$producto->getNombre()]['ingresos'] + $stock->getIngresado();
+                
+                foreach ($stock->getRetiros() as $retiro)
+                {
+                    $entities[$producto->getNombre()]['despachos'] = $entities[$producto->getNombre()]['despachos'] + $retiro->getCantidad();
+                    
+                    foreach ($retiro->getDevoluciones() as $devolucion)
+                    {
+                        $entities[$producto->getNombre()]['devolucion'] = $entities[$producto->getNombre()]['devolucion'] + $devolucion->getCantidad();
+                    }
+                }
+                foreach ($stock->getDestrucciones() as $baja)
+                {
+                    $entities[$producto->getNombre()]['bajas'] = $entities[$producto->getNombre()]['bajas'] + $baja->getCantidad();
+                }
+                
+            }
+        }
+        return $entities;
     }
     
     private function crearFormularioMovimientoProducto(){
@@ -216,7 +251,7 @@ class ListadoController extends Controller
                         }
                     }
                 }
-                foreach ($stock->getBajas() as $baja)
+                foreach ($stock->getDestrucciones() as $baja)
                 {
                     if ($baja->getFecha() >= $desde && $baja->getFecha() <= $hasta)
                     {

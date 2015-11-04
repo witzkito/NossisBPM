@@ -321,7 +321,7 @@ class StockController extends Controller
                  array('form' => $form->createView(), 'lote' => $lote, 'area' => $area, 'fecha' => $timestamp));
     }
     
-    public function destruirAction($id)
+    /*public function destruirAction($id)
     {
         $em = $this->get('doctrine')->getManager();
         $stock = $em->getRepository('NossisBundle:Stock')->find($id);
@@ -344,7 +344,7 @@ class StockController extends Controller
         $em->flush();            
          
         return $this->indexAction();
-    }
+    }*/
     
      public function listarDestruidoAction(){
         $em = $this->get('doctrine')->getManager();

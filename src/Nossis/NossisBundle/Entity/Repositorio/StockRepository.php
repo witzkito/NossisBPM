@@ -50,7 +50,7 @@ class StockRepository extends EntityRepository
             ->leftjoin('s.producto', 'p')
             ->leftjoin('s.retiros', 'rs')
             ->leftjoin('rs.devoluciones', 'd')
-            ->leftJoin('s.bajas', 'b')
+            ->leftJoin('s.destrucciones', 'b')
             ->GroupBy('s.producto')
             ->getQuery();
         return $query->getResult();

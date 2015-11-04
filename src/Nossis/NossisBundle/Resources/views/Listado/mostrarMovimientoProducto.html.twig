@@ -27,9 +27,9 @@
                 {% set total = 0 %}
                 <tr>
                     <td>{{entity.producto}} </td>
-                    <td>{{entity.ingresado}} {% set total = total + entity.ingresado %}</td>
+                    <td>{{entity.ingresos}} {% set total = total + entity.ingresos %}</td>
                     <td>{{entity.despachos}} {% set total = total - entity.despachos %}</td>
-                    <td>{{entity.devoluciones}} {% set total = total + entity.devoluciones %}</td>
+                    <td>{{entity.devolucion}} {% set total = total + entity.devolucion %}</td>
                     <td>{{entity.bajas}} {% set total = total - entity.bajas %}</td>
                     <th>{{ total }}</th>
                 </tr>                
