@@ -31,7 +31,7 @@ class EnvaseRetiro
     /**
      * @var integer
      *
-     * @ORM\Column(name="cantidad", type="integer")
+     * @ORM\Column(name="cantidad", type="decimal", scale=2)
      */
     private $cantidad;
     
