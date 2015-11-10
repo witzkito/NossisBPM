@@ -26,13 +26,25 @@
                         <td>{{ fraccionar.stock }} - <a href="{{ path('show_stock', {'id' : fraccionar.stock.id}) }}">Ver</a></td>                
                     </tr>
                     <tr>
-                        <th>Stock Destino:</th>
-                        {% if fraccionar.stockDestino is not null %}
-                            <td>{{ fraccionar.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionar.stockDestino.id}) }}">Ver</a></td>                
-                        {% else %}
-                            <td>Sin asignar aun - <a href="{{ path('fraccionar_stock', {'id' : fraccionar.id}) }}">Asignar</a></td>                
-                        {% endif %}    
+                        <th>Lote Destino:</th>
+                        <td>{{ fraccionar.loteDestino }}</td>                
                     </tr>
+                    <tr>
+                        <th>Stock Destino:</th><td></td>
+                    </tr>
+                    <tr>
+                        {% if fraccionar.stockDestino is not null %}
+                            <th></th>
+                            <td>{{ fraccionar.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionar.stockDestino.id}) }}">Ver</a></td>                
+                        {% endif %}
+                    <tr>
+                        {% for destino in destinos %}
+                            <tr>
+                                <th></th>
+                                <td>{{ destino.codigo }} - <a href="{{ path('show_stock', {'id' : destino.id}) }}">Ver</a></td>                
+                            </tr>
+                        {% endfor %}
+                    
                 </thead>
                 <tbody>
 

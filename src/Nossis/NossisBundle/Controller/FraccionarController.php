@@ -50,8 +50,9 @@ class FraccionarController extends Controller
     public function showAction($id){
         $em = $this->get('doctrine')->getManager();
         $fraccionar = $em->getRepository('NossisBundle:Fraccionar')->find($id);
+        $destinos = $em->getRepository('NossisBundle:Stock')->findBy(array('lote' => $fraccionar->getLoteDestino()));
         return $this->render('NossisBundle:Fraccionar:show.html.twig',
-                array('fraccionar' => $fraccionar));
+                array('fraccionar' => $fraccionar, 'destinos' => $destinos));
         
     }
     
