@@ -22,7 +22,11 @@
     <div class="{{ class }}">        
         <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
         <div class="formcodigo">
-            {{ form_row(formStock.codigo) }}
+            <table>
+                <tr><td class="formcodigo-total">{{stocks | length}}</td>
+                <td>{{ form_row(formStock.codigo) }}</td>
+                <td class="formcodigo-total">&nbsp;</td></tr>
+            </table>
                 </form>
             <div class="datagrid">
                 <table>

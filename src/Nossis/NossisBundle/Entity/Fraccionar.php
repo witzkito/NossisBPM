@@ -41,7 +41,7 @@ class Fraccionar
      /**
      * @var integer
      *
-     * @ORM\Column(name="cantidad", type="integer")
+     * @ORM\Column(name="cantidad", type="decimal", scale=2)
      * @GRID\Column(title="Cantidad",filterable=true)
      */
     private $cantidad;

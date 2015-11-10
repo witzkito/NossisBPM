@@ -841,3 +841,19 @@ th div {
 .red {
     background-color: red;
 }
+
+.formcodigo > table {
+    width: 100%;
+}
+
+
+.formcodigo-total {
+    font-size: 34px;
+    text-align: center;
+    width: 200px;
+}
+
+
+.formcodigo div {
+    text-align: center;
+}
