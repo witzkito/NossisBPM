@@ -20,30 +20,35 @@
                 </td>
             </tr>
         </table>
-                <br/><br/>
-                <h2>Movimiento Historico de Productos</h2>
+                <table>
+                    <tr><td border-color="white"><h2>Movimiento Historico de Productos</h2></td>
+                        <td border-color="white"><p text-align="right">Impreso el {{ 'now' |date('d-m-Y') }} </p></td></tr>
+                </table>
+               
         <table margin-left="20px" margin-right="20px">
             <tr>
-                <td width="50%"><b>Producto</b></td>
-                <td><b>Ingresos</b></td>
-                <td><b>Despachos</b></td>
-                <td><b>Devoluciones</b></td>
-                <td><b>Bajas</b></td>
-                <td><b>Total</b></td>
+                <td width="50%" height="18px" background-color="gray" padding-left="3px" ><b>Producto</b></td>
+                <td background-color="gray" padding-left="3px"><b>Ingresos</b></td>
+                <td background-color="gray" padding-left="3px"><b>Despachos</b></td>
+                <td background-color="gray" padding-left="3px"><b>Fraccionados</b></td>
+                <td background-color="gray" padding-left="3px"><b>Devoluciones</b></td>
+                <td background-color="gray" padding-left="3px"><b>Bajas</b></td>
+                <td background-color="gray" padding-left="3px"><b>Total</b></td>
             </tr>
            {% for entity in entities %}
                 {% set total = 0 %}
                 <tr>
-                    <td border-color="black">{{entity.producto}} </td>
-                    <td border-color="black">{{entity.ingresado}} {% set total = total + entity.ingresado %}</td>
-                    <td border-color="black">{{entity.despachos}} {% set total = total - entity.despachos %}</td>
-                    <td border-color="black">{{entity.devoluciones}} {% set total = total + entity.devoluciones %}</td>
-                    <td border-color="black">{{entity.bajas}} {% set total = total - entity.bajas %}</td>
-                    <td border-color="black">{{ total }}</td>                    
+                    <td border-color="black" height="18px" padding-left="3px">{{entity.producto}} </td>
+                    <td border-color="black" padding-left="3px">{{entity.ingresos}} {% set total = total + entity.ingresos %}</td>
+                    <td border-color="black" padding-left="3px">{{entity.despachos}} {% set total = total - entity.despachos %}</td>
+                    <td border-color="black" padding-left="3px">{{entity.fraccionado}} {% set total = total - entity.fraccionado %}</td>
+                    <td border-color="black" padding-left="3px">{{entity.devolucion}} {% set total = total + entity.devolucion %}</td>
+                    <td border-color="black" padding-left="3px">{{entity.bajas}} {% set total = total - entity.bajas %}</td>
+                    <td border-color="black" padding-left="3px">{{ total }}</td>                    
                 </tr>
             {% endfor %}
             
         </table>
-            <h6 text-align="right">Impreso el {{ 'now' |date('d-m-Y') }} </h6>
+            
     </dynamic-page>
 </pdf>

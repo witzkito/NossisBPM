@@ -91,6 +91,7 @@ class ListadoController extends Controller
             $entities[$producto->getNombre()]['ingresos'] = 0;
             $entities[$producto->getNombre()]['despachos'] = 0;
             $entities[$producto->getNombre()]['devolucion'] = 0;
+            $entities[$producto->getNombre()]['fraccionado'] = 0;
             $entities[$producto->getNombre()]['bajas'] = 0;
             foreach ($producto->getStocks() as $stock)
             {
@@ -109,6 +110,10 @@ class ListadoController extends Controller
                 {
                     $entities[$producto->getNombre()]['bajas'] = $entities[$producto->getNombre()]['bajas'] + $baja->getCantidad();
                 }
+                foreach ($stock->getFraccionados() as $fraccionado)
+                {
+                    $entities[$producto->getNombre()]['fraccionado'] = $entities[$producto->getNombre()]['fraccionado'] + $fraccionado->getCantidad();
+                }
                 
             }
         }
@@ -118,9 +123,11 @@ class ListadoController extends Controller
     private function crearFormularioMovimientoProducto(){
         return $this->createFormBuilder()
             ->add('desde', 'genemu_jquerydate', array(
-                'widget' => 'single_text'))
+                'widget' => 'single_text',
+                'format' => 'd/M/y'))
             ->add('hasta', 'genemu_jquerydate', array(
-                'widget' => 'single_text'))
+                'widget' => 'single_text',
+                'format' => 'd/M/y'))
             ->getForm();
     }
     
@@ -229,6 +236,7 @@ class ListadoController extends Controller
         {
             $entities[$producto->getNombre()]['ingresos'] = 0;
             $entities[$producto->getNombre()]['despachos'] = 0;
+            $entities[$producto->getNombre()]['fraccionado'] = 0;
             $entities[$producto->getNombre()]['devolucion'] = 0;
             $entities[$producto->getNombre()]['bajas'] = 0;
             foreach ($producto->getStocks() as $stock)
@@ -258,7 +266,10 @@ class ListadoController extends Controller
                         $entities[$producto->getNombre()]['bajas'] = $entities[$producto->getNombre()]['bajas'] + $baja->getCantidad();
                     }
                 }
-                
+                foreach ($stock->getFraccionados() as $fraccionado)
+                {
+                    $entities[$producto->getNombre()]['fraccionado'] = $entities[$producto->getNombre()]['fraccionado'] + $fraccionado->getCantidad();
+                }
             }
         }
         return $entities;
@@ -302,7 +313,7 @@ class ListadoController extends Controller
      */
     public function imprimirMovimientoProductoAction(){
         $em = $this->get('doctrine')->getManager();
-        $entities = $em->getRepository('NossisBundle:Stock')->mostrarMovimientoProducto();
+        $entities = $this->generarArrayMovimientoProductos();
         $response = new Response();
         $this->render('NossisBundle:Listado:mostrarMovimientoProducto.pdf.twig', array("entities" => $entities), $response);
         $facade = $this->get('ps_pdf.facade');
