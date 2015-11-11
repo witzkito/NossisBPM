@@ -16,10 +16,12 @@ class ExportacionAlmaType extends AbstractType
     {
         $builder
             ->add('fechaInicio', 'genemu_jquerydate', array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
             ))
             ->add('fechaFin', 'genemu_jquerydate', array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
             ))
         ;
     }

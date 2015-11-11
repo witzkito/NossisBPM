@@ -34,9 +34,11 @@ class ListadoController extends Controller
      private function crearFormulario(){
         return $this->createFormBuilder()
             ->add('desde', 'genemu_jquerydate', array(
-                'widget' => 'single_text'))
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'))
             ->add('hasta', 'genemu_jquerydate', array(
-                'widget' => 'single_text'))
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'))
             ->add('producto', 'genemu_jqueryselect2_entity', array(
                 'class' => 'NossisBundle:Producto',
                 'required' => false
@@ -124,10 +126,10 @@ class ListadoController extends Controller
         return $this->createFormBuilder()
             ->add('desde', 'genemu_jquerydate', array(
                 'widget' => 'single_text',
-                'format' => 'd/M/y'))
+                'format' => 'dd/MM/yyyy'))
             ->add('hasta', 'genemu_jquerydate', array(
                 'widget' => 'single_text',
-                'format' => 'd/M/y'))
+                'format' => 'dd/MM/yyyy'))
             ->getForm();
     }
     

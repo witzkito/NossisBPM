@@ -16,7 +16,8 @@ class EnvaseIngresoType extends AbstractType
     {
         $builder
             ->add('fecha', 'genemu_jquerydate', array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
             ))
             ->add('lote')
             ->add('cantidad')

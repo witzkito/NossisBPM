@@ -20,7 +20,8 @@ class StockEditType extends AbstractType
                 'label' => 'Producto'))
             ->add('lote')
             ->add('fechaEnvasado', 'genemu_jquerydate', array(
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
             ))
             ->add('palet')
             ->add('turno','choice', array(

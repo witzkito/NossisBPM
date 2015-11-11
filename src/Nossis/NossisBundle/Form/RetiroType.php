@@ -17,7 +17,7 @@ class RetiroType extends AbstractType
         $builder
             ->add('fechaSalida', 'genemu_jquerydate', array(
                 'widget' => 'single_text',
-                'format' => 'd/M/yyyy'
+                'format' => 'dd/MM/yyyy'
             ))
             ->add('nroOrden')
             ->add('formaCarga', 'choice', array(
