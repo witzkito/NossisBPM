@@ -6,6 +6,7 @@
        
         <a class="boton-blue" id="btt-1" href="{{ path('trazladar_stock', { 'id': stock.id})}}">Trazladar</a>
         <a class="boton-blue" id="btt-3" href="{{ path('index_fraccionar', { 'id': stock.id})}}">Fraccionar</a>
+        <a class="boton-blue" id="btt-3" href="{{ path('editar_stock', { 'id': stock.id})}}">Editar</a>
         {% if stock.area.destruccion and stock.actual > 0 %}
             <a class="boton-blue" id="btt-3" href="{{ path('destruccion_new', { 'id': stock.id})}}"/>Destruir</a>
         {% endif %}    
