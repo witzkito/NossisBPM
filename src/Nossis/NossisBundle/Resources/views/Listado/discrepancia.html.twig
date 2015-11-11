@@ -1,0 +1,47 @@
+{% extends "NossisBundle::layout.html.twig" %}
+
+{% block title %}Listar Movimiento por Producto{% endblock %}
+
+{% block body %}
+    
+    <hr>
+    <h2>Discrepancias</h2>
+    <br/>
+    <div class="grid">
+        <table>
+            <tr>
+                <th>Stock</th>
+                <th>Actual</th>
+                <th>Ingresos</th>
+                <th>Despachos</th>
+                <th>Fraccionados</th>
+                <th>Devoluciones</th>
+                <th>Destruccion</th>
+                <th>Diferencia</th>
+                <th></th>
+            </tr>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{entity.numero}} - {{entity}}</td>
+                    <td>{{entity.actual}}</td>
+                    <td>{{entity.ingresado}}</td>
+                    <td>{{entity.cantidadRetirado}}</td>
+                    <td>{{entity.cantidadFraccionado}}</td>
+                    <td>{{entity.cantidadDevuelto}}</td>
+                    <td>{{entity.cantidadDestruido}}</td>
+                    <td><b>{{(entity.actual - ((entity.ingresado + entity.cantidadDevuelto) - (entity.cantidadRetirado + 
+                            entity.cantidadFraccionado + entity.cantidadDestruido))) | number_format(2, '.') }}</b></td>
+                    <td><a href="{{ path('show_stock', {'id' : entity.id})}}">Ver</a></td>
+                </tr>                
+            {% else %}
+                <tr>
+                    <td colspan="9">Felicitaciones!! no hay discrepancias</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    
+{% endblock %}
+
+    

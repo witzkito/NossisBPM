@@ -774,4 +774,63 @@ class Stock
     {
         return $this->destrucciones;
     }
+    
+    /**
+     * Devuelve la cantidad de retiros
+     * @return type
+     */
+    public function getCantidadRetirado()
+    {
+        $retornar = 0;
+        foreach ($this->getRetiros() as $retiro)
+        {
+            $retornar = $retornar + $retiro->getCantidad();
+        }
+        return $retornar;
+    }
+    
+    /**
+     * Devuelve la cantidad de Fraccionado
+     * @return type
+     */
+    public function getCantidadFraccionado()
+    {
+        $retornar = 0;
+        foreach ($this->getFraccionados() as $entity)
+        {
+            $retornar = $retornar + $entity->getCantidad();
+        }
+        return $retornar;
+    }
+    
+    /**
+     * Devuelve la cantidad devuelto
+     * @return type
+     */
+    public function getCantidadDevuelto()
+    {
+        $retornar = 0;
+        foreach ($this->getRetiros() as $retiro)
+        {
+            foreach ($retiro->getDevoluciones() as $entity)
+            {
+                $retornar = $retornar + $entity->getCantidad();
+            }
+        }
+        return $retornar;
+    }
+    
+    /**
+     * Devuelve la cantidad destruido
+     * @return type
+     */
+    public function getCantidadDestruido()
+    {
+        $retornar = 0;
+        foreach ($this->getDestrucciones() as $entity)
+        {
+            $retornar = $retornar + $entity->getCantidad();
+        }
+        return $retornar;
+    }
 }

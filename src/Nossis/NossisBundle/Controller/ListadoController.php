@@ -413,5 +413,31 @@ class ListadoController extends Controller
         
         return new Response($content, 200, array('content-type' => 'application/pdf'));
     }
+    
+    /**
+     * @Route("/listar/discrepancia", name="listado_discrepancia")
+     * @Template()
+     */
+    public function listarDiscrepanciaAction(){
+        $em = $this->get('doctrine')->getManager();
+        $stocks = $em->getRepository('NossisBundle:Stock')->findAll();
+        $retornar = array();
+        foreach ($stocks as $stock)
+        {
+            $actual = $stock->getActual();
+            $ingresado = $stock->getIngresado();
+            $retirado = $stock->getCantidadRetirado();
+            $fraccionado = $stock->getCantidadFraccionado();
+            $devuelto = $stock->getCantidadDevuelto();
+            $destruido = $stock->getCantidadDestruido();
+            if ($actual != ($ingresado + $devuelto - $retirado - $fraccionado - $destruido))
+            {
+                $retornar[$stock->getId()] = $stock;
+            }
+        }
+        return $this->render('NossisBundle:Listado:discrepancia.html.twig', array(
+                "entities" => $retornar));        
+       
+    }
 
 }
