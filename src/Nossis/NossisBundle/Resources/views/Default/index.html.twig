@@ -23,19 +23,21 @@
         <h3>{{ almacen.nombre }}</h3>
         <hr class="hr3-inicio">
     <div class="datagrid">    
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Producto</th>
                     {% for area in almacen.areas %}
                         <th>{{ area.nombre }}</th>
                     {%endfor%}
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                     {% for producto in productos %}
                         <tr>
                             <td class="datagrid-producto">{{ producto.nombre }}</td>
+                            {% set total = 0 %}
                             {% for area in almacen.areas %}
                                 {% set count = 0 %}
                                 {% for stock in area.stocks %}
@@ -43,8 +45,10 @@
                                         {% set count = count + stock.actual %}
                                     {%endif %}                                
                                 {% endfor %}
-                                <td>{{ count }}</td>
+                                <td>{{ count | number_format("2", ",", ".")}}</td>
+                                {% set total = total + count %}
                             {%endfor%}                       
+                            <td>{{total | number_format("2", ",", ".")}}</td>
                         </tr>   
                     {% endfor %}
                            
