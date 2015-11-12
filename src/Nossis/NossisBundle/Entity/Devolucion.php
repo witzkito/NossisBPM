@@ -38,7 +38,7 @@ class Devolucion
     
     /**
      * @var integer
-     * @orm\Column(name="cantidad", type="integer")
+     * @orm\Column(name="cantidad", type="decimal", scale=2)
      */
     private $cantidad;
     
