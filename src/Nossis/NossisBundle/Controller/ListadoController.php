@@ -434,6 +434,10 @@ class ListadoController extends Controller
             {
                 $retornar[$stock->getId()] = $stock;
             }
+            if ($actual < 0)
+            {
+                $retornar[$stock->getId()] = $stock;
+            }
         }
         return $this->render('NossisBundle:Listado:discrepancia.html.twig', array(
                 "entities" => $retornar));        
