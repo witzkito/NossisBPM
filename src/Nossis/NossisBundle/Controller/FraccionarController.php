@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Nossis\NossisBundle\Entity\EstadoStock;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
+use Symfony\Component\Form\FormError;
 
 class FraccionarController extends Controller
 {
@@ -27,21 +28,31 @@ class FraccionarController extends Controller
             if ($request->getMethod() == 'POST'){
                 $form->bind($request);
                 $fraccionar = $form->getData();
-                $fraccionar->setFecha(new \DateTime('now'));
                 
-                $stock->retirarStock($fraccionar->getCantidad());
-                
-                $estadoStock = new EstadoStock;
-                $estadoStock->setEstado("Fraccionado");
-                $estadoStock->setStock($stock);
-                $estadoStock->setDescripcion("Se retiro la cantidad de ". $fraccionar->getCantidad() ." unidades para fraccionado");
-                $estadoStock->setFecha(new \DateTime('NOW'));
-            
-                $em->persist($fraccionar);
-                $em->persist($stock);
-                $em->persist($estadoStock);
-                $em->flush();
-                return new RedirectResponse($this->generateUrl('show_stock',array('id' => $stock->getId())));
+                if ($fraccionar->getCantidad() <= $stock->getActual())
+                {
+                    $fraccionar->setFecha(new \DateTime('now'));
+
+                    $stock->retirarStock($fraccionar->getCantidad());
+
+                    $estadoStock = new EstadoStock;
+                    $estadoStock->setEstado("Fraccionado");
+                    $estadoStock->setStock($stock);
+                    $estadoStock->setDescripcion("Se retiro la cantidad de ". $fraccionar->getCantidad() ." unidades para fraccionado");
+                    $estadoStock->setFecha(new \DateTime('NOW'));
+
+                    $em->persist($fraccionar);
+                    $em->persist($stock);
+                    $em->persist($estadoStock);
+                    $em->flush();
+                    return new RedirectResponse($this->generateUrl('show_stock',array('id' => $stock->getId())));
+                }else{
+                     $form = $this->get('form.factory')->create(
+                        new FraccionarType(),
+                        $fraccionar
+                     );
+                    $form->get('cantidad')->addError(new FormError('No hay Suficiente Stock'));
+                }                
             }
         return $this->render('NossisBundle:Fraccionar:index.html.twig',
                 array('fraccionar' => $fraccionar, 'form' => $form->createView()));     
