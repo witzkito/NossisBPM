@@ -857,3 +857,7 @@ th div {
 .formcodigo div {
     text-align: center;
 }
+
+.text-red {
+    color: red;
+}

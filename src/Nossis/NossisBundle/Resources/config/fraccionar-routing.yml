@@ -13,3 +13,7 @@ listar_fraccionar:
 fraccionar_lote_stock:
   pattern:  /fraccionar/lote/stock/{id}
   defaults: { _controller: NossisBundle:Fraccionar:lote }
+  
+fraccionar_delete:
+  pattern:  /fraccionar/borrar/{id}
+  defaults: { _controller: NossisBundle:Fraccionar:delete }

@@ -33,6 +33,9 @@
                         <th>Producto:</th><td>{{ stock.producto.nombre }}</td>                    
                     </tr>
                     <tr>
+                        <th>Cantidad Ingresada:</th><td> {{ stock.ingresado}}</td>
+                    </tr>
+                    <tr>
                         <th>Lote:</th><td> {{ stock.lote}}</td>
                     </tr>
                     <tr>
@@ -118,14 +121,15 @@
                         <td>{{ fraccionado.fecha | date('d/m/y h:m A') }}</td>
                         <td>{{ fraccionado.cantidad }}</td>
                         {% if fraccionado.stockDestino is null and fraccionado.loteDestino is null %}
-                        <td>Todavia sin destino - <a href=" {{ path('fraccionar_stock', { 'id' : fraccionado.id }) }}">Ingresar Stock</a> - <a href=" {{ path('fraccionar_lote_stock', { 'id' : fraccionado.id }) }}">Ingresar Lote</a></td>
+                        <td>Todavia sin destino - <a href=" {{ path('fraccionar_stock', { 'id' : fraccionado.id }) }}">Ingresar Stock</a> - <a href=" {{ path('fraccionar_lote_stock', { 'id' : fraccionado.id }) }}">Ingresar Lote</a>
                         {% else %}
                             {% if fraccionado.stockDestino is not null %}
-                            <td>{{ fraccionado.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionado.stockDestino.id}) }}">Ver</a></td>
+                            <td>{{ fraccionado.stockDestino }} - <a href="{{ path('show_stock', {'id' : fraccionado.stockDestino.id}) }}">Ver</a>
                             {% else %}
-                            <td>Lote {{ fraccionado.loteDestino }}</td>
+                            <td>Lote {{ fraccionado.loteDestino }}
                             {% endif %}
                         {% endif %}
+                        - <a class="text-red" onclick="confirmar('¿Esta seguro de querer cancelar el fraccionado?','{{ path('fraccionar_delete', { 'id' : fraccionado.id})}}')" href="#"> Eliminar </a>
                     </tr>
                 {% endfor %}
             </table>

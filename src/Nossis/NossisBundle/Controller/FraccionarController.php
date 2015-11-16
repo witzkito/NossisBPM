@@ -94,4 +94,27 @@ class FraccionarController extends Controller
                 array('fraccionar' => $fraccionar, 'form' => $form->createView()));     
     }
     
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fraccionado = $em->getRepository("NossisBundle:Fraccionar")->find($id);
+        if ($fraccionado != null)
+        {
+            $estadoStock = new EstadoStock;
+            $estadoStock->setEstado("Fraccionado");
+            $estadoStock->setStock($fraccionado->getStock());
+            $estadoStock->setDescripcion("Se elimino el fraccionado de " . $fraccionado->getCantidad() . " unidades");
+            $estadoStock->setFecha(new \DateTime('NOW'));
+            
+            $stock = $fraccionado->getStock();
+            $stock->devolver($fraccionado->getCantidad());
+            
+            $em->persist($estadoStock);
+            $em->remove($fraccionado);
+            $em->persist($stock);
+            $em->flush();
+        }
+        return new RedirectResponse($this->generateUrl('show_stock', array('id' => $stock->getId())));
+    }
+    
 }
