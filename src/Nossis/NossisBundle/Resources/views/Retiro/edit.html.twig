@@ -23,7 +23,7 @@
         <form action="{{ path('edit_retiro', { 'id' : retiro.id}) }}" method="post">
         <div class="formcodigo">
             <table>
-                <tr><td class="formcodigo-total">{{stocks | length}}</td>
+                <tr><td class="formcodigo-total">{{stocks | length}} item/s</td>
                 <td>{{ form_row(formStock.codigo) }}</td>
                 <td class="formcodigo-total">&nbsp;</td></tr>
             </table>
@@ -41,6 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% set total = 0 %}
                         {% for stock in stocks %}
                             <tr>
                                 <td>{{ stock.stock.numero }}</td>
@@ -50,9 +51,16 @@
                                 <td>{{ form_widget(formStock[stock.id])}}</td>
                                 <td><a href="{{ path('edit_retiro_stock', { 'id' : stock.id}) }}">Editar</a>
                                 <a href="#" onclick="confirmar('¿Esta seguro de querer borra?','{{ path('eliminar_retiro_stock', { 'id' : stock.id}) }}')">Eliminar</a></td>
+                                {% set total = total + stock.cantidad %}
                             </tr>
-                        {% endfor %}
-                    </tbody>                    
+                        {% endfor %}                        
+                    </tbody>        
+                    <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th colspan="5">{{total}} Unidades</th>
+                    </tr>
+                    </tfoot>
                 </table>               
             </div>
                 <div class="botones">
